@@ -26,7 +26,7 @@
                 VALUES (:userid, :itemid, now(), :reviewtitle, :reviewtext, :rating)');
 
                 $sendReviewQuery->execute(array(
-                    ':userid'=>$_SESSION['name'],
+                    ':userid'=>$_SESSION['userID'],
                     ':itemid'=>$_POST['itemID'],
                     ':reviewtitle'=>$_POST['reviewTitle'],
                     ':reviewtext'=>$_POST['reviewText'],
