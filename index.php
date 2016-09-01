@@ -20,7 +20,7 @@
         <div class="search-form">
             <form action="search-results.php" method="get">
                 <div class="seperate">
-                    <h1 class="align-text-center">find your package.</h1>
+                    <h1 class="align-text-center">The php version of this webserver is: <?php echo phpversion();?></h1>
 
                     <input id ="name-field-frontpage" placeholder="Name of Wifi..." type="text" name="name" />
                     <span>:</span>
