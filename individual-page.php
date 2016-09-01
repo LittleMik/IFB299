@@ -1,4 +1,4 @@
-<!doctype html>
+e<!doctype html>
 <html>
 <head>
     <title>Wifi Hotspots</title>
