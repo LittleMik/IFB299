@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Wifi Hotspots</title>
+    <title>On The Spot - Package Delivery Service</title>
     
     <meta name="author" content="Greg Mills">
     <meta name="description" content="A collation of reviews about Wifi Hotspots">
