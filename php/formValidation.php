@@ -14,12 +14,11 @@ streetNo int(4)
 postcode int(4)
 state char(3)
 */
-checkEmail("something@domain.com");
   function checkEmail($email)
   {
     if(isset($email) && $email !== "")
     {
-      if(filter_var($email, FILTER_VALIDATE_EMAIL) === true)){
+      if(filter_var($email, FILTER_VALIDATE_EMAIL) == true){
         return true;
       }else{
         return false;
@@ -33,7 +32,7 @@ checkEmail("something@domain.com");
   {
     if(isset($password) && $password !== "")
     {
-      if(preg_match('/(?=.*[a-zA-Z])(?=.*\d).{8,255}/')){
+      if(preg_match('/(?=.*[a-zA-Z])(?=.*\d).{8,255}/', $password)){
         return true;
       }else{
         return false;
@@ -47,7 +46,7 @@ checkEmail("something@domain.com");
   {
     if(isset($name) && $name !== "")
     {
-      if(preg_match('/^\w{2,255}(?!=\W)$/')){
+      if(preg_match('/^\w{2,255}(?!=\W)$/', $name)){
         return true;
       }else{
         return false;
@@ -60,7 +59,7 @@ checkEmail("something@domain.com");
   function checkPhone($phone)
   {
     if(isset($phone) && $phone !== ""){
-      if(preg_match('/^(?:\(\+?[0-9]{2}\))?(?:[0-9]{6,10}|[0-9]{3,4}(?:(?:\s[0-9]{3,4}){1,2}))$/')){
+      if(preg_match('/^(?:\(\+?[0-9]{2}\))?(?:[0-9]{6,10}|[0-9]{3,4}(?:(?:\s[0-9]{3,4}){1,2}))$/', $phone)){
         return true;
       }else{
         return false;
@@ -73,20 +72,20 @@ checkEmail("something@domain.com");
   function checkAddress($address)
   {
     if(isset($address) && $address !== ""){
-      if(preg_match('/^[0-9]{1,5},?\s\w{2,64}\s\w{2,64},?\s\w{2,64}$/')){
+      if(preg_match('/^[0-9]{1,5},?\s\w{2,64}\s\w{2,64},?\s\w{2,64}$/', $address)){
         return true;
       }else{
         return false;
       }
     }else{
-      return false;
+      return true;
     }
   }
 
-  function checkPost($postcode)
+  function checkPost($postCode)
   {
-    if(isset($postcode) && $postcode !== ""){
-      if(preg_match('/^[0-9]{4}$/')){
+    if(isset($postCode) && $postCode !== ""){
+      if(preg_match('/^[0-9]{4}$/', $postCode)){
         return true;
       }else{
         return false;
@@ -99,7 +98,7 @@ checkEmail("something@domain.com");
   function checkState($state)
   {
     if(isset($state) && $state !== ""){
-      if(preg_match('/^ACT|NSW|NT|QLD|SA|TAS|VIC|WA$/')){
+      if(preg_match('/^ACT|NSW|NT|QLD|SA|TAS|VIC|WA$/', $state)){
         return true;
       }else{
         return false;

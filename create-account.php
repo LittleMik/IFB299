@@ -37,7 +37,7 @@
         $formValid = true;
 
         //Get Dependancies
-        require_once 'formValidation.php';
+        require_once 'php/formValidation.php';
 
         //PHP Field Validation
         $errors = array(
@@ -76,7 +76,7 @@
     <div class="container">
         <h2>Create an Account</h2>
 
-        <form action="" method="post">
+        <form method="post" autocomplete="on" onsubmit="return validate(this)" action="<?php echo $_SERVER['PHP_SELF'];?>">
             <div class="form-group">
                 <label for="email">Email Address:</label>
                 <input type="email" class="form-control" id="email" placeholder="Enter Email Address" name="email" maxlength="255" required>

@@ -6,17 +6,17 @@
 class User
 {
 
-	private $id;
-	private $email;
-	private $password;
-	private $salt;
-	private $role;
-	private $firstname;
-	private $lastname;
-	private $phone;
-	private $address;
-	private $postcode;
-	private $state;
+	public $id;
+	public $email;
+	public $password;
+	public $salt;
+	public $role;
+	public $firstName;
+	public $lastName;
+	public $phone;
+	public $address;
+	public $postcode;
+	public $state;
 
 	var $roles = array("Customer", "Driver", "Co-ordinator", "Manager", "Admin");
 
@@ -37,11 +37,11 @@ class User
 			$this->email = $args[0]->email;
 			$this->salt = $args[0]->salt;
 			$this->role = $args[0]->role;
-			$this->firstname = $args[0]->firstname;
-			$this->lastname = $args[0]->lastname;
+			$this->firstName = $args[0]->firstName;
+			$this->lastName = $args[0]->lastName;
 			$this->phone = $args[0]->phone;
 			$this->address = $args[0]->address;
-			$this->postcode = $args[0]->postcode;
+			$this->postCode = $args[0]->postCode;
 			$this->state = $args[0]->state;
 
 		}else{
@@ -50,18 +50,18 @@ class User
 			//Set user defined fields
 			$this->email = $args[0];
 			$this->password = $args[1];
-			$this->firstname = $args[2];
-			$this->lastname = $args[3];
+			$this->firstName = $args[2];
+			$this->lastName = $args[3];
 			$this->phone = $args[4];
 			$this->address = $args[5];
-			$this->postcode = $args[6];
+			$this->postCode = $args[6];
 			$this->state = $args[7];
 
 			//Generate Salt
 			$this->salt = uniqid(mt_rand(), true);
 
 			//Set User to Customer by default
-			$this->role = $roles[0];
+			$this->role = "Customer";
 		}
 	}
 
@@ -75,8 +75,8 @@ class User
 	//Saves User to Database
 	function saveToDatabase()
 	{
-		require_once 'pdo.inc';
-		//need to implement
+		require_once 'usersDB.php';
+		createUser($this);
 	}
 }
 

@@ -28,18 +28,19 @@ state char(3)
       "email"=>checkEmail($_POST['email']),
       "password"=>checkPassword($_POST['password']),
       "confpassword"=>checkMatch($_POST['password'], $_POST['confpassword']),
-      "firstname"=>checkName($_POST['firstname']),
-      "lastname"=>checkName($_POST['lastname']),
+      "firstName"=>checkName($_POST['firstName']),
+      "lastName"=>checkName($_POST['lastName']),
       "phone"=>checkPhone($_POST['phone']),
       "address"=>checkAddress($_POST['address']),
-      "postcode"=>checkPost($_POST['postcode']),
+      "postCode"=>checkPost($_POST['postCode']),
       "state"=>checkState($_POST['state'])
     );
 
     //Check for presence of errors and output
     foreach($errors as $field => $valid)
     {
-      if($valid === false){
+      if($valid === false)
+      {
         $formValid = false;
         echo "Invalid " . $field . " detected<br />";
       }
@@ -50,7 +51,9 @@ state char(3)
     {
       require_once 'users.php';
 
-      $user = new User($_POST['email'], $_POST['password'], $_POST['firstname'], $_POST['lastname'], $_POST['phone'], $_POST['address'], $_POST['postcode'], $_POST['state']);
+      $user = new User($_POST['email'], $_POST['password'], $_POST['firstName'], $_POST['lastName'], $_POST['phone'], $_POST['address'], $_POST['postCode'], $_POST['state']);
+
+      $user->saveToDatabase();
     }
 
   }
