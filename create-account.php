@@ -40,17 +40,31 @@
         require_once 'php/formValidation.php';
 
         //PHP Field Validation
-        $errors = array(
-          "email"=>checkEmail($_POST['email']),
-          "password"=>checkPassword($_POST['password']),
-          "confpassword"=>checkMatch($_POST['password'], $_POST['confpassword']),
-          "firstName"=>checkName($_POST['firstName']),
-          "lastName"=>checkName($_POST['lastName']),
-          "phone"=>checkPhone($_POST['phone']),
-          "address"=>checkAddress($_POST['address']),
-          "postCode"=>checkPost($_POST['postCode']),
-          "state"=>checkState($_POST['state'])
-        );
+        if(empty($_POST['address']) && empty($_POST['postCode']) && empty($_POST['state']))
+        {
+          $errors = array(
+            "email"=>checkEmail($_POST['email']),
+            "password"=>checkPassword($_POST['password']),
+            "confpassword"=>checkMatch($_POST['password'], $_POST['confpassword']),
+            "firstName"=>checkName($_POST['firstName']),
+            "lastName"=>checkName($_POST['lastName']),
+            "phone"=>checkPhone($_POST['phone'])
+          );
+          //Set state to empty string for user object
+          $_POST['state'] = "";
+        } else {
+          $errors = array(
+            "email"=>checkEmail($_POST['email']),
+            "password"=>checkPassword($_POST['password']),
+            "confpassword"=>checkMatch($_POST['password'], $_POST['confpassword']),
+            "firstName"=>checkName($_POST['firstName']),
+            "lastName"=>checkName($_POST['lastName']),
+            "phone"=>checkPhone($_POST['phone']),
+            "address"=>checkAddress($_POST['address']),
+            "postCode"=>checkPost($_POST['postCode']),
+            "state"=>checkState($_POST['state'])
+          );
+        }
 
         //Check for presence of errors and output
         foreach($errors as $field => $valid)
@@ -58,6 +72,7 @@
           if($valid === false)
           {
             $formValid = false;
+            echo $_POST[$field] . "<br />";
             echo "Invalid " . $field . " detected<br />";
           }
         }
@@ -66,14 +81,14 @@
         if($formValid)
         {
           require_once 'php/users.php';
-
+          
           $user = new User($_POST['email'], $_POST['password'], $_POST['firstName'], $_POST['lastName'], $_POST['phone'], $_POST['address'], $_POST['postCode'], $_POST['state']);
 
           $user->saveToDatabase();
         }
       }
     ?>
-    
+
     <div class="container">
         <h2>Create an Account</h2>
 
@@ -121,7 +136,7 @@
             <div class="form-group">
                 <label for="state">State:</label>
                 <select class="form-control" id="state" name="state">
-                    <option>- Select State -</option>
+                    <option value="" disabled selected>- Select State -</option>
                     <option>QLD</option>
                     <option>NSW</option>
                     <option>ACT</option>

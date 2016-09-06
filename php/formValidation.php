@@ -78,7 +78,7 @@ state char(3)
         return false;
       }
     }else{
-      return true;
+      return false;
     }
   }
 

@@ -33,8 +33,9 @@
       $stmt->execute();
 
       //Close connection
-      $stmt->close();
-      $pdo->close();
+      $stmt = null;
+      //Destroy PDO Object
+      $pdo = null;
 
     }catch(PDOException $e){
 
