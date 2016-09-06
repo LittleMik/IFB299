@@ -73,6 +73,7 @@
         }
       }
     ?>
+    
     <div class="container">
         <h2>Create an Account</h2>
 

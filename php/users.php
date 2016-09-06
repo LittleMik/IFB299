@@ -18,8 +18,6 @@ class User
 	public $postcode;
 	public $state;
 
-	var $roles = array("Customer", "Driver", "Co-ordinator", "Manager", "Admin");
-
 	/**
 	 * Constructor
 	 * Precondition: Argument must be either user table row
