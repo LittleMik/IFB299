@@ -4,13 +4,14 @@
 		
 		require 'php/pdo.inc';
 		try {
-			$checkQuery = $pdo->prepare('SELECT * FROM users   
-									WHERE email = :email 
-									and password = SHA2(CONCAT(:password, salt), 0) ');
+			$checkQuery = $pdo->prepare(
+				'SELECT * FROM users   
+				WHERE email = :email 
+				AND password = SHA2(CONCAT(:thisPassword, salt), 0) '
+			);
 			$checkQuery->bindValue(':email',$email);
-			//$checkQuery->bindValue(':password',$password);
+			$checkQuery->bindValue(':thisPassword',$password);
 			$checkQuery->execute();
-			echo $email. " and ";//.$password;
 			if($checkQuery->rowCount() > 0){
 				return true;
 			}else{return false;}

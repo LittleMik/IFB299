@@ -1,4 +1,5 @@
 <header>
+	<?php session_start(); ?>
 	<div class = "container-fluid">
 		<div class="nav navbar-nav navbar-right">
 			<?php     

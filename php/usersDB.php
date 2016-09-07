@@ -16,11 +16,10 @@
 
     // Prepare Query
     $stmt = $pdo->prepare(
-      "SELECT * FROM users WHERE email = :email and	password = SHA2(CONCAT(:password, Salt), 0)"
+      "SELECT * FROM users WHERE email = :email and	password = SHA2(CONCAT(:password, salt), 0)"
     );
 
     $stmt->bindParam(':email', $email);
-    $stmt->bindParam('')
   }
 
   function createUser($user)
