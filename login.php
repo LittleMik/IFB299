@@ -97,16 +97,15 @@
 
 				//Get Firstname
 				try{
-					require 'pdo.inc';
+					require 'php/pdo.inc';
 					$getInfoQuery = $pdo->prepare('SELECT firstName, userID FROM users   
 										WHERE email = :email limit 1');
 					$getInfoQuery->bindValue(':email',$_POST['yourEmail']);
 					$getInfoQuery->execute();
 
 					$userInfo = $getInfoQuery->fetch();
-					$_SESSION['firstname'] = $userInfo['Firstname'];
-					$_SESSION['userID'] = $userInfo['UserID'];
-					exit();
+					$_SESSION['firstname'] = $userInfo['firstName'];
+					$_SESSION['userID'] = $userInfo['userID'];
 				} catch (PDOException $e){
 					echo $e->getMessage(); 
 				}
@@ -126,7 +125,7 @@
 	<section id="login">
 	  <div class="container">
 
-		<form class="form-signin" action=">
+		<form method="POST" class="form-signin">
 		  <h2 class="form-signin-heading">Log in</h2>
 		  <div id="error"></div>
 		  <label for="inputEmail" class="sr-only">Email address</label>

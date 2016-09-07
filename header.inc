@@ -3,7 +3,7 @@
 		<div class="nav navbar-nav navbar-right">
 			<?php     
 				if (isset($_SESSION['isUser']))   {    
-					echo '<a href="">Logout</a> 
+					echo '<a href="php/logout.php">Logout</a> 
 					
 					| Hello ', $_SESSION['firstname'],'!';
 				} else {
