@@ -3,12 +3,17 @@
 	<div class = "container-fluid">
 		<div class="nav navbar-nav navbar-right">
 			<?php     
-				if (isset($_SESSION['isUser']))   {    
-					echo '<a href="php/logout.php">Logout</a> 
-					
-					| Hello ', $_SESSION['firstname'],'!';
+				if (isset($_SESSION['isUser']))   {  
+
+					echo '
+						<li><a href="php/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>  
+						<li><a href="">Hello ', $_SESSION['firstname'], '!</a></li>
+					';
 				} else {
-					echo '<a href="login.php">Login</a> | <a href="create-account.php">Register</a>';
+					echo '
+						<li><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>  
+						<li><a href="create-account.php"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+					';
 				}
 			?> 
 		</div>
@@ -42,6 +47,7 @@
 				  <li><a href="#">Tracking</a></li>
 				  <li><a href="#">History</a></li>
 				</ul>
+				<li><a href="create-staff-account.php">Create Staff Account</a></li>
 				<li><a href="#">Contact</a></li>
 			  </li>
 			</ul>
