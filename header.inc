@@ -1,4 +1,18 @@
 <header>
+	<div class = "container-fluid">
+		<div class="nav navbar-nav navbar-right">
+			<?php     
+				if (isset($_SESSION['isUser']))   {    
+					echo '<a href="">Logout</a> 
+					
+					| Hello ', $_SESSION['firstname'],'!';
+				} else {
+					echo '<a href="login.php">Login</a> | <a href="create-account.php">Register</a>';
+				}
+			?> 
+		</div>
+	</div>
+	
 	<div class="container">
 		<img id="hero" src="images/icon4.png" alt="hero"/>
 	</div>
@@ -20,7 +34,7 @@
 		  <div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
 			  <li class="active"><a href="index.php">Home</a></li>
-			  <li><a href="login.html">My Account</a></li>
+			  <li><a href="login.php">My Account</a></li>
 			  <li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Orders <span class="caret"></span></a>
 				<ul class="dropdown-menu">

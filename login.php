@@ -85,16 +85,56 @@
     <!--</div> <!-- /container -->
 	
 	<body>
+	
+	<!--Handle login-->
+	<?php
+		session_start();
+		if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+			$email = $_POST['yourEmail'];
+			require 'php/verifyPassword.php';
+			if (checkPassword($_POST['yourEmail'], $_POST['yourPassword'])){
+				$_SESSION['isUser'] = true;
+
+				//Get Firstname
+				try{
+					require 'pdo.inc';
+					$getInfoQuery = $pdo->prepare('SELECT firstName, userID FROM users   
+										WHERE email = :email limit 1');
+					$getInfoQuery->bindValue(':email',$_POST['yourEmail']);
+					$getInfoQuery->execute();
+
+					$userInfo = $getInfoQuery->fetch();
+					$_SESSION['firstname'] = $userInfo['Firstname'];
+					$_SESSION['userID'] = $userInfo['UserID'];
+					exit();
+				} catch (PDOException $e){
+					echo $e->getMessage(); 
+				}
+			}else{ 
+				echo'
+				<script>
+					window.onload = function var1() {
+						document.getElementById(\'error\').innerHTML = \'Your username or password is incorrect!\';
+					};
+				</script>';
+			}
+		}
+	?>
+
 	<?php include'header.inc'?>
+	
 	<section id="login">
 	  <div class="container">
 
-		<form class="form-signin">
+		<form class="form-signin" action=">
 		  <h2 class="form-signin-heading">Log in</h2>
+		  <div id="error"></div>
 		  <label for="inputEmail" class="sr-only">Email address</label>
-		  <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+		  <input type="email" name="yourEmail" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+		  
 		  <label for="inputPassword" class="sr-only">Password</label>
-		  <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+		  <input type="password" name="yourPassword" id="inputPassword" class="form-control" placeholder="Password" required>
+		  
 		  <div class="checkbox">
 			<label>
 			  <input type="checkbox" value="remember-me"> Remember me
