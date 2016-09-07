@@ -3,7 +3,7 @@
 <?php
   if(!isset($_SESSION['userID']))
   {
-    header("Location:Login.php");
+    header("Location:login.php");
   }
 ?>
 
@@ -49,9 +49,9 @@
         require_once 'php/orders.php';
         require_once 'php/users.php';
 
-        $user = $_SESSION['user'];
+        $user = unserialize($_SESSION['user']);
 
-        $order = new Order($user->userID, $_POST['description'], $_POST['totalWeight'], $_POST['signature'], $_POST['priority'], $_POST['pickupAddress'], $_POST['pickupTime'], $_POST['deliveryAddress'], $_POST['recipientName'], $_POST['recipientPhone']);
+        $order = new Order($user->id, $_POST['description'], $_POST['totalWeight'], $_POST['signature'], $_POST['priority'], $_POST['pickupAddress'], $_POST['pickupTime'], $_POST['deliveryAddress'], $_POST['recipientName'], $_POST['recipientPhone']);
 
         $order->saveToDatabase();
       }
@@ -60,7 +60,7 @@
 
     <div class="container">
         <h2>Order Details</h2>
-        <form method="post" autocomplete="on" onsubmit="return validate(this)" action="<?php echo "https://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];?>">
+        <form method="post" autocomplete="on" onsubmit="return validate(this)"">
 
             <!--Order Description-->
             <div class="form-group">

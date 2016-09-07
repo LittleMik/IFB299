@@ -29,9 +29,10 @@ class User
 		# code...
 		//Construct User according to the arguments provided
 		$args = func_get_args();
-		if(is_int($args[0]))
+		$numArgs = func_num_args();
+		if($numArgs === 8)
 		{
-			
+
 			//Construct User from db table row
 			$this->id = $args[0];
 			$this->email = $args[1];

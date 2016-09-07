@@ -10,7 +10,7 @@
     //TO DO
   }
 
-  function createOrders($order)
+  function createOrder($order)
   {
     require_once 'pdo.inc';
     try
@@ -51,19 +51,4 @@
 		}
   }
 
-  function updateRole($user)
-  {
-    require_once 'pdo.inc';
-    try {
-
-    } catch (PDOException $e) {
-
-      //Output Error
-      echo $e->getMessage();
-			echo '<p>'.$e.'</p>';
-
-    }
-
-
-  }
 ?>

@@ -71,6 +71,8 @@
 					$_SESSION['firstname'] = $userInfo['firstName'];
 					$_SESSION['userID'] = $userInfo['userID'];
 
+					require_once 'php/users.php';
+
           $user = new User(
 						$userInfo['userID'],
 						$userInfo['email'],
@@ -82,8 +84,8 @@
 						$userInfo['state']
 					);
 
-          $_SESSION['user'] = $user;
-          
+          $_SESSION['user'] = serialize($user);
+
 				} catch (PDOException $e){
 					echo $e->getMessage();
 				}
