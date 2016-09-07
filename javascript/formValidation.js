@@ -1,4 +1,4 @@
-/*Ensure password confirmation matches*/
+/*Ensure password & confirmation matches, input is confirmation field*/
 function check(input) {
     if (input.value != document.getElementById('password').value) {
         input.setCustomValidity('Password Must be Matching.');

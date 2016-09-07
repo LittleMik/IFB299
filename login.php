@@ -40,9 +40,10 @@
 <!--Nav-->
     </head>
   
+	<!--
      <div class="container">
 
-      <!-- Static navbar -->
+      <!-- Static old navbar --
       <nav class="navbar navbar-default">
         <div class="container-fluid">
           <div class="navbar-header">
@@ -67,9 +68,9 @@
                 <li><a href="#">Contact</a></li>
               </li>
             </ul>
-          </div><!--/.nav-collapse -->
-        </div><!--/.container-fluid -->
-      </nav>
+          </div><!--/.nav-collapse --
+        </div><!--/.container-fluid --
+      </nav> -->
 
       <!-- Main component for a primary marketing message or call to action -->
 <!--      <div class="jumbotron">
@@ -81,10 +82,39 @@
       </div>
 -->
       
-    </div> <!-- /container -->
+    <!--</div> <!-- /container -->
+	
+	<body>
+	<?php include'header.inc'?>
+	<section id="login">
+	  <div class="container">
+
+		<form class="form-signin">
+		  <h2 class="form-signin-heading">Log in</h2>
+		  <label for="inputEmail" class="sr-only">Email address</label>
+		  <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+		  <label for="inputPassword" class="sr-only">Password</label>
+		  <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+		  <div class="checkbox">
+			<label>
+			  <input type="checkbox" value="remember-me"> Remember me
+			</label>
+
+		  </div>
+		  <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+		  <br>
+		</form>
+
+		 <a href="create-account.php">Create an account?</a> | <a href"">Forgotten Password?</a>
+		
+	  </div> <!-- /container -->
+	</section>
 
 
-    <!-- Bootstrap core JavaScript
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="bootstrap-3.3.7/docs/assets/js/ie10-viewport-bug-workaround.js"></script>
+  
+  <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -92,36 +122,5 @@
     <script src="bootstrap-3.3.7/docs/dist/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="bootstrap-3.3.7/docs/assets/js/ie10-viewport-bug-workaround.js"></script>
-    <body>
-
-   
-
-<section id="login">
-  <div class="container">
-
-    <form class="form-signin">
-      <h2 class="form-signin-heading">Log in</h2>
-      <label for="inputEmail" class="sr-only">Email address</label>
-      <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-      <label for="inputPassword" class="sr-only">Password</label>
-      <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-      <div class="checkbox">
-        <label>
-          <input type="checkbox" value="remember-me"> Remember me
-        </label>
-
-      </div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
-      <br>
-    </form>
-
-     <a href="create-account.php">Create an account?</a> | <a href"">Forgotten Password?</a>
-    
-  </div> <!-- /container -->
-</section>
-
-
-  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-  <script src="bootstrap-3.3.7/docs/assets/js/ie10-viewport-bug-workaround.js"></script>
 </body>
 </html>
