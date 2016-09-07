@@ -3,7 +3,7 @@
   require_once 'users.php';
 
   function login()
-  {
+  {\
     require_once 'pdo.inc';
 
 
@@ -75,4 +75,4 @@
 
 
   }
- ?>
+?>

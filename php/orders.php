@@ -67,4 +67,12 @@
         $this->status = "Ordered";
   		}
   	}
+
+    //Saves User to Database
+  	function saveToDatabase()
+  	{
+  		require_once 'ordersDB.php';
+  		createOrder($this);
+  	}
+  }
 ?>

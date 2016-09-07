@@ -132,4 +132,41 @@ state char(3)
     }
   }
 
+  //TO DO
+  function checkDescription($description)
+  {
+    return true;
+  }
+
+  function checkWeight($weight)
+  {
+    if(isset($weight) && $weight !== ""){
+      if(preg_match('/^[0-9]{4}$/', $weight)){
+        return true;
+      }else{
+        return false;
+      }
+    }else{
+      return false;
+    }
+  }
+  
+  function checkSet($input)
+  {
+    if(isset($input) && $input !== ""){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  //to do
+  function checkTime($time)
+  {
+    if(isset($time) && $time !== ""){
+      return true;
+    }else{
+      return false;
+    }
+  }
  ?>

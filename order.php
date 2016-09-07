@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
     session_start();
-    if(!isset($_SESSION['loggedIn']))
+    if(!isset($_SESSION['isUser']))
     {
       header("Location:Login.php");
     }
@@ -44,7 +44,9 @@
         "pickupAddress"=>checkAddress($_POST['pickupAddress']),
         "pickupTime"=>checkTime($_POST['pickupTime']),
         "deliveryAddress"=>checkAddress($_POST['deliveryAddress']),
-        "state"=>checkState($_POST['state'])
+        "deliveryState"=>checkState($_POST['deliveryState']),
+        "recipientName"=>checkFullName($_POST['recipientName']),
+        "recipientPhone"=>checkPhone($_POST['recipientPhone']),
       );
 
       //Check for presence of errors and output
@@ -72,50 +74,38 @@
       }
     }
   ?>
-   <!-- Columns:
-orderID int(255) AI PK
-userID int(255) PK
-orderStatus varchar(255)
-description varchar(140)
-totalWeight int(4)
-signature tinyint(1)
-deliveryPriority varchar(255)
-pickUpAddress varchar(255)
-pickUptime timestamp
-deliveryAddress varchar(255)
-recipientName varchar(255)
-recipientphoneNo int(16)-->
+  
     <div class="container">
         <h2>Order Details</h2>
-        <form>
+        <form method="post" autocomplete="on" onsubmit="return validate(this)" action="<?php echo "https://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];?>">
 
             <!--Order Description-->
             <div class="form-group">
                 <label for="comment">Description:</label>
-                <textarea class="form-control" rows="5" id="comment"></textarea>*max 140 characters
+                <textarea class="form-control" rows="5" id="comment" maxlength="140" name="description"></textarea>*max 140 characters
             </div>
 
             <!--Order Weight-->
             <div class="form-group">
                 <label for="weight">Weight:</label>
-                <input type="number" class="form-control" id="weight" name="totalWeight" placeholder="Weight in KGs">KGs
+                <input type="number" class="form-control" id="weight" placeholder="Weight in KGs" name="totalWeight" maxlength="4" pattern="^[0-9]{4}$" required>KGs
             </div>
 
             <!--Signature Required-->
             <div class="form-group">
                 <label>Require Signature Upon Delivery?</label>
-                <label class="radio-inline"><input type="radio" name="optradio">Yes</label>
-                <label class="radio-inline"><input type="radio" name="optradio">No</label>
+                <label class="radio-inline"><input type="radio" name="signature" value="1">Yes</label>
+                <label class="radio-inline"><input type="radio" name="signature" value="0" checked="checked">No</label>
             </div>
 
             <!--Priority (Order Type)-->
             <div class="form-group">
                 <label>Delivery Priority</label>
                 <div class="radio">
-                    <label><input type="radio" name="optradio">Express (1-2 Business Days)</label>
+                    <label><input type="radio" name="deliveryPriority" value="Express">Express (1-2 Business Days)</label>
                 </div>
                 <div class="radio">
-                    <label><input type="radio" name="optradio">Standard (5-7 Business Days)</label>
+                    <label><input type="radio" name="deliveryPriority" value="Standard" checked="checked">Standard (5-7 Business Days)</label>
                 </div>
             </div>
 
@@ -140,23 +130,22 @@ recipientphoneNo int(16)-->
             <!--Pickup Address-->
             <div class="form-group">
                 <label>Pickup Address:</label>
-                <label class="radio-inline"><input type="radio" name="optradio">Your Address</label>
-                <label class="radio-inline"><input type="radio" name="optradio">Other</label>
-                <label>Other address:</label>
+                <label class="radio-inline"><input type="radio" name="otherPickupAddress" disabled>Your Address</label>
+                <label class="radio-inline"><input type="radio" name="otherPickupAddress" checked="checked">Other</label>
                 <input type="text" class="form-control" id="pickupAddress" name="pickupAddress">
             </div>
 
             <h3>Recipient Details</h3>
             <!--Fullname of Recipient-->
             <div class="form-group">
-                <label for="email">Recipient Name:</label>
-                <input type="email" class="form-control" id="recipientName" placeholder="Enter Recipient Name" name="recipientName" maxlength="255" pattern="^[\w]{2,255}(?:\s[\w]{2,255})*(?!=\W)$" required>
+                <label for="recipientName">Recipient Name:</label>
+                <input type="text" class="form-control" id="recipientName" placeholder="Enter Recipient Name" name="recipientName" maxlength="255" pattern="^[\w]{2,255}(?:\s[\w]{2,255})*(?!=\W)$" required>
             </div>
 
             <!--Recipient's Phone Number-->
             <div class="form-group">
-                <label for="email">Recipient Phone Number:</label>
-                <input type="tel" class="form-control" id="email" placeholder="Enter Phone Number" name="recipientPhone" maxlength="16" pattern="^(?:\(\+?[0-9]{2}\))?(?:[0-9]{6,10}|[0-9]{3,4}(?:(?:\s[0-9]{3,4}){1,2}))$" required>
+                <label for="recipientPhone">Recipient Phone Number:</label>
+                <input type="tel" class="form-control" id="recipientPhone" placeholder="Enter Phone Number" name="recipientPhone" maxlength="16" pattern="^(?:\(\+?[0-9]{2}\))?(?:[0-9]{6,10}|[0-9]{3,4}(?:(?:\s[0-9]{3,4}){1,2}))$" required>
             </div>
 
             <h3>Delivery</h3>
@@ -164,13 +153,13 @@ recipientphoneNo int(16)-->
             <!--Delivery Address-->
             <div class="form-group">
                 <label for="deliveryAddress">Delivery Address:</label>
-                <input type="deliveryAddress" class="form-control" id="deliveryAddress" placeholder="Enter Delivery Address" name="deliveryAddress" maxlength="255" pattern="^[0-9]{1,5},?\s\w{2,64}\s\w{2,64},?\s\w{2,64}$" required>
+                <input type="text" class="form-control" id="deliveryAddress" placeholder="Enter Delivery Address" name="deliveryAddress" maxlength="255" pattern="^[0-9]{1,5},?\s\w{2,64}\s\w{2,64},?\s\w{2,64}$" required>
             </div>
 
             <!--Delivery PostCode-->
             <div class="form-group">
                 <label for="email">Postcode:</label>
-                <input type="email" class="form-control" id="email" placeholder="Enter Postcode" name="deliveryPostCode" pattern="^[0-9]{4}$">
+                <input type="number" class="form-control" id="email" placeholder="Enter Postcode" name="deliveryPostCode" pattern="^[0-9]{4}$">
             </div>
 
             <!--Delivery State-->
