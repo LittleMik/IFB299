@@ -71,9 +71,18 @@
 					$_SESSION['firstname'] = $userInfo['firstName'];
 					$_SESSION['userID'] = $userInfo['userID'];
 
-          $user = new User($userInfo['userID'], $userInfo['email'], $userInfo['firstName'], $userInfo['lastName'], $userInfo['phoneNumber'], $userInfo['address'], $userInfo['postcode'], $userInfo['state']);
+          $user = new User(
+						$userInfo['userID'],
+						$userInfo['email'],
+						$userInfo['firstName'],
+						$userInfo['lastName'],
+						$userInfo['phoneNumber'],
+						$userInfo['address'],
+						$userInfo['postcode'],
+						$userInfo['state']
+					);
 
-          $_SESSION['user'] = $user
+          $_SESSION['user'] = $user;
           
 				} catch (PDOException $e){
 					echo $e->getMessage();
