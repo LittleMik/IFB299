@@ -9,12 +9,12 @@
 ?>
 
 <body>
-	<?php require 'includes/validate-and-create-account.inc' ?>
+	<?php require 'php/userCreation.php' ?>
 
     <?php
 		require_once 'php/users.php';
 		$thisUser = unserialize($_SESSION['user']);
-		require 'includes/validate-and-create-account.inc'
+		require 'php/userCreation.php'
 	?>
 
 	<?php include 'includes/header.inc' ?>
@@ -22,7 +22,7 @@
     <div class="container">
         <h2>Edit your Account</h2>
 
-        <form method="post" autocomplete="on" onsubmit="return validate(this)" action="<?php echo "https://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];?>">
+        <form method="post" autocomplete="on" onsubmit="return validate(this)" action="<?php echo $_SERVER['PHP_SELF'];?>">
             <div class="form-group">
                 <label for="email">Email Address:</label>
                 <input type="email" class="form-control" id="email" value="<?php echo $thisUser->email ?>" name="email" maxlength="255" required>
