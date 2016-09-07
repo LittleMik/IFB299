@@ -1,11 +1,12 @@
 <?php
 
 /**
- *
+ * Class for User related functionality
  */
 class User
 {
 
+	//User Variables
 	public $id;
 	public $email;
 	public $password;

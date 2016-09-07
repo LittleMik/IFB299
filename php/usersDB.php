@@ -5,7 +5,22 @@
   function login()
   {
     require_once 'pdo.inc';
+
+
     //TO DO
+  }
+
+  function verifyPassword($email, $password)
+  {
+    require_once 'pdo.inc';
+
+    // Prepare Query
+    $stmt = $pdo->prepare(
+      "SELECT * FROM users WHERE email = :email and	password = SHA2(CONCAT(:password, Salt), 0)"
+    );
+
+    $stmt->bindParam(':email', $email);
+    $stmt->bindParam('')
   }
 
   function createUser($user)

@@ -17,8 +17,8 @@
     <link href="bootstrap-3.3.7/docs/examples/signin/signin.css" rel="stylesheet">
     <script src="bootstrap-3.3.7/docs/assets/js/ie-emulation-modes-warning.js"></script>
     <!-- Sign in-->
-    
-    
+
+
 	<!--Nav-->
    <link href="bootstrap-3.3.7/docs/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -37,8 +37,8 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    
-        
+
+
 	<!--Nav-->
 	<script type="text/javascript" src="javascript/formValidation.js"></script>
 </head>
@@ -107,7 +107,7 @@
         if($formValid)
         {
           require_once 'php/users.php';
-          
+
           $user = new User($_POST['email'], $_POST['password'], $_POST['firstName'], $_POST['lastName'], $_POST['phone'], $_POST['address'], $_POST['postCode'], $_POST['state']);
 
           $user->saveToDatabase();
@@ -116,7 +116,7 @@
     ?>
 
 	<?php include 'header.inc' ?>
-	
+
     <div class="container">
         <h2>Create an Account</h2>
 
@@ -127,8 +127,8 @@
             </div>
 
             <div class="form-group">
-                <label for="password">Password:</label>
-				<!--Doesn't accept simple passwords pattern="(?=.*[a-zA-Z])(?=.*\d).{8,255}" --> 
+                <label for="password">Password: (must be over 8 characters containing letter and numbers)</label>
+				<!--Doesn't accept simple passwords pattern="(?=.*[a-zA-Z])(?=.*\d).{8,255}" -->
                 <input id="password" class="form-control" placeholder="Password" type="password" name="password" maxlength="255" required>
 
                 <label for="confirmPassword">Confirm Password:</label>
