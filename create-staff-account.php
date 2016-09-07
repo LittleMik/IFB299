@@ -1,20 +1,22 @@
 <?php require 'includes/head.inc' ?>
 
-<!-- "email"=>checkEmail($_POST['email']),
-      "password"=>checkPassword($_POST['password']),
-      "confpassword"=>checkMatch($_POST['password'], $_POST['confpassword']),
-      "firstName"=>checkName($_POST['firstName']),
-      "lastName"=>checkName($_POST['lastName']),
-      "phone"=>checkPhone($_POST['phone']),
-      "address"=>checkAddress($_POST['address']),
-      "postCode"=>checkPost($_POST['postCode']),
-      "state"=>checkState($_POST['state']) -->
-
-
+<?php
+  if(isset($_SESSION['role']))
+  {
+    if(!($_SESSION['role'] > 2))
+    {
+      //insufficient role
+      header("Location:index.php");
+    }
+  }else{
+    //not logged in
+    header("Location:login.php");
+  }
+?>
 <body>
-    
-	<?php require 'includes/validate-and-create-account.inc' ?>
-	<?php include 'includes/header.inc' ?>
+
+    <?php require 'php/userCreation.php' ?>
+    <?php include 'includes/header.inc' ?>
 
     <div class="container">
         <h2>Create an Account</h2>
@@ -24,7 +26,7 @@
                 <label for="email">Email Address:</label>
                 <input type="email" class="form-control" id="email" placeholder="Enter Email Address" name="email" maxlength="255" required>
             </div>
-			
+
 			<input type="hidden" id="ID" name="ID" value="">
 
             <div class="form-group">
@@ -45,14 +47,14 @@
 
                 <label for="lastName">Last Name:</label>
                 <input type="text" class="form-control" id="lastName" name="lastName" maxlength="255" pattern="^\w{2,255}(?!=\W)$" required>
-				
-								
+
+
 				<label for="role">Role:</label>
                 <select class="form-control" id="role" name="role">
                     <option value="0" disabled selected>- Select Staff Role -</option>
                     <option value = "0">Customer</option>
-                    <option value = "1">Coordinator</option>
-                    <option value = "2">Driver</option>
+                    <option value = "1">Driver</option>
+                    <option value = "2">Coordinator</option>
                     <option value = "3">Manager</option>
                     <option value = "4">Admin</option>
                 </select>

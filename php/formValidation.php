@@ -1,19 +1,5 @@
 <?php
-  /*
-  Columns:
-userID int(255) AI PK
-email varchar(255)
-password varchar(255)
-salt int(11)
-role char(255)
-firstName varchar(255)
-lastName varchar(255)
-phoneNumber int(16)
-streetAddress varchar(255)
-streetNo int(4)
-postcode int(4)
-state char(3)
-*/
+
   function checkEmail($email)
   {
     if(isset($email) && $email !== "")

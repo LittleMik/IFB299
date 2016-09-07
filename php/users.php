@@ -63,13 +63,6 @@ class User
 		}
 	}
 
-	//Reloads User Details
-	function getFromDatabase($email)
-	{
-		require_once 'pdo.inc';
-		//need to implement
-	}
-
 	//Saves User to Database
 	function saveToDatabase()
 	{
@@ -80,8 +73,8 @@ class User
 		} else {
 			createUser($this);
 		}
-		
-		
+
+
 	}
 }
 

@@ -1,23 +1,23 @@
 <header>
 	<div class = "container-fluid">
 		<div class="nav navbar-nav navbar-right">
-			<?php     
-				if (isset($_SESSION['isUser']))   {  
+			<?php
+				if (isset($_SESSION['login']))   {
 
 					echo '
-						<li><a href="php/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>  
+						<li><a href="php/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 						<li><a href="edit-account-details.php">Hello ', $_SESSION['firstname'], '!</a></li>
 					';
 				} else {
 					echo '
-						<li><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>  
+						<li><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
 						<li><a href="create-account.php"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
 					';
 				}
-			?> 
+			?>
 		</div>
 	</div>
-	
+
 	<div class="container">
 		<img id="hero" src="images/icon4.png" alt="hero"/>
 	</div>
@@ -41,14 +41,27 @@
 			  <li class="active"><a href="index.php">Home</a></li>
 			  <li><a href="login.php">My Account</a></li>
 			  <li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Orders <span class="caret"></span></a>
-				<ul class="dropdown-menu">
-				  <li><a href="#">Tracking</a></li>
-				  <li><a href="#">History</a></li>
-				</ul>
-				<li><a href="create-staff-account.php">Create Staff Account</a></li>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Orders <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="order.php">Place Order</a></li>
+					  <li><a href="#">Tracking</a></li>
+					  <li><a href="#">History</a></li>
+					</ul>
+				</li>
+				<?php
+				  if(isset($_SESSION['role']))
+				  {
+				    if($_SESSION['role'] > 2)
+				    {
+				      //sufficient role
+							echo '
+								<li><a href="create-staff-account.php">Create Staff Account</a></li>
+								<li><a href="phoneOrder.php">Phone Order</a></li>
+								';
+				    }
+					}
+				?>
 				<li><a href="#">Contact</a></li>
-			  </li>
 			</ul>
 		  </div><!--/.nav-collapse -->
 		</div><!--/.container-fluid -->

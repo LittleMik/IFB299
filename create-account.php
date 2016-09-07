@@ -1,16 +1,16 @@
 <?php require 'includes/head.inc' ?>
 
 <body>
-    <?php require 'includes/validate-and-create-account.inc' ?>
+    <?php require 'php/userCreation.php' ?>
 
-	<?php include 'includes/header.inc' ?>
+	  <?php include 'includes/header.inc' ?>
 
     <div class="container">
         <h2>Create an Account</h2>
 
         <form method="post" autocomplete="on" onsubmit="return validate(this)" action="<?php echo "https://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];?>">
             <input type="hidden" id="ID" name="ID" value="">
-			
+
 			<div class="form-group">
                 <label for="email">Email Address:</label>
                 <input type="email" class="form-control" id="email" placeholder="Enter Email Address" name="email" maxlength="255" required>

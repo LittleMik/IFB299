@@ -1,7 +1,7 @@
 <?php require 'includes/head.inc' ?>
 
 <?php
-  if(!isset($_SESSION['userID']))
+  if(!isset($_SESSION['login']))
   {
     header("Location:login.php");
   }
@@ -54,13 +54,20 @@
         $order = new Order($user->id, $_POST['description'], $_POST['totalWeight'], $_POST['signature'], $_POST['priority'], $_POST['pickupAddress'], $_POST['pickupTime'], $_POST['deliveryAddress'], $_POST['recipientName'], $_POST['recipientPhone']);
 
         $order->saveToDatabase();
+
+        //Redirect Script
+				echo "
+					<script>
+            alert('Order Created');
+						window.location.href = 'index.php';
+					</script>";
       }
     }
   ?>
 
     <div class="container">
         <h2>Order Details</h2>
-        <form method="post" autocomplete="on" onsubmit="return validate(this)"">
+        <form method="post" autocomplete="on" onsubmit="return validate(this)" action="<?php echo "https://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];?>">
 
             <!--Order Description-->
             <div class="form-group">

@@ -49,46 +49,22 @@
 	<!--Handle login-->
 	<?php
 		if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-			$email = $_POST['yourEmail'];
-			require 'php/verifyPassword.php';
-			if (checkPassword($_POST['yourEmail'], $_POST['yourPassword'])){
-				$_SESSION['isUser'] = true;
 
-				//Get Firstname
-				try{
-					require 'php/pdo.inc';
+			$email = $_POST['email'];
+			$password = $_POST['password'];
 
-          $getInfoQuery = $pdo->prepare(
-            "SELECT userID, email, firstName, lastName, phoneNumber, address, postcode, state FROM users WHERE email = :email limit 1"
-          );
+			require 'php/usersDB.php';
+			if (verifyPassword($email, $password)){
 
-					$getInfoQuery->bindValue(':email',$_POST['yourEmail']);
+				//Login and set session variables
+				login($email);
 
-					$getInfoQuery->execute();
+				//Redirect Script
+				echo "
+					<script>
+						window.location.href = 'index.php';
+					</script>";
 
-					$userInfo = $getInfoQuery->fetch();
-
-					$_SESSION['firstname'] = $userInfo['firstName'];
-					$_SESSION['userID'] = $userInfo['userID'];
-
-					require_once 'php/users.php';
-
-          $user = new User(
-						$userInfo['userID'],
-						$userInfo['email'],
-						$userInfo['firstName'],
-						$userInfo['lastName'],
-						$userInfo['phoneNumber'],
-						$userInfo['address'],
-						$userInfo['postcode'],
-						$userInfo['state']
-					);
-
-          $_SESSION['user'] = serialize($user);
-
-				} catch (PDOException $e){
-					echo $e->getMessage();
-				}
 			}else{
 				echo'
 				<script>
@@ -109,10 +85,10 @@
 		  <h2 class="form-signin-heading">Log in</h2>
 		  <div id="error"></div>
 		  <label for="inputEmail" class="sr-only">Email address</label>
-		  <input type="email" name="yourEmail" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+		  <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
 
 		  <label for="inputPassword" class="sr-only">Password</label>
-		  <input type="password" name="yourPassword" id="inputPassword" class="form-control" placeholder="Password" required>
+		  <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
 
 		  <div class="checkbox">
 			<label>

@@ -2,23 +2,11 @@
 <?php require 'includes/head.inc' ?>
 
 <?php
-  if(!isset($_SESSION['userID']))
+  if(!isset($_SESSION['login']))
   {
     header("Location:login.php");
   }
 ?>
-
-
-<!-- "email"=>checkEmail($_POST['email']),
-      "password"=>checkPassword($_POST['password']),
-      "confpassword"=>checkMatch($_POST['password'], $_POST['confpassword']),
-      "firstName"=>checkName($_POST['firstName']),
-      "lastName"=>checkName($_POST['lastName']),
-      "phone"=>checkPhone($_POST['phone']),
-      "address"=>checkAddress($_POST['address']),
-      "postCode"=>checkPost($_POST['postCode']),
-      "state"=>checkState($_POST['state']) -->
-
 
 <body>
 	<?php require 'includes/validate-and-create-account.inc' ?>
@@ -26,7 +14,7 @@
     <?php
 		require_once 'php/users.php';
 		$thisUser = unserialize($_SESSION['user']);
-		require 'includes/validate-and-create-account.inc' 
+		require 'includes/validate-and-create-account.inc'
 	?>
 
 	<?php include 'includes/header.inc' ?>
@@ -39,11 +27,11 @@
                 <label for="email">Email Address:</label>
                 <input type="email" class="form-control" id="email" value="<?php echo $thisUser->email ?>" name="email" maxlength="255" required>
             </div>
-			
+
 			<input type="hidden" id="ID" name="ID" value= "<?php echo $thisUser->id ?>" >
-			
+
 			<input type="hidden" id="password" name="password" value= "unknownPassword1" >
-			
+
 			<input type="hidden" id="confirmPassword" name="confpassword" value= "unknownPassword1" >
 
             <h3>Personal Details</h3>
@@ -54,7 +42,7 @@
 
                 <label for="lastName">Last Name:</label>
                 <input type="text" class="form-control" id="lastName" value="<?php echo $thisUser->lastName ?>" name="lastName" maxlength="255" pattern="^\w{2,255}(?!=\W)$" required>
-				
+
 				<input type="hidden" id="role" name="role" value="0">
             </div>
 
@@ -70,7 +58,7 @@
             <div class="form-group">
                 <label for="address">Address:</label>
                 <input type="text" class="form-control" id="address" <?php $attribute = ($thisUser->address == "") ? "placeholder = 'Enter Address'" : "value = '".$thisUser->address."'"; echo $attribute; ?> name="address" maxlength="255" pattern="^[0-9]{1,5},?\s\w{2,64}\s\w{2,64},?\s\w{2,64}$">
-				
+
                 <label for="postCode">Postcode:</label>
                 <input type="number" size="4" class="form-control" id="postCode" <?php $attribute = ($thisUser->postcode == "") ? "placeholder = 'Enter Address'" : "value = '".$thisUser->postcode."'"; echo $attribute; ?> name="postCode" pattern="^[0-9]{4}$">
             </div>
