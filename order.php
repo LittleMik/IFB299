@@ -67,7 +67,7 @@
 
     <div class="container">
         <h2>Order Details</h2>
-        <form method="post" autocomplete="on" onsubmit="return validate(this)" action="<?php echo $_SERVER['PHP_SELF'];?>">
+        <form method="post" autocomplete="on" onsubmit="return validate(this)" action="<?php echo "https://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];?>">
 
             <!--Order Description-->
             <div class="form-group">
