@@ -56,6 +56,20 @@ state char(3)
     }
   }
 
+  function checkFullName($name)
+  {
+    if(isset($name) && $name !== "")
+    {
+      if(preg_match('/^[\w]{2,255}(?:\s[\w]{2,255})*(?!=\W)$/', $name)){
+        return true;
+      }else{
+        return false;
+      }
+    }else{
+      return false;
+    }
+  }
+
   function checkPhone($phone)
   {
     if(isset($phone) && $phone !== ""){
