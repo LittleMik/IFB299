@@ -45,6 +45,8 @@
     <!--</div> <!-- /container -->
 
 	<body>
+	<!--the header, see the file for the code-->
+	<?php include 'includes/header.inc' ?>
 
 	<!--Handle login-->
 	<?php
@@ -75,8 +77,6 @@
 			}
 		}
 	?>
-
-	<?php include'includes\header.inc'?>
 
 	<section id="login">
 	  <div class="container">
