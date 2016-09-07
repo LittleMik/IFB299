@@ -1,5 +1,5 @@
 <?php require 'includes/head.inc' ?>
-  
+
 	<!--
      <div class="container">
 
@@ -41,11 +41,11 @@
         </p>
       </div>
 -->
-      
+
     <!--</div> <!-- /container -->
-	
+
 	<body>
-	
+
 	<!--Handle login-->
 	<?php
 		if ($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -57,18 +57,28 @@
 				//Get Firstname
 				try{
 					require 'php/pdo.inc';
-					$getInfoQuery = $pdo->prepare('SELECT firstName, userID FROM users   
-										WHERE email = :email limit 1');
+
+          $getInfoQuery = $pdo->prepare(
+            "SELECT userID, email, firstName, lastName, phoneNumber, address, postcode, state FROM users WHERE email = :email limit 1"
+          );
+
 					$getInfoQuery->bindValue(':email',$_POST['yourEmail']);
+
 					$getInfoQuery->execute();
 
 					$userInfo = $getInfoQuery->fetch();
+
 					$_SESSION['firstname'] = $userInfo['firstName'];
 					$_SESSION['userID'] = $userInfo['userID'];
+
+          $user = new User($userInfo['userID'], $userInfo['email'], $userInfo['firstName'], $userInfo['lastName'], $userInfo['phoneNumber'], $userInfo['address'], $userInfo['postcode'], $userInfo['state']);
+
+          $_SESSION['user'] = $user
+          
 				} catch (PDOException $e){
-					echo $e->getMessage(); 
+					echo $e->getMessage();
 				}
-			}else{ 
+			}else{
 				echo'
 				<script>
 					window.onload = function var1() {
@@ -80,7 +90,7 @@
 	?>
 
 	<?php include'includes\header.inc'?>
-	
+
 	<section id="login">
 	  <div class="container">
 
@@ -89,10 +99,10 @@
 		  <div id="error"></div>
 		  <label for="inputEmail" class="sr-only">Email address</label>
 		  <input type="email" name="yourEmail" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-		  
+
 		  <label for="inputPassword" class="sr-only">Password</label>
 		  <input type="password" name="yourPassword" id="inputPassword" class="form-control" placeholder="Password" required>
-		  
+
 		  <div class="checkbox">
 			<label>
 			  <input type="checkbox" value="remember-me"> Remember me
@@ -104,14 +114,14 @@
 		</form>
 
 		 <a href="create-account.php">Create an account?</a> | <a href"">Forgotten Password?</a>
-		
+
 	  </div> <!-- /container -->
 	</section>
 
 
   <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
   <script src="bootstrap-3.3.7/docs/assets/js/ie10-viewport-bug-workaround.js"></script>
-  
+
   <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

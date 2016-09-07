@@ -1,16 +1,5 @@
 <?php require 'includes/head.inc' ?>
 
-<!-- "email"=>checkEmail($_POST['email']),
-      "password"=>checkPassword($_POST['password']),
-      "confpassword"=>checkMatch($_POST['password'], $_POST['confpassword']),
-      "firstName"=>checkName($_POST['firstName']),
-      "lastName"=>checkName($_POST['lastName']),
-      "phone"=>checkPhone($_POST['phone']),
-      "address"=>checkAddress($_POST['address']),
-      "postCode"=>checkPost($_POST['postCode']),
-      "state"=>checkState($_POST['state']) -->
-
-
 <body>
     <?php require 'includes/validate-and-create-account.inc' ?>
 
@@ -43,7 +32,7 @@
 
                 <label for="lastName">Last Name:</label>
                 <input type="text" class="form-control" id="lastName" name="lastName" maxlength="255" pattern="^\w{2,255}(?!=\W)$" required>
-				
+
 				<input type="hidden" id="role" name="role" value="0">
             </div>
 

@@ -31,21 +31,19 @@ class User
 		$args = func_get_args();
 		if(is_int($args[0]))
 		{
+			
 			//Construct User from db table row
-			$this->id = $args[0]->id;
-			$this->email = $args[0]->email;
-			$this->salt = $args[0]->salt;
-			$this->role = $args[0]->role;
-			$this->firstName = $args[0]->firstName;
-			$this->lastName = $args[0]->lastName;
-			$this->phone = $args[0]->phone;
-			$this->address = $args[0]->address;
-			$this->postCode = $args[0]->postCode;
-			$this->state = $args[0]->state;
+			$this->id = $args[0];
+			$this->email = $args[1];
+			$this->firstName = $args[2];
+			$this->lastName = $args[3];
+			$this->phone = $args[4];
+			$this->address = $args[5];
+			$this->postcode = $args[6];
+			$this->state = $args[7];
 
 		}else{
 			//Construct User from scratch
-
 			//Set user defined fields
 			$this->email = $args[0];
 			$this->password = $args[1];
