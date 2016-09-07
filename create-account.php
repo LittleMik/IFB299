@@ -44,7 +44,7 @@
                 <label for="lastName">Last Name:</label>
                 <input type="text" class="form-control" id="lastName" name="lastName" maxlength="255" pattern="^\w{2,255}(?!=\W)$" required>
 				
-				<input type="hidden" id="role" name="role" value="1">
+				<input type="hidden" id="role" name="role" value="0">
             </div>
 
             <h3>Phone Number</h3>

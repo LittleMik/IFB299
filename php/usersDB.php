@@ -27,9 +27,12 @@
     require_once 'pdo.inc';
     try
     {
-      // Prepare Query
+      // Prepare Query to update user table
       $stmt = $pdo->prepare(
-        "INSERT INTO users (email, password, salt, firstName, lastName, role, phoneNumber, address, postcode, state) VALUES (:email, SHA2(CONCAT(:password, :salt), 0), :salt, :firstName, :lastName, :role, :phoneNumber, :address, :postcode, :state)"
+        "	
+		INSERT INTO users (email, password, salt, firstName, lastName, phoneNumber, address, postcode, state)
+		VALUES (:email, SHA2(CONCAT(:password, :salt), 0), :salt, :firstName, :lastName, :phoneNumber, :address, :postcode, :state)
+		"
       );
 
       //Bind query parameter with it's given variable
@@ -49,6 +52,28 @@
 
       //Close connection
       $stmt = null;
+	  
+	  //Prepare query to update role table
+	  $stmt = $pdo->prepare(
+		"
+		INSERT INTO roles (userID, role)
+		SELECT
+			userID, :role
+		FROM users
+		WHERE email = :email;
+		"
+	  );
+	  
+	  //Bind query parameter with it's given variable
+	  $stmt->bindParam(':role', $user->role);
+	  $stmt->bindParam(':email', $user->email);
+	  
+	  //Run query
+      $stmt->execute();
+
+      //Close connection
+      $stmt = null;
+	  
       //Destroy PDO Object
       $pdo = null;
 
