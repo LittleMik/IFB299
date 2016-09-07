@@ -141,7 +141,7 @@ state char(3)
   function checkWeight($weight)
   {
     if(isset($weight) && $weight !== ""){
-      if(preg_match('/^[0-9]{4}$/', $weight)){
+      if(preg_match('/^[0-9]{1,4}$/', $weight)){
         return true;
       }else{
         return false;
@@ -150,7 +150,7 @@ state char(3)
       return false;
     }
   }
-  
+
   function checkSet($input)
   {
     if(isset($input) && $input !== ""){

@@ -29,7 +29,8 @@
   		# code...
   		//Construct Order according to the arguments provided
   		$args = func_get_args();
-  		if(is_int($args[0]))
+      $numArgs = func_num_args();
+  		if($numArgs === 12)
   		{
 
   			//Construct Order from db table row

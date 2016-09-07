@@ -85,10 +85,10 @@
             <div class="form-group">
                 <label>Delivery Priority</label>
                 <div class="radio">
-                    <label><input type="radio" name="deliveryPriority" value="Express">Express (1-2 Business Days)</label>
+                    <label><input type="radio" name="priority" value="Express">Express (1-2 Business Days)</label>
                 </div>
                 <div class="radio">
-                    <label><input type="radio" name="deliveryPriority" value="Standard" checked="checked">Standard (5-7 Business Days)</label>
+                    <label><input type="radio" name="priority" value="Standard" checked="checked">Standard (5-7 Business Days)</label>
                 </div>
             </div>
 
