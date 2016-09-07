@@ -51,16 +51,15 @@ class User
 			$this->password = $args[1];
 			$this->firstName = $args[2];
 			$this->lastName = $args[3];
-			$this->phone = $args[4];
-			$this->address = $args[5];
-			$this->postCode = $args[6];
-			$this->state = $args[7];
+			$this->role = $args[4];
+			$this->phone = $args[5];
+			$this->address = $args[6];
+			$this->postCode = $args[7];
+			$this->state = $args[8];
 
 			//Generate Salt
 			$this->salt = uniqid(mt_rand(), true);
 
-			//Set User to Customer by default
-			$this->role = "Customer";
 		}
 	}
 

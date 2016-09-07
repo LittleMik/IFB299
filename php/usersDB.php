@@ -29,7 +29,7 @@
     {
       // Prepare Query
       $stmt = $pdo->prepare(
-        "INSERT INTO users (email, password, salt, firstName, lastName, phoneNumber, address, postcode, state) VALUES (:email, SHA2(CONCAT(:password, :salt), 0), :salt, :firstName, :lastName, :phoneNumber, :address, :postcode, :state)"
+        "INSERT INTO users (email, password, salt, firstName, lastName, role, phoneNumber, address, postcode, state) VALUES (:email, SHA2(CONCAT(:password, :salt), 0), :salt, :firstName, :lastName, :role, :phoneNumber, :address, :postcode, :state)"
       );
 
       //Bind query parameter with it's given variable
@@ -38,6 +38,7 @@
       $stmt->bindParam(':salt', $user->salt);
       $stmt->bindParam(':firstName', $user->firstName);
       $stmt->bindParam(':lastName', $user->lastName);
+	  $stmt->bindParam(':role', $user->role);
       $stmt->bindParam(':phoneNumber', $user->phone);
       $stmt->bindParam(':address', $user->address);
       $stmt->bindParam(':postcode', $user->postCode);

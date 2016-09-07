@@ -12,8 +12,8 @@
 
 
 <body>
-    <?php require 'includes/validate-and-create-account.inc' ?>
-
+    
+	<?php require 'includes/validate-and-create-account.inc' ?>
 	<?php include 'includes/header.inc' ?>
 
     <div class="container">
@@ -44,7 +44,16 @@
                 <label for="lastName">Last Name:</label>
                 <input type="text" class="form-control" id="lastName" name="lastName" maxlength="255" pattern="^\w{2,255}(?!=\W)$" required>
 				
-				<input type="hidden" id="role" name="role" value="1">
+								
+				<label for="role">Role:</label>
+                <select class="form-control" id="role" name="role">
+                    <option value="0" disabled selected>- Select Staff Role -</option>
+                    <option value = "0">Customer</option>
+                    <option value = "1">Coordinator</option>
+                    <option value = "2">Driver</option>
+                    <option value = "3">Manager</option>
+                    <option value = "4">Admin</option>
+                </select>
             </div>
 
             <h3>Phone Number</h3>
