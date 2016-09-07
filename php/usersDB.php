@@ -85,6 +85,75 @@
 
 		}
   }
+  
+  function updateUser($user)
+  {
+    include 'pdo.inc';
+    try
+    {
+      // Prepare Query to update user table
+      $stmt = $pdo->prepare(
+        "
+		UPDATE users
+		SET email = :email, 
+			firstName = :firstName, 
+			lastName = :lastName, 
+			phoneNumber = :phoneNumber, 
+			address = :address, 
+			postcode = :postcode, 
+			state = :state
+		WHERE userID = :userID;
+		"
+      );
+
+      //Bind query parameter with it's given variable
+      $stmt->bindParam(':email', $user->email);
+      $stmt->bindParam(':firstName', $user->firstName);
+      $stmt->bindParam(':lastName', $user->lastName);
+      $stmt->bindParam(':phoneNumber', $user->phone);
+      $stmt->bindParam(':address', $user->address);
+      $stmt->bindParam(':postcode', $user->postCode);
+      $stmt->bindParam(':state', $user->state);
+	  $stmt->bindParam(':userID', $user->id);
+
+      //Run query
+      $stmt->execute();
+
+      //Close connection
+      $stmt = null;
+
+	  //Prepare query to update role table
+	  $stmt = $pdo->prepare(
+		"
+		INSERT INTO roles (userID, role)
+		SELECT
+			userID, :role
+		FROM users
+		WHERE email = :email;
+		"
+	  );
+
+	  //Bind query parameter with it's given variable
+	  $stmt->bindParam(':role', $user->role);
+	  $stmt->bindParam(':email', $user->email);
+
+	  //Run query
+      $stmt->execute();
+
+      //Close connection
+      $stmt = null;
+
+      //Destroy PDO Object
+      $pdo = null;
+
+    }catch(PDOException $e){
+
+			//Output Error
+			echo $e->getMessage();
+			echo '<p>'.$e.'</p>';
+
+		}
+  }
 
   function updateRole($user)
   {

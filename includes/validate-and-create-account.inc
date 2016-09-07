@@ -49,11 +49,11 @@
 	//Complete Registration Process
 	if($formValid)
 	{
-	  require_once 'php/users.php';
+		require_once 'php/users.php';
+		//note the initial 0 is for the id. This will get replaced unless 
+		$user = new User($_POST['ID'], $_POST['email'], $_POST['password'], $_POST['firstName'], $_POST['lastName'], $_POST['role'], $_POST['phone'], $_POST['address'], $_POST['postCode'], $_POST['state']);
 
-	  $user = new User($_POST['email'], $_POST['password'], $_POST['firstName'], $_POST['lastName'], $_POST['role'], $_POST['phone'], $_POST['address'], $_POST['postCode'], $_POST['state']);
-
-	  $user->saveToDatabase();
+		$user->saveToDatabase();
 	}
   }
 ?>

@@ -46,15 +46,16 @@ class User
 		}else{
 			//Construct User from scratch
 			//Set user defined fields
-			$this->email = $args[0];
-			$this->password = $args[1];
-			$this->firstName = $args[2];
-			$this->lastName = $args[3];
-			$this->role = $args[4];
-			$this->phone = $args[5];
-			$this->address = $args[6];
-			$this->postCode = $args[7];
-			$this->state = $args[8];
+			$this->id = $args[0];
+			$this->email = $args[1];
+			$this->password = $args[2];
+			$this->firstName = $args[3];
+			$this->lastName = $args[4];
+			$this->role = $args[5];
+			$this->phone = $args[6];
+			$this->address = $args[7];
+			$this->postCode = $args[8];
+			$this->state = $args[9];
 
 			//Generate Salt
 			$this->salt = uniqid(mt_rand(), true);
@@ -72,8 +73,15 @@ class User
 	//Saves User to Database
 	function saveToDatabase()
 	{
+		//If the user already has an id (i.e. is being modified) run the update user function otherwise create a user
 		require_once 'usersDB.php';
-		createUser($this);
+		if($this->id != ""){
+			updateUser($this);
+		} else {
+			createUser($this);
+		}
+		
+		
 	}
 }
 

@@ -24,6 +24,8 @@
                 <label for="email">Email Address:</label>
                 <input type="email" class="form-control" id="email" placeholder="Enter Email Address" name="email" maxlength="255" required>
             </div>
+			
+			<input type="hidden" id="ID" name="ID" value="">
 
             <div class="form-group">
                 <label for="password">Password: (must be over 8 characters containing letter and numbers)</label>
