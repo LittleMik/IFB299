@@ -1,5 +1,4 @@
 <header>
-	
 	<div class = "container-fluid">
 		<div class="nav navbar-nav navbar-right">
 			<?php     
@@ -7,7 +6,7 @@
 
 					echo '
 						<li><a href="php/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>  
-						<li><a href="">Hello ', $_SESSION['firstname'], '!</a></li>
+						<li><a href="edit-account-details.php">Hello ', $_SESSION['firstname'], '!</a></li>
 					';
 				} else {
 					echo '
