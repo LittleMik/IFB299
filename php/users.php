@@ -1,5 +1,5 @@
 <?php
-
+namespace stats;
 /**
  * Class for User related functionality
  */
@@ -30,7 +30,7 @@ class User
 		//Construct User according to the arguments provided
 		$args = func_get_args();
 		$numArgs = func_num_args();
-		
+
 		if($numArgs === 9){
 			//Construct User from scratch
 			//Set user defined fields
@@ -51,27 +51,27 @@ class User
 	//Saves User to Database
 	function saveToDatabase()
 	{
-		
-		
+
+
 		//If the user already has an id (i.e. is being modified) run the update user function otherwise create a user
-		
+
 		if($this->id != ""){
-			
+
 		} else {
-			
+
 		}
 
 
 	}
-	
+
 	//Create a customer account that has the role hard coded to '0'
 	function createCustomerAccount($password)
 	{
 		require 'pdo.inc';
-		
+
 		//Generate Salt
 		$salt = uniqid(mt_rand(), true);
-		
+
 		try
 		{
 		  // Prepare Query to update user table
@@ -123,15 +123,15 @@ class User
 			echo '<p>'.$e.'</p>';
 		}
 	}
-	
+
 	//Create a user account that has a role
 	function createStaffAccount($password)
 	{
 		require 'pdo.inc';
-		
+
 		//Generate Salt
 		$salt = uniqid(mt_rand(), true);
-		
+
 		try
 		{
 		  // Prepare Query to update user table
@@ -184,11 +184,11 @@ class User
 			echo '<p>'.$e.'</p>';
 		}
 	}
-	
+
 	function updateUser()
-	{	
+	{
 		require 'php/pdo.inc';
-		
+
 		try
 		{
 			// Prepare Query to update user table
@@ -229,7 +229,7 @@ class User
 			echo '<p>'.$e.'</p>';
 		}
 	}
-	
+
 	function updateAccount() {
 		updateUser($this);
 	}

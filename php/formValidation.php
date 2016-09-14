@@ -127,7 +127,7 @@
   function checkWeight($weight)
   {
     if(isset($weight) && $weight !== ""){
-      if(preg_match('/^[0-9]{1,4}$/', $weight)){
+      if(preg_match('/^[1-9][0-9]{0,3}$/', $weight)){
         return true;
       }else{
         return false;
