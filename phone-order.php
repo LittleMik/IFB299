@@ -1,10 +1,14 @@
 <?php require 'includes/head.inc' ?>
 
 <?php
-  if(!isset($_SESSION['login']))
-  {
-    header("Location:login.php");
-  }
+	if(isset($_SESSION['role']))
+	{
+		if($_SESSION['role'] < 2) {
+			header('Location: ../login.php');
+		}
+	} else {
+		header('Location: ../login.php');
+	}
 ?>
 
 <body>
@@ -50,17 +54,14 @@
         require_once 'php/users.php';
 
         $user = unserialize($_SESSION['user']);
+		
+		require_once 'php/usersDB.php';
+        $order = new Order(getID($_POST['email']), $_POST['description'], $_POST['totalWeight'], $_POST['signature'], $_POST['priority'], $_POST['pickupAddress'], $_POST['pickupTime'], $_POST['deliveryAddress'], $_POST['recipientName'], $_POST['recipientPhone']);
 
-        $order = new Order($user->id, $_POST['description'], $_POST['totalWeight'], $_POST['signature'], $_POST['priority'], $_POST['pickupAddress'], $_POST['pickupTime'], $_POST['deliveryAddress'], $_POST['recipientName'], $_POST['recipientPhone']);
-
-        $order->createCustomerOrder();
+        $order->createPhoneOrder();
 
         //Redirect Script
-				echo "
-					<script>
-            alert('Order Created');
-						window.location.href = 'index.php';
-					</script>";
+		header('Location: ../index.php');
       }
     }
   ?>
@@ -70,7 +71,12 @@
     <div class="container">
         <h2>Order Details</h2>
         <form method="post" autocomplete="on" onsubmit="return validate(this)" action="<?php echo "https://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];?>">
-
+			<!--Customer Email-->
+            <div class="form-group">
+                <label for="inputEmail" class="sr-only">Customer email address</label>
+				<input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+            </div>
+			
             <!--Order Description-->
             <div class="form-group">
                 <label for="comment">Description:</label>

@@ -38,14 +38,14 @@
 		  </div>
 		  <div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
-			  <li class="active"><a href="index.php">Home</a></li>
-			  <li><a href="login.php">My Account</a></li>
-			  <li class="dropdown">
+			    <li class="active"><a href="index.php">Home</a></li>
+			    <li><a href="login.php">My Account</a></li>
+			    <li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Orders <span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="order.php">Place Order</a></li>
-					  <li><a href="#">Tracking</a></li>
-					  <li><a href="#">History</a></li>
+						<li><a href="#">Tracking</a></li>
+						<li><a href="#">History</a></li>
 					</ul>
 				</li>
 				<?php
@@ -54,9 +54,20 @@
 				    if($_SESSION['role'] > 2)
 				    {
 				      //sufficient role
+						echo '
+							<li><a href="edit-account-details.php">Create Staff Account</a></li>
+						';
+				    }
+					}
+				?>
+				<?php
+				  if(isset($_SESSION['role']))
+				  {
+				    if($_SESSION['role'] > 2)
+				    {
+				      //sufficient role
 							echo '
-								<li><a href="create-staff-account.php">Create Staff Account</a></li>
-								<li><a href="phoneOrder.php">Phone Order</a></li>
+								<li><a href="phone-order.php">Phone Order</a></li>
 								';
 				    }
 					}

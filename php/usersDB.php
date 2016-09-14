@@ -115,6 +115,27 @@
       return 0;
     }
   }
+  
+	function getID($userEmail){
+		try
+		{
+			require 'pdo.inc';
+			$stmt = $pdo->prepare(
+			"SELECT userID FROM users WHERE email = :email limit 1"
+		);
+
+		$stmt->bindValue(':email', $userEmail);
+		$stmt->execute();
+
+		$result = $stmt->fetch();
+
+		return $result['userID'];
+
+		} catch (PDOException $e){
+			echo $e->getMessage();
+			return 0;
+		}
+	}
 
   function verifyPassword($email, $password)
   {
