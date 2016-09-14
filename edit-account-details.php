@@ -90,8 +90,6 @@
                 <input type="email" class="form-control" id="email" value="<?php echo $thisUser->email ?>" name="email" maxlength="255" required>
             </div>
 
-			<input type="hidden" id="ID" name="ID" value= "<?php echo $thisUser->id ?>" >
-
             <h3>Personal Details</h3>
 
             <div class="form-group">
@@ -100,8 +98,6 @@
 
                 <label for="lastName">Last Name:</label>
                 <input type="text" class="form-control" id="lastName" value="<?php echo $thisUser->lastName ?>" name="lastName" maxlength="255" pattern="^\w{2,255}(?!=\W)$" required>
-
-				<input type="hidden" id="role" name="role" value="0">
             </div>
 
             <h3>Phone Number</h3>
