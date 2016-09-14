@@ -25,7 +25,7 @@
         $userInfo['firstName'],
         $userInfo['lastName'],
         $userInfo['phoneNumber'],
-		getRole($userInfo['userID']),
+		    getRole($userInfo['userID']),
         $userInfo['address'],
         $userInfo['postcode'],
         $userInfo['state']
@@ -47,7 +47,7 @@
 
     }
   }
-  
+
   function loginWithID($userID)
   {
     require 'pdo.inc';
@@ -71,7 +71,7 @@
         $userInfo['firstName'],
         $userInfo['lastName'],
         $userInfo['phoneNumber'],
-		getRole($userInfo['userID']),
+    		getRole($userInfo['userID']),
         $userInfo['address'],
         $userInfo['postcode'],
         $userInfo['state']
@@ -109,13 +109,13 @@
       $result = $stmt->fetch();
 
       return $result['role'];
-      
+
     } catch (PDOException $e){
       echo $e->getMessage();
       return 0;
     }
   }
-  
+
 	function getID($userEmail){
 		try
 		{
@@ -166,7 +166,7 @@
 		}
   }
 
-  
+
 
   function updateRole($user)
   {
