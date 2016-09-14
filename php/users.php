@@ -1,5 +1,5 @@
 <?php
-namespace stats;
+
 /**
  * Class for User related functionality
  */
