@@ -41,7 +41,6 @@
 	  if($valid === false)
 	  {
 		$formValid = false;
-		echo $_POST[$field] . "<br />";
 		echo "Invalid " . $field . " detected<br />";
 	  }
 	}
