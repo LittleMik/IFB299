@@ -9,12 +9,74 @@
 ?>
 
 <body>
-	<?php require 'php/userCreation.php' ?>
-
     <?php
 		require_once 'php/users.php';
 		$thisUser = unserialize($_SESSION['user']);
-		require 'php/userCreation.php'
+		
+		//login again, to update the results with the most current data
+		require_once 'php/usersDB.php';
+		loginWithID($thisUser->id);
+		$thisUser = unserialize($_SESSION['user']);
+		
+		//Update database with the new info, if a form has been submitted.
+		if($_SERVER["REQUEST_METHOD"] === "POST")
+		{
+			$errors = array();
+			$formValid = true;
+
+			//Get Dependancies
+			require_once 'php/formValidation.php';
+
+			//PHP Field Validation
+			if(empty($_POST['address']) && empty($_POST['postCode']) && empty($_POST['state']))
+			{
+			  $errors = array(
+				"email"=>checkEmail($_POST['email']),
+				"firstName"=>checkName($_POST['firstName']),
+				"lastName"=>checkName($_POST['lastName']),
+				"phone"=>checkPhone($_POST['phone'])
+			  );
+			  //Set state to empty string for user object
+			  $_POST['state'] = "";
+			} else {
+			  $errors = array(
+				"email"=>checkEmail($_POST['email']),
+				"firstName"=>checkName($_POST['firstName']),
+				"lastName"=>checkName($_POST['lastName']),
+				"phone"=>checkPhone($_POST['phone']),
+				"address"=>checkAddress($_POST['address']),
+				"postCode"=>checkPost($_POST['postCode']),
+				"state"=>checkState($_POST['state'])
+			  );
+			}
+
+			//Check for presence of errors and output
+			foreach($errors as $field => $valid)
+			{
+			  if($valid === false)
+			  {
+				$formValid = false;
+				echo "Invalid " . $field . " detected<br />";
+			  }
+			}
+
+			//Complete Registration Process
+			if($formValid)
+			{
+				require_once 'php/users.php';
+				//note the initial 0 is for the id. This will get replaced unless
+				$user = new User($thisUser->id, $_POST['email'], $_POST['firstName'], $_POST['lastName'], $_POST['phone'], $_SESSION['role'], $_POST['address'], $_POST['postCode'], $_POST['state']);
+				//Edit the database with the new information.
+				$user->updateUser();
+				
+				//Login to account just created
+				require_once 'php/usersDB.php';
+				login($_POST['email']);
+
+				//Redirect Script	
+				header('Location: ../index.php');
+			} 
+		}
 	?>
 
 	<?php include 'includes/header.inc' ?>
@@ -29,10 +91,6 @@
             </div>
 
 			<input type="hidden" id="ID" name="ID" value= "<?php echo $thisUser->id ?>" >
-
-			<input type="hidden" id="password" name="password" value= "unknownPassword1" >
-
-			<input type="hidden" id="confirmPassword" name="confpassword" value= "unknownPassword1" >
 
             <h3>Personal Details</h3>
 

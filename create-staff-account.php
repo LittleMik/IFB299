@@ -13,9 +13,71 @@
     header("Location:login.php");
   }
 ?>
+
 <body>
 
-    <?php require 'php/userCreation.php' ?>
+    <?php
+		if($_SERVER["REQUEST_METHOD"] === "POST")
+		{
+			$errors = array();
+			$formValid = true;
+
+			//Get Dependancies
+			require_once 'php/formValidation.php';
+
+			//PHP Field Validation
+			if(empty($_POST['address']) && empty($_POST['postCode']) && empty($_POST['state']))
+			{
+			  $errors = array(
+				"email"=>checkEmail($_POST['email']),
+				"password"=>checkPassword($_POST['password']),
+				"confpassword"=>checkMatch($_POST['password'], $_POST['confpassword']),
+				"firstName"=>checkName($_POST['firstName']),
+				"lastName"=>checkName($_POST['lastName']),
+				"phone"=>checkPhone($_POST['phone'])
+			  );
+			  //Set state to empty string for user object
+			  $_POST['state'] = "";
+			} else {
+			  $errors = array(
+				"email"=>checkEmail($_POST['email']),
+				"password"=>true,//"password"=>checkPassword($_POST['password']),   Password checking is too strict I think.
+				"confpassword"=>checkMatch($_POST['password'], $_POST['confpassword']),
+				"firstName"=>checkName($_POST['firstName']),
+				"lastName"=>checkName($_POST['lastName']),
+				"phone"=>checkPhone($_POST['phone']),
+				"address"=>checkAddress($_POST['address']),
+				"postCode"=>checkPost($_POST['postCode']),
+				"state"=>checkState($_POST['state'])
+			  );
+			}
+
+			//Check for presence of errors and output
+			foreach($errors as $field => $valid)
+			{
+			  if($valid === false)
+			  {
+				$formValid = false;
+				echo "Invalid " . $field . " detected<br />";
+			  }
+			}
+
+			//Complete Registration Process
+			if($formValid)
+			{
+				require_once 'php/users.php';
+				//Set the ID to null. The database will give the new account a unique ID at a later time.
+				$$ID = NULL;
+				$user = new User($ID, $_POST['email'], $_POST['firstName'], $_POST['lastName'], $_POST['phone'], $_POST['role'], $_POST['address'], $_POST['postCode'], $_POST['state']);
+
+				$user->createStaffAccount($_POST['password']);
+
+				//Redirect Script	
+				header('Location: ../index.php');
+			} 
+		}
+	?>
+	
     <?php include 'includes/header.inc' ?>
 
     <div class="container">
@@ -26,8 +88,6 @@
                 <label for="email">Email Address:</label>
                 <input type="email" class="form-control" id="email" placeholder="Enter Email Address" name="email" maxlength="255" required>
             </div>
-
-			<input type="hidden" id="ID" name="ID" value="">
 
             <div class="form-group">
                 <label for="password">Password: (must be over 8 characters containing letter and numbers)</label>

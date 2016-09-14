@@ -1,15 +1,81 @@
 <?php require 'includes/head.inc' ?>
 
 <body>
-    <?php require 'php/userCreation.php' ?>
+    <?php
+		if($_SERVER["REQUEST_METHOD"] === "POST")
+		{
 
-	  <?php include 'includes/header.inc' ?>
+			$errors = array();
+			$formValid = true;
+
+			//Get Dependancies
+			require_once 'php/formValidation.php';
+
+			//PHP Field Validation
+			if(empty($_POST['address']) && empty($_POST['postCode']) && empty($_POST['state']))
+			{
+			  $errors = array(
+				"email"=>checkEmail($_POST['email']),
+				"password"=>checkPassword($_POST['password']),
+				"confpassword"=>checkMatch($_POST['password'], $_POST['confpassword']),
+				"firstName"=>checkName($_POST['firstName']),
+				"lastName"=>checkName($_POST['lastName']),
+				"phone"=>checkPhone($_POST['phone'])
+			  );
+			  //Set state to empty string for user object
+			  $_POST['state'] = "";
+			} else {
+			  $errors = array(
+				"email"=>checkEmail($_POST['email']),
+				"password"=>true,//"password"=>checkPassword($_POST['password']),   Password checking is too strict I think.
+				"confpassword"=>checkMatch($_POST['password'], $_POST['confpassword']),
+				"firstName"=>checkName($_POST['firstName']),
+				"lastName"=>checkName($_POST['lastName']),
+				"phone"=>checkPhone($_POST['phone']),
+				"address"=>checkAddress($_POST['address']),
+				"postCode"=>checkPost($_POST['postCode']),
+				"state"=>checkState($_POST['state'])
+			  );
+			}
+
+			//Check for presence of errors and output
+			foreach($errors as $field => $valid)
+			{
+			  if($valid === false)
+			  {
+				$formValid = false;
+				echo "Invalid " . $field . " detected<br />";
+			  }
+			}
+
+			//Complete Registration Process
+			if($formValid)
+			{
+				require_once 'php/users.php';
+				//Set the customer role to 0, which is represents customer accounts.
+				$role = 0;
+				//Set the ID to null.
+				$ID = NULL;
+				$user = new User($ID, $_POST['email'], $_POST['firstName'], $_POST['lastName'], $_POST['phone'], $role, $_POST['address'], $_POST['postCode'], $_POST['state']);
+
+				$user->createCustomerAccount($_POST['password']);
+				
+				//Login to account just created
+				require_once 'php/usersDB.php';
+				login($_POST['email']);
+
+				//Redirect Script	
+				header('Location: ../index.php');
+			} 
+		}
+	?>
+
+	 <?php include 'includes/header.inc' ?>
 
     <div class="container">
         <h2>Create an Account</h2>
 
         <form method="post" autocomplete="on" onsubmit="return validate(this)" action="<?php echo "https://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];?>">
-            <input type="hidden" id="ID" name="ID" value="">
 
 			<div class="form-group">
                 <label for="email">Email Address:</label>
@@ -34,8 +100,6 @@
 
                 <label for="lastName">Last Name:</label>
                 <input type="text" class="form-control" id="lastName" name="lastName" maxlength="255" pattern="^\w{2,255}(?!=\W)$" required>
-
-				<input type="hidden" id="role" name="role" value="0">
             </div>
 
             <h3>Phone Number</h3>
