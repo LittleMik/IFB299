@@ -49,27 +49,32 @@
 					</ul>
 				</li>
 				<?php
-				  if(isset($_SESSION['role']))
-				  {
-				    if($_SESSION['role'] > 2)
-				    {
-				      //sufficient role
-						echo '
-							<li><a href="edit-account-details.php">Create Staff Account</a></li>
-						';
-				    }
-					}
-				?>
-				<?php
-				  if(isset($_SESSION['role']))
-				  {
-				    if($_SESSION['role'] > 2)
-				    {
-				      //sufficient role
+					//Verify User Permission to View Special Navigation Items
+					require_once 'php/permissions.php';
+
+					if(isset($_SESSION['role']))
+					{
+						//Check Permission to Create Staff Account
+						if(checkPermission($_SESSION['role'], 'create-staff-account.php') === true)
+						{
+							echo '
+								<li><a href="create-staff-account.php">Create Staff Account</a></li>
+							';
+						}
+						//Check Permission to place Phone Order
+						if(checkPermission($_SESSION['role'], 'phone-order.php') === true)
+						{
 							echo '
 								<li><a href="phone-order.php">Phone Order</a></li>
-								';
-				    }
+							';
+						}
+						//Check Permission to View Order
+						if(checkPermission($_SESSION['role'], 'view-order.php') === true)
+						{
+							echo '
+								<li><a href="view-order.php">View Order</a></li>
+							';
+						}
 					}
 				?>
 				<li><a href="contact.php">Contact</a></li>
