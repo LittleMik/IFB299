@@ -7,3 +7,17 @@ function check(input) {
         input.setCustomValidity('');
     }
 }
+
+//Load a php
+function getAddress(inputID){
+	$.ajax({
+		url:'php/getAddress.php',
+		complete: function (response) {
+			$('#' + inputID).val(response.responseText);
+		},
+		error: function () {
+			$('#' + inputID).html('Bummer: there was an error!');
+		}
+	});
+	return false;
+}

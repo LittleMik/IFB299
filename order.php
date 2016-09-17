@@ -122,7 +122,7 @@
             <!--Pickup Address-->
             <div class="form-group">
                 <label>Pickup Address:</label>
-                <label class="radio-inline"><input type="radio" name="otherPickupAddress" disabled>Your Address</label>
+                <label class="radio-inline"><input type="radio" onclick="getAddress('pickupAddress');" name="otherPickupAddress">Your Address</label>
                 <label class="radio-inline"><input type="radio" name="otherPickupAddress" checked="checked">Other</label>
                 <input type="text" class="form-control" id="pickupAddress" name="pickupAddress">
             </div>
