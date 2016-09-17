@@ -7,172 +7,171 @@
   }
 ?>
 
-<body>
-  <?php
-    if($_SERVER["REQUEST_METHOD"] === "POST")
-    {
 
-      $errors = array();
-      $formValid = true;
+<?php
+if($_SERVER["REQUEST_METHOD"] === "POST")
+{
 
-      //Get Dependancies
-      require_once 'php/formValidation.php';
+  $errors = array();
+  $formValid = true;
 
-      //PHP Field Validation
-      $errors = array(
-        "description"=>checkDescription($_POST['description']),
-        "totalWeight"=>checkWeight($_POST['totalWeight']),
-        "signature"=>checkSet($_POST['signature']),
-        "priority"=>checkSet($_POST['priority']),
-        "pickupAddress"=>checkAddress($_POST['pickupAddress']),
-        "pickupTime"=>checkTime($_POST['pickupTime']),
-        "deliveryAddress"=>checkAddress($_POST['deliveryAddress']),
-        "deliveryState"=>checkState($_POST['deliveryState']),
-        "recipientName"=>checkFullName($_POST['recipientName']),
-        "recipientPhone"=>checkPhone($_POST['recipientPhone']),
-      );
+  //Get Dependancies
+  require_once 'php/formValidation.php';
 
-      //Check for presence of errors and output
-      foreach($errors as $field => $valid)
-      {
-        if($valid === false)
-        {
-          $formValid = false;
-          echo $_POST[$field] . "<br />";
-          echo "Invalid " . $field . " detected<br />";
-        }
-      }
+  //PHP Field Validation
+  $errors = array(
+	"description"=>checkDescription($_POST['description']),
+	"totalWeight"=>checkWeight($_POST['totalWeight']),
+	"signature"=>checkSet($_POST['signature']),
+	"priority"=>checkSet($_POST['priority']),
+	"pickupAddress"=>checkAddress($_POST['pickupAddress']),
+	"pickupTime"=>checkTime($_POST['pickupTime']),
+	"deliveryAddress"=>checkAddress($_POST['deliveryAddress']),
+	"deliveryState"=>checkState($_POST['deliveryState']),
+	"recipientName"=>checkFullName($_POST['recipientName']),
+	"recipientPhone"=>checkPhone($_POST['recipientPhone']),
+  );
 
-      //Complete Registration Process
-      if($formValid)
-      {
-        require_once 'php/orders.php';
-        require_once 'php/users.php';
+  //Check for presence of errors and output
+  foreach($errors as $field => $valid)
+  {
+	if($valid === false)
+	{
+	  $formValid = false;
+	  echo $_POST[$field] . "<br />";
+	  echo "Invalid " . $field . " detected<br />";
+	}
+  }
 
-        $user = unserialize($_SESSION['user']);
+  //Complete Registration Process
+  if($formValid)
+  {
+	require_once 'php/orders.php';
+	require_once 'php/users.php';
 
-        $order = new Order($user->id, $_POST['description'], $_POST['totalWeight'], $_POST['signature'], $_POST['priority'], $_POST['pickupAddress'], $_POST['pickupTime'], $_POST['deliveryAddress'], $_POST['recipientName'], $_POST['recipientPhone']);
+	$user = unserialize($_SESSION['user']);
 
-        $order->createCustomerOrder();
+	$order = new Order($user->id, $_POST['description'], $_POST['totalWeight'], $_POST['signature'], $_POST['priority'], $_POST['pickupAddress'], $_POST['pickupTime'], $_POST['deliveryAddress'], $_POST['recipientName'], $_POST['recipientPhone']);
 
-        //Redirect Script
-				echo "
-					<script>
-            alert('Order Created');
-						window.location.href = 'index.php';
-					</script>";
-      }
-    }
-  ?>
-  
-	<?php include 'includes/header.inc' ?>
+	$order->createCustomerOrder();
 
-    <div class="container">
-        <h2>Order Details</h2>
-        <form method="post" autocomplete="on" onsubmit="return validate(this)" action="<?php echo "https://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];?>">
+	//Redirect Script
+			echo "
+				<script>
+		alert('Order Created');
+					window.location.href = 'index.php';
+				</script>";
+  }
+}
+?>
 
-            <!--Order Description-->
-            <div class="form-group">
-                <label for="comment">Description:</label>
-                <textarea class="form-control" rows="5" id="comment" maxlength="140" name="description"></textarea>*max 140 characters
-            </div>
+<?php require 'includes/header.inc' ?>
 
-            <!--Order Weight-->
-            <div class="form-group">
-                <label for="weight">Weight:</label>
-                <input type="number" class="form-control" id="weight" placeholder="Weight in KGs" name="totalWeight" maxlength="4" pattern="^[0-9]{4}$" required>KGs
-            </div>
+<div class="container">
+	<h2>Order Details</h2>
+	<form method="post" autocomplete="on" onsubmit="return validate(this)" action="<?php echo "https://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];?>">
 
-            <!--Signature Required-->
-            <div class="form-group">
-                <label>Require Signature Upon Delivery?</label>
-                <label class="radio-inline"><input type="radio" name="signature" value="1">Yes</label>
-                <label class="radio-inline"><input type="radio" name="signature" value="0" checked="checked">No</label>
-            </div>
+		<!--Order Description-->
+		<div class="form-group">
+			<label for="comment">Description:</label>
+			<textarea class="form-control" rows="5" id="comment" maxlength="140" name="description"></textarea>*max 140 characters
+		</div>
 
-            <!--Priority (Order Type)-->
-            <div class="form-group">
-                <label>Delivery Priority</label>
-                <div class="radio">
-                    <label><input type="radio" name="priority" value="Express">Express (1-2 Business Days)</label>
-                </div>
-                <div class="radio">
-                    <label><input type="radio" name="priority" value="Standard" checked="checked">Standard (5-7 Business Days)</label>
-                </div>
-            </div>
+		<!--Order Weight-->
+		<div class="form-group">
+			<label for="weight">Weight:</label>
+			<input type="number" class="form-control" id="weight" placeholder="Weight in KGs" name="totalWeight" maxlength="4" pattern="^[0-9]{4}$" required>KGs
+		</div>
 
-            <h3>Pick Up</h3>
+		<!--Signature Required-->
+		<div class="form-group">
+			<label>Require Signature Upon Delivery?</label>
+			<label class="radio-inline"><input type="radio" name="signature" value="1">Yes</label>
+			<label class="radio-inline"><input type="radio" name="signature" value="0" checked="checked">No</label>
+		</div>
 
-            <!--Pickup Time-->
-            <div class="form-group">
-                <label for="pickupTime">Pickup Time:</label>
-                <input type="datetime-local" class="form-control" id="pickupTime" name="pickupTime"
-                <?php
-                  date_default_timezone_set('Australia/Brisbane');
-                  $dateMin = date('Y-m-d TH:i:s a');
-                  echo "min='".$dateMin."'";
+		<!--Priority (Order Type)-->
+		<div class="form-group">
+			<label>Delivery Priority</label>
+			<div class="radio">
+				<label><input type="radio" name="priority" value="Express">Express (1-2 Business Days)</label>
+			</div>
+			<div class="radio">
+				<label><input type="radio" name="priority" value="Standard" checked="checked">Standard (5-7 Business Days)</label>
+			</div>
+		</div>
 
-                  $date = date_create($dateMin);
-                  date_modify($date,"+1 year");
-                  $dateMax = date_format($date, "Y-m-d TH:i:s a");
-                  echo " max='".$dateMax."'";
-                ?>>
-            </div>
+		<h3>Pick Up</h3>
 
-            <!--Pickup Address-->
-            <div class="form-group">
-                <label>Pickup Address:</label>
-                <label class="radio-inline"><input type="radio" onclick="getAddress('pickupAddress');" name="otherPickupAddress">Your Address</label>
-                <label class="radio-inline"><input type="radio" name="otherPickupAddress" checked="checked">Other</label>
-                <input type="text" class="form-control" id="pickupAddress" name="pickupAddress">
-            </div>
+		<!--Pickup Time-->
+		<div class="form-group">
+			<label for="pickupTime">Pickup Time:</label>
+			<input type="datetime-local" class="form-control" id="pickupTime" name="pickupTime"
+			<?php
+			  date_default_timezone_set('Australia/Brisbane');
+			  $dateMin = date('Y-m-d TH:i:s a');
+			  echo "min='".$dateMin."'";
 
-            <h3>Recipient Details</h3>
-            <!--Fullname of Recipient-->
-            <div class="form-group">
-                <label for="recipientName">Recipient Name:</label>
-                <input type="text" class="form-control" id="recipientName" placeholder="Enter Recipient Name" name="recipientName" maxlength="255" pattern="^[\w]{2,255}(?:\s[\w]{2,255})*(?!=\W)$" required>
-            </div>
+			  $date = date_create($dateMin);
+			  date_modify($date,"+1 year");
+			  $dateMax = date_format($date, "Y-m-d TH:i:s a");
+			  echo " max='".$dateMax."'";
+			?>>
+		</div>
 
-            <!--Recipient's Phone Number-->
-            <div class="form-group">
-                <label for="recipientPhone">Recipient Phone Number:</label>
-                <input type="tel" class="form-control" id="recipientPhone" placeholder="Enter Phone Number" name="recipientPhone" maxlength="16" pattern="^(?:\(\+?[0-9]{2}\))?(?:[0-9]{6,10}|[0-9]{3,4}(?:(?:\s[0-9]{3,4}){1,2}))$" required>
-            </div>
+		<!--Pickup Address-->
+		<div class="form-group">
+			<label>Pickup Address:</label>
+			<label class="radio-inline"><input type="radio" onclick="getAddress('pickupAddress');" name="otherPickupAddress">Your Address</label>
+			<label class="radio-inline"><input type="radio" name="otherPickupAddress" checked="checked">Other</label>
+			<input type="text" class="form-control" id="pickupAddress" name="pickupAddress">
+		</div>
 
-            <h3>Delivery</h3>
+		<h3>Recipient Details</h3>
+		<!--Fullname of Recipient-->
+		<div class="form-group">
+			<label for="recipientName">Recipient Name:</label>
+			<input type="text" class="form-control" id="recipientName" placeholder="Enter Recipient Name" name="recipientName" maxlength="255" pattern="^[\w]{2,255}(?:\s[\w]{2,255})*(?!=\W)$" required>
+		</div>
 
-            <!--Delivery Address-->
-            <div class="form-group">
-                <label for="deliveryAddress">Delivery Address:</label>
-                <input type="text" class="form-control" id="deliveryAddress" placeholder="Enter Delivery Address" name="deliveryAddress" maxlength="255" pattern="^[0-9]{1,5},?\s\w{2,64}\s\w{2,64},?\s\w{2,64}$" required>
-            </div>
+		<!--Recipient's Phone Number-->
+		<div class="form-group">
+			<label for="recipientPhone">Recipient Phone Number:</label>
+			<input type="tel" class="form-control" id="recipientPhone" placeholder="Enter Phone Number" name="recipientPhone" maxlength="16" pattern="^(?:\(\+?[0-9]{2}\))?(?:[0-9]{6,10}|[0-9]{3,4}(?:(?:\s[0-9]{3,4}){1,2}))$" required>
+		</div>
 
-            <!--Delivery PostCode-->
-            <div class="form-group">
-                <label for="email">Postcode:</label>
-                <input type="number" class="form-control" id="email" placeholder="Enter Postcode" name="deliveryPostCode" pattern="^[0-9]{4}$">
-            </div>
+		<h3>Delivery</h3>
 
-            <!--Delivery State-->
-            <div class="form-group">
-                <label for="state">State:</label>
-                <select class="form-control" id="state" name="deliveryState">
-                    <option value="" disabled selected>- Select State -</option>
-                    <option>QLD</option>
-                    <option>NSW</option>
-                    <option>ACT</option>
-                    <option>VIC</option>
-                    <option>SA</option>
-                    <option>WA</option>
-                    <option>NT</option>
-                </select>
-            </div>
+		<!--Delivery Address-->
+		<div class="form-group">
+			<label for="deliveryAddress">Delivery Address:</label>
+			<input type="text" class="form-control" id="deliveryAddress" placeholder="Enter Delivery Address" name="deliveryAddress" maxlength="255" pattern="^[0-9]{1,5},?\s\w{2,64}\s\w{2,64},?\s\w{2,64}$" required>
+		</div>
 
-            <button type="submit" class="btn btn-default">Submit</button>
+		<!--Delivery PostCode-->
+		<div class="form-group">
+			<label for="email">Postcode:</label>
+			<input type="number" class="form-control" id="email" placeholder="Enter Postcode" name="deliveryPostCode" pattern="^[0-9]{4}$">
+		</div>
 
-        </form>
-    </div>
+		<!--Delivery State-->
+		<div class="form-group">
+			<label for="state">State:</label>
+			<select class="form-control" id="state" name="deliveryState">
+				<option value="" disabled selected>- Select State -</option>
+				<option>QLD</option>
+				<option>NSW</option>
+				<option>ACT</option>
+				<option>VIC</option>
+				<option>SA</option>
+				<option>WA</option>
+				<option>NT</option>
+			</select>
+		</div>
 
-</body>
-</html>
+		<button type="submit" class="btn btn-default">Submit</button>
+
+	</form>
+</div>
+
+<?php require 'includes/footer.inc' ?>
