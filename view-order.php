@@ -19,6 +19,13 @@
 ?>
 
 <?php
+if($_SERVER["REQUEST_METHOD"] === "GET")
+{
+  //Get Dependancies
+  require_once 'php/formValidation.php';
+
+
+}
 if($_SERVER["REQUEST_METHOD"] === "POST")
 {
 
@@ -53,47 +60,87 @@ I can click to find specific information on the customer
   //Complete Registration Process
   if($formValid)
   {
-	if(isset($_POST['email']))
-	{
-	  $query = "SELECT *
-	  FROM Orders ord, Users u
-	  WHERE ord.userID == u.userID
-	  AND u.email LIKE :email";
+  	if(isset($_POST['email']))
+  	{
+      require 'php/pdo.inc';
 
-	  $stmt = $pdo->prepare($query);
+      try{
+    	  $query = "SELECT orders.*, users.firstName, users.lastName
+        FROM orders
+        LEFT JOIN users
+        ON orders.userID=users.userID
+        WHERE users.email LIKE :email";
 
-	  $stmt->bindValue(':email', $_POST['email']);
+    	  $stmt = $pdo->prepare($query);
 
-	}else if(isset($_POST['email']) && isset($_POST['']))
-	{
-	  $query = "SELECT *
-	  FROM Orders ord, Users u
-	  WHERE ord.userID == u.userID
-	  AND u.email LIKE :email
-	  AND ord.orderStatus == :status";
+    	  $stmt->bindValue(':email', $_POST['email']);
+        $stmt->execute();
 
-	  $stmt = $pdo->prepare($query);
+        //Output Table
+        echo '
+        <section id="view-order">
+          <div class="container">
+        		<table>
+        			<tr>
+        				<th>ID</th>
+        				<th>Customer</th>
+        				<th>Description</th>
+                <th>Total Weight</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>More Details...</th>
+    			</tr>';
+        foreach($stmt as $order)
+        {
+          echo "
+          <tr>
+            <td>{$order['orderID']}</td>
+            <td>{$order['firstName']} {$order['lastName']}</td>
+            <td>{$order['description']}</td>
+            <td>{$order['totalWeight']}</td>
+            <td>{$order['deliveryPriority']}</td>
+            <td>{$order['orderStatus']}</td>
+            <td><a href='view-order.php?orderID={$order['orderID']}'>View</a></td>
+          </div>
+        </section>
+          ";
+        }
+        $orders = $stmt->fetch();
+      } catch (PDOException $e){
+        echo $e->getMessage();
+      }
 
-	  $stmt->bindValue(':email', $_POST['email']);
-	  $stmt->bindValue(':status', $_POST['status']);
-	}
+
+  	}/*else if(isset($_POST['email']) && isset($_POST['']))
+  	{
+  	  $query = "SELECT *
+  	  FROM Orders ord, Users u
+  	  WHERE ord.userID == u.userID
+  	  AND u.email LIKE :email
+  	  AND ord.orderStatus == :status";
+
+  	  $stmt = $pdo->prepare($query);
+
+  	  $stmt->bindValue(':email', $_POST['email']);
+  	  $stmt->bindValue(':status', $_POST['status']);
+  	}*/
   }
 }
 ?>
 
 <?php require 'includes/header.inc' ?>
 
-<section id="view-order">
-<div class="container">
-  <form method="POST" class="form-order-lookup">
-	<h2 class="form-order-lookup">Orders</h2>
-	<div id="error"></div>
-	<label for="inputEmail" class="sr-only">Customer's Email address</label>
-	<input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" autofocus>
+<section id="filter-order">
+  <div class="container">
+    <form method="POST" class="form-order-lookup">
+    	<h2 class="form-order-lookup">Orders</h2>
+    	<div id="error"></div>
+    	<label for="inputEmail" class="sr-only">Customer's Email address</label>
+    	<input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" autofocus>
 
-  </form>
+    </form>
 
-</div> <!-- /container -->
+  </div>
 </section>
 
 <?php require 'includes/footer.inc' ?>
