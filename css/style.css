@@ -3,104 +3,838 @@
   padding: 0;
   margin: 0;
 }
-body {
-  font-family:helvetica;
-  font-size: 12px;
-  padding-top: 40px;
-  padding-bottom: 40px;
-  background-color: #FFD393;
+
+/* DESKTOP */
+@media (min-width: 1200px) {
+    body {
+    font-family:helvetica;
+    font-size: 12px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #FFFFFF;
+    
+  }
+  
+  #h {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background-color:#b30000
+  
+  }
+  
+  .container{
+    max-width: 1024px;
+    margin: 20px auto;
+    padding: 0px 5px;
+    color: black;
+  }
+  
+  /* Set bottom padding (fixed top nav requires bottom padding) */
+  .container-fluid {
+    padding-bottom:40px;
+  }
+  
+  
+  /*Top Navigation */
+  .nav {
+    height: 50px;
+    /* Set Height when login/sign up displays inline */
+    
+  }
+  
+  /* Main Navigation */
+  .navbar-fixed-top {
+    background-color: #171F68;
+  }
+  /*Right Navigation */
+  .navbar-right {
+    background-color: #F2D5A0;
+    padding-right:50px;
+  }
+  
+  .navbar-right > li {
+    float:left; /* Need media Query for mobile */
+    display: inline;
+  }
+  
+  .navbar-right li a{
+    color:#FFFFFF;
+  }
+  
+  /*Logo in Navigation */
+  .navbar-brand {
+    padding: 0px;
+    background-color: white; /* Remove this when the brand logo's padding is fixed*/
+  }
+  
+  /*Navigation List */
+  .navbar li a{
+    color:#FFFFFF;
+  }
+  
+  /*Collapsed Navigation Icon */
+  .icon-bar {
+      background-color: white;
+  }
+  
+  #login{
+    text-align: center;
+  }
+  
+  #error{
+      color: red;
+  }
+  
+  .form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+  }
+  .form-signin .form-signin-heading,
+  .form-signin .checkbox {
+    margin-bottom: 10px;
+  }
+  .form-signin .checkbox {
+    font-weight: normal;
+  }
+  .form-signin .form-control {
+    position: relative;
+    height: auto;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+    padding: 10px;
+    font-size: 16px;
+  }
+  .form-signin .form-control:focus {
+    z-index: 2;
+  }
+  .form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  .form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  
+  ---buttonstuff
+  
+  .btn-primary:hover {
+      color: #fff;
+      background-color: #F54F29;
+      border-color: #204d74;
+  }
+  
+  
+  #logo {
+    width: 80px;
+    height: 80px;
+    position: fixed;
+    top: 85%;
+    right: 1%;
+    z-index:2;
+  }
+  
+  /* I commented out the html for this - Keith
+  #hero {
+    width: 300px;
+    height: 300px;
+    display: block;
+    margin: auto;
+  } */
+  
+  /* Shortcut = 3 Images on Index */
+  #shortcut {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: auto;
+  }
+  
+  section {
+    background-color: #FF974F;
+    border-radius: 4px;
+  }
+  
+  /*Footer */
+  .footer {
+    position: relative;
+    bottom:0;
+    width:100%;
+    background-color:#171F68;
+    
+  }
+  
+  .footer section {
+    background: none;
+  }
+  
+  .footer h2, p {
+    color:#FFFFFF;
+  }
+  
+  .footer h2 {
+    font-size: 28px;
+  }
+  
+  .footer h3 {
+    color: #FFFFFF;
+    font-size: 16px;
+  }
+  
+  .footer p {
+    font-size: 12px;
+    
+  }
+  
+  .footer img {
+    width: 60px;
+    height: 60px;
+  }
+  
+  #details {
+    float:right;
+    margin-top: -20px;
+    margin-right: 15px;
+  }
+  
+  /* Carousel */
+  #myCarousel {
+    width:100%;
+    height:400px;
+    overflow:hidden;
+  }
+
 }
 
-#h {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  background-color:#b30000
+/* PORTRAIT TABLET */
+@media (min-width: 768px) and (max-width: 1199px) {
+    body {
+    font-family:helvetica;
+    font-size: 12px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #FFFFFF;
+    
+  }
+  
+  #h {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background-color:#b30000
+  
+  }
+  
+  .container{
+    max-width: 1024px;
+    margin: 20px auto;
+    padding: 0px 5px;
+    color: black;
+  }
+  
+  /* Set bottom padding (fixed top nav requires bottom padding) */
+  .container-fluid {
+    padding-bottom:40px;
+  }
+  
+  
+  /*Top Navigation */
+  .nav {
+    height: 50px;
+    /* Set Height when login/sign up displays inline */
+    
+  }
+  
+  /* Main Navigation */
+  .navbar-fixed-top {
+    background-color: #171F68;
+  }
+  /*Right Navigation */
+  .navbar-right {
+    background-color: #F2D5A0;
+    padding-right:50px;
+  }
+  
+  .navbar-right > li {
+    float:left; /* Need media Query for mobile */
+    display: inline;
+  }
+  
+  .navbar-right li a{
+    color:#FFFFFF;
+  }
+  
+  /*Logo in Navigation */
+  .navbar-brand {
+    padding: 0px;
+    background-color: white; /* Remove this when the brand logo's padding is fixed*/
+  }
+  
+  /*Navigation List */
+  .navbar li a{
+    color:#FFFFFF;
+  }
+  
+  /*Collapsed Navigation Icon */
+  .icon-bar {
+      background-color: white;
+  }
+  
+  #login{
+    text-align: center;
+  }
+  
+  #error{
+      color: red;
+  }
+  
+  .form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+  }
+  .form-signin .form-signin-heading,
+  .form-signin .checkbox {
+    margin-bottom: 10px;
+  }
+  .form-signin .checkbox {
+    font-weight: normal;
+  }
+  .form-signin .form-control {
+    position: relative;
+    height: auto;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+    padding: 10px;
+    font-size: 16px;
+  }
+  .form-signin .form-control:focus {
+    z-index: 2;
+  }
+  .form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  .form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  
+  ---buttonstuff
+  
+  .btn-primary:hover {
+      color: #fff;
+      background-color: #F54F29;
+      border-color: #204d74;
+  }
+  
+  
+  #logo {
+    width: 80px;
+    height: 80px;
+    position: fixed;
+    top: 85%;
+    right: 1%;
+    z-index:2;
+  }
+  
+  /* I commented out the html for this - Keith
+  #hero {
+    width: 300px;
+    height: 300px;
+    display: block;
+    margin: auto;
+  } */
+  
+  /* Shortcut = 3 Images on Index */
+  #shortcut {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: auto;
+  }
+  
+  section {
+    background-color: #FF974F;
+    border-radius: 4px;
+  }
+  
+  /*Footer */
+  .footer {
+    position: relative;
+    bottom:0;
+    width:100%;
+    background-color:#171F68;
+    
+  }
+  
+  .footer section {
+    background: none;
+  }
+  
+  .footer h2, p {
+    color:#FFFFFF;
+  }
+  
+  .footer h2 {
+    font-size: 28px;
+  }
+  
+  .footer h3 {
+    color: #FFFFFF;
+    font-size: 16px;
+  }
+  
+  .footer p {
+    font-size: 12px;
+    
+  }
+  
+  .footer img {
+    width: 60px;
+    height: 60px;
+  }
+  
+  #details {
+    float:right;
+    margin-top: -20px;
+    margin-right: 15px;
+  }
+  
+  /* Carousel */
+  #myCarousel {
+    width:100%;
+    height:300px;
+    overflow:hidden;
+  }
 
 }
 
-.container{
-  max-width: 1024px;
-  margin: 20px auto;
-  padding: 0px, 5px;
-  color: black;
+/* LANDSCAPE TABLET */
+@media (max-width: 767px) {
+    body {
+    font-family:helvetica;
+    font-size: 12px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #FFFFFF;
+    
+  }
+  
+  #h {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background-color:#b30000
+  
+  }
+  
+  .container{
+    max-width: 1024px;
+    margin: 20px auto;
+    padding: 0px 5px;
+    color: black;
+  }
+  
+  /* Set bottom padding (fixed top nav requires bottom padding) */
+  .container-fluid {
+    padding-bottom:40px;
+  }
+  
+  
+  /*Top Navigation */
+  .nav {
+    height: 50px;
+    /* Set Height when login/sign up displays inline */
+    
+  }
+  
+  /* Main Navigation */
+  .navbar-fixed-top {
+    background-color: #171F68;
+  }
+  /*Right Navigation */
+  .navbar-right {
+    background-color: #F2D5A0;
+    padding-right:50px;
+  }
+  
+  .navbar-right > li {
+    float:left; /* Need media Query for mobile */
+    display: inline;
+  }
+  
+  .navbar-right li a{
+    color:#FFFFFF;
+  }
+  
+  /*Logo in Navigation */
+  .navbar-brand {
+    padding: 0px;
+    background-color: white; /* Remove this when the brand logo's padding is fixed*/
+  }
+   
+  .navbar-brand img {
+    width:100px;
+  }
+  
+  /*Navigation List */
+  .navbar li a{
+    color:#FFFFFF;
+  }
+  
+  /*Collapsed Navigation Icon */
+  .icon-bar {
+      background-color: white;
+  }
+  
+  #login{
+    text-align: center;
+  }
+  
+  #error{
+      color: red;
+  }
+  
+  .form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+  }
+  .form-signin .form-signin-heading,
+  .form-signin .checkbox {
+    margin-bottom: 10px;
+  }
+  .form-signin .checkbox {
+    font-weight: normal;
+  }
+  .form-signin .form-control {
+    position: relative;
+    height: auto;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+    padding: 10px;
+    font-size: 16px;
+  }
+  .form-signin .form-control:focus {
+    z-index: 2;
+  }
+  .form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  .form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  
+  ---buttonstuff
+  
+  .btn-primary:hover {
+      color: #fff;
+      background-color: #F54F29;
+      border-color: #204d74;
+  }
+  
+  
+  #logo {
+    width: 80px;
+    height: 80px;
+    position: fixed;
+    top: 85%;
+    right: 1%;
+    z-index:2;
+  }
+  
+  /* I commented out the html for this - Keith
+  #hero {
+    width: 300px;
+    height: 300px;
+    display: block;
+    margin: auto;
+  } */
+  
+  /* Shortcut = 3 Images on Index */
+  #shortcut {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: auto;
+  }
+  
+  section {
+    background-color: #FF974F;
+    border-radius: 4px;
+  }
+  
+  /*Footer */
+  .footer {
+    position: relative;
+    bottom:0;
+    width:100%;
+    background-color:#171F68;
+    
+  }
+  
+  .footer section {
+    background: none;
+  }
+  
+  .footer h2, p {
+    color:#FFFFFF;
+  }
+  
+  .footer h2 {
+    font-size: 28px;
+  }
+  
+  .footer h3 {
+    color: #FFFFFF;
+    font-size: 16px;
+  }
+  
+  .footer p {
+    font-size: 12px;
+    
+  }
+  
+  .footer img {
+    width: 60px;
+    height: 60px;
+  }
+  
+  #details {
+    float:right;
+    margin-top: -20px;
+    margin-right: 15px;
+  }
+  
+  /* Carousel */
+  #myCarousel {
+    width:100%;
+    height:225px;
+    overflow:hidden;
+  }
+
 }
 
+/* MOBILE */
+@media (max-width: 480px) {
+    body {
+    font-family:helvetica;
+    font-size: 12px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #FFFFFF;
+    
+  }
+  
+  #h {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background-color:#b30000
+  
+  }
+  
+  .container{
+    max-width: 1024px;
+    margin: 20px auto;
+    padding: 0px 5px;
+    color: black;
+  }
+  
+  /* Set bottom padding (fixed top nav requires bottom padding) */
+  .container-fluid {
+    padding-bottom:40px;
+  }
+  
+  
+  /*Top Navigation */
+  .nav {
+    height: 50px;
+    /* Set Height when login/sign up displays inline */
+    
+  }
+  
+  /* Main Navigation */
+  .navbar-fixed-top {
+    background-color: #171F68;
+    
+  }
+  
+  /*Right Navigation */
+  .navbar-right {
+    background-color: #F2D5A0;
+    padding-right:50px;
+  }
+  
+  .navbar-right > li {
+    float:left; /* Need media Query for mobile */
+    display: inline;
+  }
+  
+  .navbar-right li a{
+    color:#FFFFFF;
+  }
+  
+  /*Logo in Navigation */
+  .navbar-brand {
+    padding: 0px;
+    background-color: white; /* Remove this when the brand logo's padding is fixed*/
+  }
+  
+  .navbar-brand img {
+    width: 80px;
+  }
+  
+  /*Navigation List */
+  .navbar li a{
+    color:#FFFFFF;
+  }
+  
+  /*Collapsed Navigation Icon */
+  .icon-bar {
+      background-color: white;
+  }
+  
+  #login{
+    text-align: center;
+  }
+  
+  #error{
+      color: red;
+  }
+  
+  .form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+  }
+  .form-signin .form-signin-heading,
+  .form-signin .checkbox {
+    margin-bottom: 10px;
+  }
+  .form-signin .checkbox {
+    font-weight: normal;
+  }
+  .form-signin .form-control {
+    position: relative;
+    height: auto;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+    padding: 10px;
+    font-size: 16px;
+  }
+  .form-signin .form-control:focus {
+    z-index: 2;
+  }
+  .form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  .form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  
+  ---buttonstuff
+  
+  .btn-primary:hover {
+      color: #fff;
+      background-color: #F54F29;
+      border-color: #204d74;
+  }
+  
+  
+  #logo {
+    width: 80px;
+    height: 80px;
+    position: fixed;
+    top: 85%;
+    right: 1%;
+    z-index:2;
+  }
+  
+  /* I commented out the html for this - Keith
+  #hero {
+    width: 300px;
+    height: 300px;
+    display: block;
+    margin: auto;
+  } */
+  
+  /* Shortcut = 3 Images on Index */
+  #shortcut {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: auto;
+  }
+  
+  section {
+    background-color: #FF974F;
+    border-radius: 4px;
+  }
+  
+  /*Footer */
+  .footer {
+    position: relative;
+    bottom:0;
+    width:100%;
+    background-color:#171F68;
+    
+  }
+  
+  .footer section {
+    background: none;
+  }
+  
+  .footer h2, p {
+    color:#FFFFFF;
+  }
+  
+  .footer h2 {
+    font-size: 28px;
+  }
+  
+  .footer h3 {
+    color: #FFFFFF;
+    font-size: 16px;
+  }
+  
+  .footer p {
+    font-size: 12px;
+    
+  }
+  
+  .footer img {
+    width: 60px;
+    height: 60px;
+  }
+  
+  #details {
+    float:right;
+    margin-top: -20px;
+    margin-right: 15px;
+    
+  }
+  
+  /* Carousel */
+  #myCarousel {
+    width:100%;
+    height: 150px;
+    overflow:hidden;
+  }
 
-#login{
-  text-align: center;
-}
-
-#error{
-    color: red;
-}
-
-.form-signin {
-  max-width: 330px;
-  padding: 15px;
-  margin: 0 auto;
-}
-.form-signin .form-signin-heading,
-.form-signin .checkbox {
-  margin-bottom: 10px;
-}
-.form-signin .checkbox {
-  font-weight: normal;
-}
-.form-signin .form-control {
-  position: relative;
-  height: auto;
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-  padding: 10px;
-  font-size: 16px;
-}
-.form-signin .form-control:focus {
-  z-index: 2;
-}
-.form-signin input[type="email"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
-.form-signin input[type="password"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-
----buttonstuff
-
-.btn-primary:hover {
-    color: #fff;
-    background-color: #F54F29;
-    border-color: #204d74;
-}
-
-
-#logo {
-  width: 80px;
-  height: 80px;
-  position: fixed;
-  top: 85%;
-  right: 1%
-}
-
-#hero {
-  width: 300px;
-  height: 300px;
-  display: block;
-  margin: auto;
-}
-
-#shortcut {
-  width: 200px;
-  height: 200px;
-  display: block;
-  margin: auto;
-}
-
-section {
-  background-color: #FF974F;
-  border-radius: 4px;
 }
