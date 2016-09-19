@@ -155,4 +155,34 @@
       return false;
     }
   }
+
+  function checkStatus($status)
+  {
+    if(isset($status))
+    {
+      if(preg_match('/^Ordered|Picking Up|Picked Up|Storing|Delivering|Delivered$/', $status))
+      {
+        return true;
+      }else{
+        return false;
+      }
+    }else{
+      return true;
+    }
+  }
+
+  function checkPriority($priority)
+  {
+    if(isset($priority))
+    {
+      if(preg_match('/^Standard|Express$/', $priority))
+      {
+        return true;
+      }else{
+        return false;
+      }
+    }else{
+      return true;
+    }
+  }
  ?>
