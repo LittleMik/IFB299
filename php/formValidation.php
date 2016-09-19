@@ -171,6 +171,10 @@
     }
   }
 
+  /**
+  * Validate Priority Value
+  * Returns true if value matches predefined priority types
+  */
   function checkPriority($priority)
   {
     if(isset($priority))

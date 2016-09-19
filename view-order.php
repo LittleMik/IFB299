@@ -93,6 +93,10 @@
     //PHP Field Validation
     $errors = array();
 
+    /*
+      Check for Set Search Filters and Validate
+      their respective input values
+    */
     if(isset($_POST['email']) && !empty($_POST['email']))
     {
       $errors["email"] = checkEmail($_POST['email']);

@@ -35,6 +35,7 @@
     }
 
     try{
+      //Set Query
       $query = "SELECT orders.*, users.firstName, users.lastName, users.email
       FROM orders
       LEFT JOIN users
