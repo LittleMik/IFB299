@@ -13,7 +13,7 @@
 			<div class="navbar-collapse collapse">
 			  <ul class="nav navbar-nav navbar-left">
 				  <li class="active"><a href="index.php">Home</a></li>
-					<li><a href="login.php">My Account</a></li>
+					<li><a href="edit-account-details.php">My Account</a></li>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Orders <span class="caret"></span></a>
 						<ul class="dropdown-menu">

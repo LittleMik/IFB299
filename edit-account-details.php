@@ -73,7 +73,7 @@
 			login($_POST['email']);
 
 			//Redirect Script	
-			header('Location: ../index.php');
+			header('Location: index.php');
 		} 
 	}
 ?>
@@ -83,7 +83,7 @@
 <div class="container">
 	<h2>Edit your Account</h2>
 
-	<form method="post" autocomplete="on" onsubmit="return validate(this)" action="<?php echo "https://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];?>">
+	<form method="post" autocomplete="on" onsubmit="return validate(this)">
 		<div class="form-group">
 			<label for="email">Email Address:</label>
 			<input type="email" class="form-control" id="email" value="<?php echo $thisUser->email ?>" name="email" maxlength="255" required>
