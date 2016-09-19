@@ -10,7 +10,6 @@
     font-family:helvetica;
     font-size: 12px;
     padding-top: 40px;
-    padding-bottom: 40px;
     background-color: #FFFFFF;
     
   }
@@ -24,7 +23,7 @@
   
   .container{
     max-width: 1024px;
-    margin: 20px auto;
+    margin: 20px auto 0;
     padding: 0px 5px;
     color: black;
   }
@@ -64,7 +63,7 @@
   /*Logo in Navigation */
   .navbar-brand {
     padding: 0px;
-    background-color: white; /* Remove this when the brand logo's padding is fixed*/
+    background-color: #8C1B16; /* Remove this when the brand logo's padding is fixed*/
   }
   
   /*Navigation List */
@@ -421,7 +420,6 @@
     font-family:helvetica;
     font-size: 12px;
     padding-top: 40px;
-    padding-bottom: 40px;
     background-color: #FFFFFF;
     
   }
@@ -631,7 +629,6 @@
     font-family:helvetica;
     font-size: 12px;
     padding-top: 40px;
-    padding-bottom: 40px;
     background-color: #FFFFFF;
     
   }
@@ -645,7 +642,7 @@
   
   .container{
     max-width: 1024px;
-    margin: 20px auto;
+    margin: 20px auto 0;
     padding: 0px 5px;
     color: black;
   }
