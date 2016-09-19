@@ -1,4 +1,5 @@
 <footer class="footer">
+	<a name="contactUs"></a>
 	  <div class="container">
 		<h2>Contact Us</h2>
 		  <div class="col-md-4">
