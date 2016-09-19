@@ -32,10 +32,10 @@
 			<span class="sr-only">Next</span>
 		  </a>
 		</div>
-	</div>
+</div>
 	
 	
-	<div class="container">
+<div class="container">
 	  <div class="row">
 		<div class="col-md-4">
 			<section>
@@ -61,5 +61,10 @@
 		</div>
 	 </div>
 </div>
+
+<a href="#">
+	<img id="logo" src="images/icon3.png" alt="logo"/>
+</a>
+	
 
 <?php require 'includes/footer.inc' ?>
