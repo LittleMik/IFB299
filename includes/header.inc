@@ -51,7 +51,7 @@
 							}
 						}
 					?>
-					<li><a href="contact.php">Contact</a></li>
+					<li><a href="#contactUs">Contact</a></li>
 			  </ul>
 			  <ul class="nav navbar-right">
 				<?php
