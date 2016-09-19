@@ -473,7 +473,7 @@
   /*Logo in Navigation */
   .navbar-brand {
     padding: 0px;
-    background-color: white; /* Remove this when the brand logo's padding is fixed*/
+    background-color: #8C1B16; /* Remove this when the brand logo's padding is fixed*/
   }
    
   .navbar-brand img {
@@ -684,7 +684,7 @@
   /*Logo in Navigation */
   .navbar-brand {
     padding: 0px;
-    background-color: white; /* Remove this when the brand logo's padding is fixed*/
+    background-color: #8C1B16; /* Remove this when the brand logo's padding is fixed*/
   }
   
   .navbar-brand img {
