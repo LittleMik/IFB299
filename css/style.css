@@ -78,6 +78,18 @@
   
   #login{
     text-align: center;
+    height: 500px;
+    padding-top: 7%;
+    padding-bottom: 2%;
+  }
+  
+  .loginform {
+    width:50%;
+    height: 90%;
+    background-color:white;
+    text-align: center;
+    margin-left: 25%;
+    margin-right: 25%;
   }
   
   #error{
@@ -281,8 +293,20 @@
       background-color: white;
   }
   
-  #login{
+    #login{
     text-align: center;
+    height: 500px;
+    padding-top: 7%;
+    padding-bottom: 2%;
+  }
+  
+  .loginform {
+    width:50%;
+    height: 90%;
+    background-color:white;
+    text-align: center;
+    margin-left: 25%;
+    margin-right: 25%;
   }
   
   #error{
@@ -492,6 +516,18 @@
   
   #login{
     text-align: center;
+    height: 500px;
+    padding-top: 7%;
+    padding-bottom: 2%;
+  }
+  
+  .loginform {
+    width:50%;
+    height: 90%;
+    background-color:white;
+    text-align: center;
+    margin-left: 25%;
+    margin-right: 25%;
   }
   
   #error{
@@ -701,8 +737,20 @@
       background-color: white;
   }
   
-  #login{
+    #login{
     text-align: center;
+    height: 500px;
+    padding-top: 7%;
+    padding-bottom: 2%;
+  }
+  
+  .loginform {
+    width:90%;
+    height: 90%;
+    background-color:white;
+    text-align: center;
+    margin-left: 5%;
+    margin-right: 5%;
   }
   
   #error{
