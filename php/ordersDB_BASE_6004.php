@@ -68,10 +68,9 @@
   function displayOrders($stmt)
   {
     //Output Table
-    echo '
-	<h1>Orders:</h1>
-	<section id="view-order">
+    echo '<section id="view-order">
       <div class="container">
+        <table>
           <tr>
             <th>ID</th>
             <th>Customer</th>
@@ -80,12 +79,10 @@
             <th>Delivery</th>
             <th>Status</th>
             <th>More Details...</th>
-          </tr>
-        </thead>'  ;
+      </tr>';
     foreach($stmt as $order)
     {
       echo "
-      <tbody>
         <tr>
           <td>{$order['orderID']}</td>
           <td>
@@ -107,13 +104,14 @@
             <p>Address:{$order['deliveryAddress']}</p>
           </td>
           <td>{$order['orderStatus']}</td>
-          <td><a href='order-information.php?orderID={$order['orderID']}'>View</a></td>
+          <td><a href='view-order.php?orderID={$order['orderID']}'>View</a></td>
         </tr>
-      </tbody>
       ";
     }
     echo "
-        </table>";
+        </table>
+      </div>
+    </section>";
   }
 
 ?>

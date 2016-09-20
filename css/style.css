@@ -177,6 +177,11 @@
     border-radius: 4px;
   }
   
+  /*Table Stuff */
+  #view-order p {
+    color:black;
+  }
+  
   /*Footer */
   .footer {
     position: relative;
