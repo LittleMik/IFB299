@@ -89,9 +89,10 @@
   */
   function displayOrders($stmt)
   {
+<<<<<<< HEAD
     //Output Orders Table
     echo '<table class="table table-striped table-condensed table-responsive">
-        <thead>
+		<thead>
           <tr>
             <th>ID</th>
             <th>Customer</th>
@@ -129,7 +130,7 @@
             <p>Address:{$order['deliveryAddress']}</p>
           </td>
           <td>{$order['orderStatus']}</td>
-          <td><a href='view-order.php?orderID={$order['orderID']}'>View</a></td>
+          <td><a href='order-information.php?orderID={$order['orderID']}'>View</a></td>
         </tr>
       </tbody>
       ";
