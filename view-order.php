@@ -58,7 +58,10 @@
 				<label><input type="radio" name="priority" value="Express">Express</label>
 			</div>
 			<div class="radio">
-				<label><input type="radio" name="priority" value="Standard" checked="checked">Standard</label>
+				<label><input type="radio" name="priority" value="Standard">Standard</label>
+      </div>
+      <div class="radio">
+				<label><input type="radio" name="priority" value="" checked="checked">All</label>
       </div>
 
       <label for="inputStatus" class="sr-only">Order Status</label>
@@ -78,63 +81,82 @@
       <button type="submit" class="btn btn-default">Search</button>
 
     </form>
+
+
+    <?php
+      if($_SERVER["REQUEST_METHOD"] === "POST")
+      {
+        $errors = array();
+        $formValid = true;
+
+        //Get Dependancies
+        require_once 'php/formValidation.php';
+
+        //PHP Field Validation
+        $errors = array();
+
+        /*
+          Check for Set Search Filters and Validate
+          their respective input values
+        */
+        if(isset($_POST['email']) && !empty($_POST['email']))
+        {
+          $errors["email"] = checkEmail($_POST['email']);
+        }
+        if(isset($_POST['customerName']) && !empty($_POST['customerName']))
+        {
+          $errors["customerName"] = checkFullName($_POST['customerName']);
+        }
+        if(isset($_POST['status']) && !empty($_POST['status']))
+        {
+          $errors["status"] = checkStatus($_POST['status']);
+        }
+        if(isset($_POST['priority']) && !empty($_POST['priority']))
+        {
+          $errors["priority"] = checkPriority($_POST['priority']);
+        }
+        if(isset($_POST['pickupTime']) && !empty($_POST['pickupTime']))
+        {
+          $errors["pickupTime"] = checkTime($_POST['pickupTime']);
+        }
+
+        //Check for presence of errors and output
+        foreach($errors as $field => $valid)
+        {
+        	if($valid === false)
+        	{
+        	  $formValid = false;
+        	  echo "Invalid " . $field . " detected<br />";
+        	}
+        }
+
+        if($formValid)
+        {
+          require_once 'php/ordersDB.php';
+          searchOrder($_POST['email'], $_POST['customerName'], $_POST['priority'], $_POST['status'], $_POST['pickupTime']);
+        }
+      }else if($_SERVER["REQUEST_METHOD"] === "GET"){
+
+        //Check Order ID is present and valid
+        if(isset($_GET['orderID']) && !empty($_GET['orderID']))
+        {
+          //Validate orderID
+          require_once 'php/formValidation.php';
+          if(checkIntID($_GET['orderID']))
+          {
+            //Run Query and Output Results
+            require_once 'php/ordersDB.php';
+            searchOrder($_POST['email'], $_POST['customerName'], $_POST['priority'], $_POST['status'], $_POST['pickupTime'], $_GET['orderID']);
+            getPackages($_GET['orderID']);
+
+          }else{
+            //Output Error
+            echo "Invalid orderID detected<br />";
+
+          }
+        }
+      }
+     ?>
   </div>
 </section>
-
-<?php
-  if($_SERVER["REQUEST_METHOD"] === "POST")
-  {
-    $errors = array();
-    $formValid = true;
-
-    //Get Dependancies
-    require_once 'php/formValidation.php';
-
-    //PHP Field Validation
-    $errors = array();
-
-    /*
-      Check for Set Search Filters and Validate
-      their respective input values
-    */
-    if(isset($_POST['email']) && !empty($_POST['email']))
-    {
-      $errors["email"] = checkEmail($_POST['email']);
-    }
-    if(isset($_POST['customerName']) && !empty($_POST['customerName']))
-    {
-      $errors["customerName"] = checkFullName($_POST['customerName']);
-    }
-    if(isset($_POST['status']) && !empty($_POST['status']))
-    {
-      $errors["status"] = checkStatus($_POST['status']);
-    }
-    if(isset($_POST['priority']) && !empty($_POST['priority']))
-    {
-      $errors["priority"] = checkPriority($_POST['priority']);
-    }
-    if(isset($_POST['pickupTime']) && !empty($_POST['pickupTime']))
-    {
-      $errors["pickupTime"] = checkTime($_POST['pickupTime']);
-    }
-
-    //Check for presence of errors and output
-    foreach($errors as $field => $valid)
-    {
-    	if($valid === false)
-    	{
-    	  $formValid = false;
-    	  echo $_POST[$field] . "<br />";
-    	  echo "Invalid " . $field . " detected<br />";
-    	}
-    }
-
-    if($formValid)
-    {
-      require_once 'php/ordersDB.php';
-      searchOrder($_POST['email'], $_POST['customerName'], $_POST['priority'], $_POST['status'], $_POST['pickupTime']);
-    }
-  }
- ?>
-
 <?php require 'includes/footer.inc' ?>

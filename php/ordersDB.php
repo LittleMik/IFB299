@@ -1,37 +1,52 @@
 <?php
 
+  //Retrieve Dependancies
   require_once 'orders.php';
 
-  function searchOrder($email, $customerName, $priority, $status, $pickupTime)
+  /**
+  * Search Order
+  * Args: $email, $customerName, $priority, $status,
+  * $pickupTime
+  * Queries database for orders matching given filters
+  */
+  function searchOrder($email, $customerName, $priority, $status, $pickupTime, $orderID)
   {
+    //Get PDO
     require_once 'pdo.inc';
 
     //Identify Search Filters
     $whereConditions = array();
     $filters = array();
 
-    //Check which filters are set
-    if(!empty($email))
+    if(!empty($orderID))
     {
-      $whereConditions[] = " LOWER(users.email) LIKE CONCAT(LOWER(:email),'%')";
-      $filters["email"] = $email;
-    }
-    if(!empty($customerName)){
-      $whereConditions[] = " LOWER(CONCAT_WS(' ', users.firstName, users.lastName)) LIKE CONCAT(LOWER(:customerName),'%')";
-      $filters["customerName"] = $customerName;
-    }
-    if(!empty($priority)){
-      $whereConditions[] = " orders.deliveryPriority LIKE :priority";
-      $filters["priority"] = $priority;
-    }
-
-    //Set SQL Where Statement According to Filters
-    if(!empty($whereConditions))
-    {
-      $where = implode(' AND ', $whereConditions);
+      $where = " orders.orderID == :orderID";
     }else{
-      //Set Empty Where Statement (Accepts all values)
-      $where = " users.email LIKE '%'";
+      //Check which filters are set
+      if(!empty($email))
+      {
+        $whereConditions[] = " LOWER(users.email) LIKE CONCAT(LOWER(:email),'%')";
+        $filters["email"] = $email;
+      }
+      if(!empty($customerName))
+      {
+        $whereConditions[] = " LOWER(CONCAT_WS(' ', users.firstName, users.lastName)) LIKE CONCAT(LOWER(:customerName),'%')";
+        $filters["customerName"] = $customerName;
+      }
+      if(!empty($priority))
+      {
+        $whereConditions[] = " orders.deliveryPriority LIKE :priority";
+        $filters["priority"] = $priority;
+      }
+
+      //Set SQL Where Statement According to Filters
+      if(!empty($whereConditions))
+      {
+        $where = implode(' AND ', $whereConditions);
+      }else{
+        //Set Empty Where Statement (Accepts all values)
+        $where = " users.email LIKE '%'";
+      }
     }
 
     try{
@@ -45,10 +60,15 @@
 
       $stmt = $pdo->prepare($query);
 
-      //Apply Search Filter Values to Query
-      foreach($filters as $filter => $filterVar)
+      if(empty($orderID))
       {
-        $stmt->bindValue($filter, $filterVar);
+        //Apply Search Filter Values to Query
+        foreach($filters as $filter => $filterVar)
+        {
+          $stmt->bindValue($filter, $filterVar);
+        }
+      }else{
+        $stmt->bindValue(':email', $orderID);
       }
 
       //Run Query
@@ -64,13 +84,13 @@
 
   /**
   * Output Results of Orders Search
+  * Args: PDO Statment ResultSet $stmt
+  * Echos order results into table
   */
   function displayOrders($stmt)
   {
-    //Output Table
-    echo '<section id="view-order">
-      <div class="container">
-        <table>
+    //Output Orders Table
+    echo '<table>
           <tr>
             <th>ID</th>
             <th>Customer</th>
@@ -80,6 +100,8 @@
             <th>Status</th>
             <th>More Details...</th>
       </tr>';
+
+    //Output each result row as a single order
     foreach($stmt as $order)
     {
       echo "
@@ -108,10 +130,44 @@
         </tr>
       ";
     }
-    echo "
-        </table>
-      </div>
-    </section>";
+
+    //Close table tag
+    echo "</table>";
   }
 
+  /**
+  * Get Packages for Order
+  * Args: Integer $orderID
+  * Queries database for packages of particular order
+  */
+  function getPackages($orderID)
+  {
+    //Get PDO
+    require_once 'pdo.inc';
+
+    try{
+      //Set Query
+      $query = "SELECT packages.*, orders.*
+      FROM packages
+      LEFT JOIN orders
+      ON packages.orderID=orders.orderID
+      ORDER BY packages.packageID ASC";
+
+      $stmt = $pdo->prepare($query);
+
+      //Run Query
+      $stmt->execute();
+
+      //Output Results Table
+      displayPackages($stmt);
+
+    } catch (PDOException $e){
+      echo $e->getMessage();
+    }
+  }
+
+  function outputPackages($stmt)
+  {
+
+  }
 ?>

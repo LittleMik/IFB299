@@ -177,6 +177,7 @@
   */
   function checkPriority($priority)
   {
+    //Check set
     if(isset($priority))
     {
       if(preg_match('/^Standard|Express$/', $priority))
@@ -189,4 +190,20 @@
       return true;
     }
   }
+
+  /**
+  * Validate ID from user input matches
+  * Integer used in database
+  * Returns true if value is an integer
+  */
+  function checkIntID($id)
+  {
+    if(filter_var($id, FILTER_VALIDATE_INT))
+    {
+      return true;
+    }else{
+      return false;
+    }
+  }
+  
  ?>
