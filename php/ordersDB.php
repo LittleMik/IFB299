@@ -69,9 +69,7 @@
   {
     //Output Table
     echo '
-	<h1>Orders:</h1>
-	<section id="view-order">
-      <div class="container">
+		<thead>
           <tr>
             <th>ID</th>
             <th>Customer</th>
