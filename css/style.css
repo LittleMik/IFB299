@@ -20,7 +20,7 @@
     background-color:#b30000
   
   }
-  
+
   .container{
     max-width: 1024px;
     margin: 20px auto 0;
@@ -169,7 +169,11 @@
   }
   
   section {
-    background-color: #D88A7A;
+    /*
+	Greg commented this out, section is just used to divide the page
+	into semantic sections, it should probably just be the same colour as the body.
+    background-color: #D88A7A;*/
+     background-color: #ffffff;
     border-radius: 4px;
   }
   
@@ -187,7 +191,10 @@
   }
   
   .footer h2, p {
-    color:#FFFFFF;
+    /*color:#FFFFFF;
+	Greg commented this out, currently
+	most of our backgrounds are white so black text makes more sense.
+    */
   }
   
   .footer h2 {
@@ -390,7 +397,10 @@
   }
   
   section {
-    background-color: #D88A7A;
+    /*Greg commented this out, section is just used to divide the page
+	into semantic sections, it should probably just be the same colour as the body.
+    background-color: #D88A7A;*/
+     background-color: #ffffff;
     border-radius: 4px;
   }
   
@@ -408,7 +418,10 @@
   }
   
   .footer h2, p {
-    color:#FFFFFF;
+    /*color:#FFFFFF;
+	Greg commented this out, currently
+	most of our backgrounds are white so black text makes more sense.
+    */
   }
   
   .footer h2 {
@@ -615,7 +628,9 @@
   }
   
   section {
-    background-color: #D88A7A;
+     /*Greg commented this out, section is just used to divide the page
+	into semantic sections, it should probably just be the same colour as the body.
+    background-color: #D88A7A;*/
     border-radius: 4px;
   }
   
@@ -633,7 +648,10 @@
   }
   
   .footer h2, p {
-    color:#FFFFFF;
+    /*color:#FFFFFF;
+	Greg commented this out, currently
+	most of our backgrounds are white so black text makes more sense.
+    */
   }
   
   .footer h2 {
@@ -842,7 +860,9 @@
   }
   
   section {
-    background-color: #D88A7A;
+    /*Greg commented this out, section is just used to divide the page
+	into semantic sections, it should probably just be the same colour as the body.
+    background-color: #D88A7A;*/
     border-radius: 4px;
   }
   
@@ -861,7 +881,10 @@
   }
   
   .footer h2, p {
-    color:#FFFFFF;
+    /*color:#FFFFFF;
+	Greg commented this out, currently
+	most of our backgrounds are white so black text makes more sense.
+    */
   }
   
   .footer h2 {
