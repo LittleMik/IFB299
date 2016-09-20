@@ -90,7 +90,8 @@
   function displayOrders($stmt)
   {
     //Output Orders Table
-    echo '<table>
+    echo '<table class="table table-striped table-condensed table-responsive">
+        <thead>
           <tr>
             <th>ID</th>
             <th>Customer</th>
@@ -99,12 +100,14 @@
             <th>Delivery</th>
             <th>Status</th>
             <th>More Details...</th>
-      </tr>';
+          </tr>
+        </thead>';
 
     //Output each result row as a single order
     foreach($stmt as $order)
     {
       echo "
+      <tbody>
         <tr>
           <td>{$order['orderID']}</td>
           <td>
@@ -128,6 +131,7 @@
           <td>{$order['orderStatus']}</td>
           <td><a href='view-order.php?orderID={$order['orderID']}'>View</a></td>
         </tr>
+      </tbody>
       ";
     }
 
