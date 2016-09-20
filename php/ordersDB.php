@@ -70,7 +70,8 @@
     //Output Table
     echo '<section id="view-order">
       <div class="container">
-        <table>
+        <table class="table table-striped table-condensed table-responsive">
+        <thead>
           <tr>
             <th>ID</th>
             <th>Customer</th>
@@ -79,10 +80,12 @@
             <th>Delivery</th>
             <th>Status</th>
             <th>More Details...</th>
-      </tr>';
+          </tr>
+        </thead>'  ;
     foreach($stmt as $order)
     {
       echo "
+      <tbody>
         <tr>
           <td>{$order['orderID']}</td>
           <td>
@@ -106,6 +109,7 @@
           <td>{$order['orderStatus']}</td>
           <td><a href='view-order.php?orderID={$order['orderID']}'>View</a></td>
         </tr>
+      </tbody>
       ";
     }
     echo "
