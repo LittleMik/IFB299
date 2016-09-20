@@ -18,28 +18,6 @@
   }
 ?>
 
-<?php
-  if($_SERVER["REQUEST_METHOD"] === "GET")
-  {
-    //Get Dependancies
-    require_once 'php/formValidation.php';
-
-
-  }
-  if($_SERVER["REQUEST_METHOD"] === "POST")
-  {
-
-
-
-
-    /*
-    I can see a chronologically ordered list of deliveries that are assigned to me.
-  I can click to find specific information on the delivery, including where I am going to, what time I am expected, and any notes the customer added in the order.
-  I can click to find specific information on the customer
-  */
-}
-?>
-
 <?php require 'includes/header.inc' ?>
 
 <section id="filter-order">
@@ -154,12 +132,19 @@
           	}
           }
 
+          //Check Form is Valid
           if($formValid)
           {
             require_once 'php/ordersDB.php';
-            searchOrder($_POST['email'], $_POST['customerName'], $_POST['priority'], $_POST['status'], $_POST['pickupTime']);
+
+            //Run Search Query and Output Results
+            displayOrders(searchOrder($_POST['email'], $_POST['customerName'], $_POST['priority'], $_POST['status'], $_POST['pickupTime']));
           }
+
         }else if($_SERVER["REQUEST_METHOD"] === "GET"){
+
+          echo '</div>
+          <div class="container">';
 
           //Check Order ID is present and valid
           if(isset($_GET['orderID']) && !empty($_GET['orderID']))
@@ -170,10 +155,10 @@
             {
               //Run Query and Output Results
               require_once 'php/ordersDB.php';
-              searchOrder($_POST['email'], $_POST['customerName'], $_POST['priority'], $_POST['status'], $_POST['pickupTime'], $_GET['orderID']);
-              getPackages($_GET['orderID']);
+              displayPackages(getOrder($_GET['orderID']), getPackages($_GET['orderID']));
 
             }else{
+
               //Output Error
               echo "Invalid orderID detected<br />";
 
@@ -183,5 +168,5 @@
        ?>
     </div>
   </section>
-  
+
 <?php require 'includes/footer.inc' ?>

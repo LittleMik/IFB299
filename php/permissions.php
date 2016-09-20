@@ -18,7 +18,9 @@
       'create-staff-account.php' => Roles::Manager,
       'view-order.php' => Roles::Driver,
       'phone-order.php' => Roles::Coordinator,
-      'edit-accounts.php' => Roles::Admin
+      'edit-accounts.php' => Roles::Admin,
+      'order-information.php' => Roles::Manager,
+      'package-information.php' => Roles::Manager
     );
 
     if(array_key_exists($permission, $permissions))
