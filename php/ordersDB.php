@@ -89,7 +89,6 @@
   */
   function displayOrders($stmt)
   {
-<<<<<<< HEAD
     //Output Orders Table
     echo '<table class="table table-striped table-condensed table-responsive">
 		<thead>
