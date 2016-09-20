@@ -37,8 +37,7 @@
   /*Top Navigation */
   .nav {
     height: 50px;
-    /* Set Height when login/sign up displays inline */
-    
+    /* Set Height when login/sign up displays inline */    
   }
   
   /* Main Navigation */
@@ -90,6 +89,10 @@
     text-align: center;
     margin-left: 25%;
     margin-right: 25%;
+  }
+  
+  .loginform h2{
+    color: #8C1B16;
   }
   
   #error{
@@ -166,7 +169,7 @@
   }
   
   section {
-    background-color: #FF974F;
+    background-color: #D88A7A;
     border-radius: 4px;
   }
   
@@ -309,6 +312,10 @@
     margin-right: 25%;
   }
   
+  .loginform h2{
+    color: #8C1B16;
+  }
+  
   #error{
       color: red;
   }
@@ -383,7 +390,7 @@
   }
   
   section {
-    background-color: #FF974F;
+    background-color: #D88A7A;
     border-radius: 4px;
   }
   
@@ -530,6 +537,10 @@
     margin-right: 25%;
   }
   
+  .loginform h2{
+    color: #8C1B16;
+  }
+  
   #error{
       color: red;
   }
@@ -604,7 +615,7 @@
   }
   
   section {
-    background-color: #FF974F;
+    background-color: #D88A7A;
     border-radius: 4px;
   }
   
@@ -753,6 +764,10 @@
     margin-right: 5%;
   }
   
+  .loginform h2{
+    color: #8C1B16;
+  }
+  
   #error{
       color: red;
   }
@@ -827,7 +842,7 @@
   }
   
   section {
-    background-color: #FF974F;
+    background-color: #D88A7A;
     border-radius: 4px;
   }
   
