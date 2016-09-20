@@ -39,7 +39,8 @@
 	<section id="login">
 		<div class="loginform">
 			<form method="POST" class="form-signin">
-			<h2 class="form-signin-heading">Log in</h2>
+			<!--Insert form logo image here-->
+			<h2 class="form-signin-heading">LOG IN</h2>
 			<div id="error"></div>
 			<label for="inputEmail" class="sr-only">Email address</label>
 			<input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
