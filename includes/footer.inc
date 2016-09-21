@@ -2,7 +2,7 @@
 	<a name="contactUs"></a>
 	  <div class="container">
 		<h2>Contact Us</h2>
-		  <div class="col-md-4">
+		  <div class="col-xs-12 col-md-4">
 			<section>
 				<img src="images/time.png" alt="Opening Hours">
 				<div id="details">
@@ -12,7 +12,7 @@
 				</div>
 			</section>				
 		  </div>
-		  <div class="col-md-4">
+		  <div class="col-xs-12 col-md-4">
 			<section>
 				<img src="images/phone.png" alt="Phone">
 				<div id="details">
@@ -22,7 +22,7 @@
 				</div>
 			</section>
 		  </div>
-		  <div class="col-md-4">
+		  <div class="col-xs-12 col-md-4">
 			<section>
 				<img src="images/email.png" alt="Email">
 				<div id="details">
