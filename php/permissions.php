@@ -17,6 +17,7 @@
     $permissions = array(
       'create-staff-account.php' => Roles::Manager,
       'view-order.php' => Roles::Driver,
+	  'edit-order.php' => Roles::Coordinator,
       'phone-order.php' => Roles::Coordinator,
       'edit-accounts.php' => Roles::Admin,
       'view-users.php' => Roles::Manager,

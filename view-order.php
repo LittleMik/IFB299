@@ -51,8 +51,8 @@
 							<div class="radio">
 								<label><input type="radio" name="priority" value="Standard" checked="checked">Standard</label>
 							</div>
-              <div class="radio">
-								<label><input type="radio" name="priority" value="" checked="checked">All</label>
+								<div class="radio">
+							<label><input type="radio" name="priority" value="" checked="checked">All</label>
 							</div>
 						</div>
 					</div>

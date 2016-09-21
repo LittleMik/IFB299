@@ -90,8 +90,16 @@
             <th>Pickup</th>
             <th>Delivery</th>
             <th>Status</th>
-            <th>More Details...</th>
-          </tr>
+            <th>More Details...</th>';
+			if(isset($_SESSION['role']))
+			{
+				if(checkPermission($_SESSION['role'], 'edit-order.php') === true)
+				{
+				  echo "<th>Edit Order</th>";
+				}
+			}
+			
+    echo  '</tr>
         </thead>
       <tbody>';
 
@@ -110,8 +118,8 @@
             <p>Type: {$order['deliveryPriority']}</p>
           </td>
           <td>
-            <p>Time: {$order['pickUptime']}</p>
-            <p>Address: {$order['pickUpAddress']}</p>
+            <p>Time: {$order['pickupTime']}</p>
+            <p>Address: {$order['pickupAddress']}</p>
           </td>
           <td>
             <p>Recipient: {$order['recipientName']}</p>
@@ -128,7 +136,7 @@
       {
         if(checkPermission($_SESSION['role'], 'edit-order.php') === true)
         {
-          echo "<a href='order-information.php?orderID={$order['orderID']}'>Edit</a>";
+          echo "<td><a href='edit-order.php?orderID={$order['orderID']}'>Edit</a></td>";
         }
       }
 
@@ -149,42 +157,54 @@
   * Args: orderID
   * Returns Array containing order information retrieved from the database
   */
-  function getOrder($orderID)
-  {
-    require 'pdo.inc';
+	function getOrder($orderID)
+	{
+		require 'pdo.inc';
 
-    if(!empty($orderID))
-    {
+		if(!empty($orderID))
+		{
 
-      $where = " orders.orderID = :orderID";
+		  $where = " orders.orderID = :orderID";
 
-      try{
-        //Set Query
-        $query = "SELECT orders.*, users.firstName, users.lastName, users.email
-        FROM orders
-        LEFT JOIN users
-        ON orders.userID = users.userID
-        WHERE $where
-        ORDER BY orders.orderID ASC, orders.deliveryPriority DESC";
+		  try{
+			//Set Query
+			$query = "SELECT DISTINCT orders.*, users.firstName, users.lastName, users.email
+			FROM orders
+			LEFT JOIN users
+			ON orders.userID = users.userID
+			WHERE $where
+			ORDER BY orders.orderID ASC, orders.deliveryPriority DESC";
 
-        $stmt = $pdo->prepare($query);
+			$stmt = $pdo->prepare($query);
 
-        //Bind OrderID value
-        $stmt->bindValue(':orderID', $orderID);
+			//Bind OrderID value
+			$stmt->bindValue(':orderID', $orderID);
 
-        //Run Query
-        $stmt->execute();
+			//Run Query
+			$stmt->execute();
 
-        //Return OrderInfo Array
-        $order = $stmt->fetch();
+			//Return OrderInfo Array
+			$order = $stmt->fetch();
 
-        return $order;
+			return $order;
 
-      } catch (PDOException $e){
-        echo $e->getMessage();
-      }
-    }
-  }
+		  } catch (PDOException $e){
+			echo $e->getMessage();
+		  }
+		}
+	}
+  
+	function getOrderObject($orderID) {
+		require_once 'orders.php';
+		$order = getOrder($orderID);
+		
+		$orderObject = new Order($order['orderID'], $order['description'], 
+		$order['signature'], $order['deliveryPriority'], $order['pickupAddress'],
+		$order['pickupTime'], $order['deliveryAddress'], $order['firstName'], 
+		$order['deliveryAddress'], $order['recipientName'], $order['recipientPhone']);
+		
+		return $orderObject;
+	}
 
   /**
   * Get Packages for Order
@@ -274,11 +294,11 @@
 
     if(isset($_SESSION['role']))
     {
-      if(checkPermission($_SESSION['role'], 'order-information.php') === true)
+      if(checkPermission($_SESSION['role'], 'edit-order.php') === true)
       {
         echo "
           <td>
-            <a href='order-information.php?orderID={$order['orderID']}'>Edit</a>
+            <a href='edit-order.php?orderID={$order['orderID']}'>Edit</a>
           </td>";
       }
     }

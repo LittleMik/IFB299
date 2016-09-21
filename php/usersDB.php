@@ -1,99 +1,101 @@
 <?php
 
   require_once 'users.php';
+	
+	//Login with email
+	function login($email)
+	{
+		$user = getUserObjectFromEmail($email);
+		
+		$_SESSION['login'] = true;
+		$_SESSION['firstname'] = $user->firstName;
+		$_SESSION['user'] = serialize($user);
+		$_SESSION['role'] = $user->role;
+	}
+	
+	function loginWithID($userID)
+	{
+		$user = getUserObjectFromID($userID);
 
-  function login($email)
-  {
-    require 'pdo.inc';
-    try
-    {
-      $stmt = $pdo->prepare(
-        "SELECT userID, email, firstName, lastName, phoneNumber, address, postcode, state FROM users WHERE email = :email limit 1"
-      );
+		$_SESSION['login'] = true;
+		$_SESSION['firstname'] = $user->firstName;
+		$_SESSION['user'] = serialize($user);
+		$_SESSION['role'] = $user->role;
+	}
+	
+	//Get a user object from the user ID
+	function getUserObjectFromEmail($email) {
+		require 'pdo.inc';
+		try
+		{
+			$stmt = $pdo->prepare(
+			"SELECT userID, email, firstName, lastName, phoneNumber, address, postcode, state FROM users WHERE email = :email limit 1"
+			);
 
-      $stmt->bindValue(':email', $email);
+			$stmt->bindValue(':email', $email);
 
-      $stmt->execute();
+			$stmt->execute();
 
-      $userInfo = $stmt->fetch();
+			$userInfo = $stmt->fetch();
 
-      require_once 'php/users.php';
+			require_once 'php/users.php';
 
-      $user = new User(
-        $userInfo['userID'],
-        $userInfo['email'],
-        $userInfo['firstName'],
-        $userInfo['lastName'],
-        $userInfo['phoneNumber'],
-		    getRole($userInfo['userID']),
-        $userInfo['address'],
-        $userInfo['postcode'],
-        $userInfo['state']
-      );
+			$user = new User(
+			$userInfo['userID'],
+			$userInfo['email'],
+			$userInfo['firstName'],
+			$userInfo['lastName'],
+			$userInfo['phoneNumber'],
+			getRole($userInfo['userID']),
+			$userInfo['address'],
+			$userInfo['postcode'],
+			$userInfo['state']
+		);
+		
+		return $user;
+		
+		} catch (PDOException $e){
+			echo $e->getMessage();
+		}
+	}
+	
+	//Get a user object from the user ID
+	function getUserObjectFromID($userID) {
+		require 'pdo.inc';
+		try
+		{
+			$stmt = $pdo->prepare(
+			"SELECT userID, email, firstName, lastName, phoneNumber, address, postcode, state FROM users WHERE userID = :userID limit 1"
+			);
 
-      $_SESSION['login'] = true;
-      $_SESSION['firstname'] = $userInfo['firstName'];
-      $_SESSION['user'] = serialize($user);
-      $_SESSION['role'] = getRole($userInfo['userID']);
+			$stmt->bindValue(':userID', $userID);
 
-    } catch (PDOException $e){
+			$stmt->execute();
 
-      echo $e->getMessage();
+			$userInfo = $stmt->fetch();
 
-      unset($_SESSION['login']);
-      unset($_SESSION['firstname']);
-      unset($_SESSION['user']);
-      unset($_SESSION['role']);
+			require_once 'php/users.php';
 
-    }
-  }
+			$user = new User(
+			$userInfo['userID'],
+			$userInfo['email'],
+			$userInfo['firstName'],
+			$userInfo['lastName'],
+			$userInfo['phoneNumber'],
+			getRole($userInfo['userID']),
+			$userInfo['address'],
+			$userInfo['postcode'],
+			$userInfo['state']
+		);
+		
+		return $user;
+		
+		} catch (PDOException $e){
+			echo $e->getMessage();
+		}
+	}
 
-  function loginWithID($userID)
-  {
-    require 'pdo.inc';
-    try
-    {
-      $stmt = $pdo->prepare(
-        "SELECT userID, email, firstName, lastName, phoneNumber, address, postcode, state FROM users WHERE userID = :userID limit 1"
-      );
-
-      $stmt->bindValue(':userID', $userID);
-
-      $stmt->execute();
-
-      $userInfo = $stmt->fetch();
-
-      require_once 'php/users.php';
-
-      $user = new User(
-        $userInfo['userID'],
-        $userInfo['email'],
-        $userInfo['firstName'],
-        $userInfo['lastName'],
-        $userInfo['phoneNumber'],
-    		getRole($userInfo['userID']),
-        $userInfo['address'],
-        $userInfo['postcode'],
-        $userInfo['state']
-      );
-
-      $_SESSION['login'] = true;
-      $_SESSION['firstname'] = $userInfo['firstName'];
-      $_SESSION['user'] = serialize($user);
-      $_SESSION['role'] = getRole($userInfo['userID']);
-
-    } catch (PDOException $e){
-
-      echo $e->getMessage();
-
-      unset($_SESSION['login']);
-      unset($_SESSION['firstname']);
-      unset($_SESSION['user']);
-      unset($_SESSION['role']);
-
-    }
-  }
-
+  //Get the role of the user as specified by the userID
   function getRole($userID)
   {
     try
@@ -116,6 +118,7 @@
     }
   }
 
+	//Get the id of the user as specified by email
 	function getID($userEmail){
 		try
 		{
@@ -130,6 +133,28 @@
 		$result = $stmt->fetch();
 
 		return $result['userID'];
+
+		} catch (PDOException $e){
+			echo $e->getMessage();
+			return 0;
+		}
+	}
+	
+	//Get the email of the user as specified by the userID
+	function getEmail($userID){
+		try
+		{
+			require 'pdo.inc';
+			$stmt = $pdo->prepare(
+			"SELECT email FROM users WHERE userID = :userID limit 1"
+		);
+
+		$stmt->bindValue(':userID', $userID);
+		$stmt->execute();
+
+		$result = $stmt->fetch();
+
+		return $result['email'];
 
 		} catch (PDOException $e){
 			echo $e->getMessage();
