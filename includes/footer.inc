@@ -1,4 +1,5 @@
 <footer class="footer">
+	<p>test</p>
 	<a name="contactUs"></a>
 	  <div class="container">
 		<h2>Contact Us</h2>
