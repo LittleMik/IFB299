@@ -1462,7 +1462,8 @@
   
   .footer section {
     background: none;
-    padding:
+    padding:;
+    height:100;
   }
   
   .footer h2 {
