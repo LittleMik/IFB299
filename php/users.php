@@ -26,7 +26,6 @@ class User
 	 */
 	function __construct()
 	{
-		# code...
 		//Construct User according to the arguments provided
 		$args = func_get_args();
 		$numArgs = func_num_args();
