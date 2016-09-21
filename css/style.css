@@ -83,7 +83,7 @@
   #login{
     text-align: center;
     height: 500px;
-    padding-top: 7%;
+    padding-top: 3%;
     padding-bottom: 2%;
   }
   
@@ -256,9 +256,12 @@
    color: #8C1B16;
   }
   
-  .form-group h3 {
+  #filter-order h3 {
    color: #8C1B16;
   }
+  
+  
+
   
   
   /*Tables */
