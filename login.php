@@ -35,7 +35,7 @@
 	}
 ?>
 
-<div class="container">git 
+<div class="container">
 	<section id="login">
 		<div class="loginform">
 			<form method="POST" class="form-signin">
