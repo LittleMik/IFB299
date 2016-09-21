@@ -202,7 +202,19 @@
   float: left;
   margin-top: 20%;
 }
-/* Create order and edit order background image*/
+
+.add_field_button {
+ margin-left:20%;
+ margin-bottom:10px;
+ padding:5px;
+  }
+  
+ .remove_field{
+  margin-left:20%;
+	
+  }
+
+/* Create create acc and edit acc background image*/
 #im {
       width: 900px;
       height: 1000px;
