@@ -198,10 +198,10 @@
 		require_once 'orders.php';
 		$order = getOrder($orderID);
 		
-		$orderObject = new Order($order['orderID'], $order['description'], 
+		$orderObject = new Order($order['userID'], $order['description'], 
 		$order['signature'], $order['deliveryPriority'], $order['pickupAddress'],
 		$order['pickupTime'], $order['deliveryAddress'], $order['firstName'], 
-		$order['deliveryAddress'], $order['recipientName'], $order['recipientPhone']);
+		$order['deliveryAddress'], $order['recipientName'], $order['recipientPhone'], $order['orderID']);
 		
 		return $orderObject;
 	}
@@ -276,8 +276,8 @@
     echo "
         </td>
         <td>
-          <p>Preferred Time: {$order['pickUptime']}</p>
-          <p>Address: {$order['pickUpAddress']}</p>
+          <p>Preferred Time: {$order['pickupTime']}</p>
+          <p>Address: {$order['pickupAddress']}</p>
         </td>
         <td>
           <p>Preferred Time: {$order['deliveryTime']}</p>

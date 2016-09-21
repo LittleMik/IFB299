@@ -24,7 +24,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 	"signature"=>checkSet($_POST['signature']),
 	"priority"=>checkSet($_POST['priority']),
 	"pickupAddress"=>checkAddress($_POST['pickupAddress']),
-	"pickupTime"=>checkTime($_POST['pickupTime']),
+	//"pickupTime"=>checkTime($_POST['pickupTime']),
 	"deliveryAddress"=>checkAddress($_POST['deliveryAddress']),
 	"deliveryState"=>checkState($_POST['deliveryState']),
 	"recipientName"=>checkFullName($_POST['recipientName']),
@@ -48,13 +48,18 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 	require_once 'php/orders.php';
 	require_once 'php/users.php';
 	require_once 'php/packages.php';
+	require_once 'php/status.php';
+	require_once 'php/usersDB.php';
 
 	$user = unserialize($_SESSION['user']);
 
-	$order = new Order($user->id, $_POST['description'], $_POST['signature'], $_POST['priority'], $_POST['pickupAddress'], $_POST['pickupTime'], $_POST['deliveryAddress'], $_POST['recipientName'], $_POST['recipientPhone']);
+	$order = new Order(0, $user->id, Status::Ordered, $_POST['description'], $_POST['signature'], 
+	$_POST['priority'], $_POST['pickupAddress'], $_POST['pickupPostCode'], $_POST['pickupState'], $_POST['pickupTime'], 
+	$_POST['deliveryAddress'], $_POST['deliveryPostCode'], $_POST['deliveryState'], $_POST['deliveryTime'], 
+	$_POST['recipientName'], $_POST['recipientPhone']);
 	
 	//Create the new order, and store the order id (returned) in the $orderID variable
-	$orderID = $order->createCustomerOrder();
+	$orderID = $order->createOrder();
 	
 	//Create arrays containing all package descriptions and weights
 	$packageDescriptions = $_POST['packageDescription'];
@@ -69,7 +74,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 	}
 	
 	//Redirect Script
-	header('Location: ../index.php');
+	//header('Location: ../index.php');
   }
 }
 ?>
@@ -79,19 +84,17 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 <img id="shortcut1" src="images/blueboardtext.png" alt="Banner">
 
 <div class="container1">
-	<!--<h2>Order Details</h2> Remove-->
-	<form method="post" autocomplete="on" onsubmit="return validate(this)" action="<?php echo "https://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];?>">
 
+	<div class="row1">
+		<div class="col-sm-2 col-xs-2">
+		<img id="shortcut3" src="images/1icon.png" alt="1"></img>
+		</div>
+		<div class="col-sm-10 col-xs-10">
+		<h3>Order Details</h3>
+		</div>
+	</div>
+	<form method="post" autocomplete="on" onsubmit="return validate(this)" action="<?php echo "https://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];?>">		
 		<!--Order Description-->
-		<div class="row1">
-		      <div class="col-sm-2 col-xs-2">
-		        <img id="shortcut3" src="images/1icon.png" alt="1"></img>
-		      </div>
-		      <div class="col-sm-10 col-xs-10">
-		        <h3>Order Details</h3>
-		      </div>
-		  </div>
-		
 		<div class="form-group">
 			<label for="comment">Description:</label>
 			<textarea class="form-control" rows="5" id="comment" maxlength="140" name="description"></textarea>*max 140 characters
@@ -131,11 +134,10 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 				<label><input type="radio" name="priority" value="Standard" checked="checked">Standard (5-7 Business Days)</label>
 			</div>
 		</div>
-		
+
 		<div class="row">
 		        <div class="col-sm-2 col-xs-2">
-		  	<img id="shortcut3" src="images/2icon.png" alt="2">
-		    </img>
+		  	<img id="shortcut3" src="images/2icon.png" alt="2"></img>
 			</div>
 			<div class="col-sm-10 col-xs-10">
 		    	<h3>Pick Up</h3>
@@ -144,7 +146,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 
 		<!--Pickup Time-->
 		<div class="form-group">
-			<label for="pickupTime">Pickup Time:</label>
+			<label for="pickupTime">Preferred Pickup Time:</label>
 			<input type="datetime-local" class="form-control" id="pickupTime" name="pickupTime"
 			<?php
 			  date_default_timezone_set('Australia/Brisbane');
@@ -161,22 +163,41 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 		<!--Pickup Address-->
 		<div class="form-group">
 			<label>Pickup Address:</label>
-			<label class="radio-inline"><input type="radio" onclick="getAddress('pickupAddress');" name="otherPickupAddress">Your Address</label>
+			<label class="radio-inline"><input type="radio" name="otherPickupAddress" disabled>Your Address</label>
 			<label class="radio-inline"><input type="radio" name="otherPickupAddress" checked="checked">Other</label>
 			<input type="text" class="form-control" id="pickupAddress" name="pickupAddress">
 		</div>
 		
-		<div class="row">
-		      <div class="col-sm-2 col-xs-2">
-			<img id="shortcut3" src="images/3icon.png" alt="3">
-		  	</img>
-			</div>
-			<div class="col-sm-10 col-xs-10">
-		    	<h3>Recipient Details</h3>
-		  	</div>
+		<!--Pickup PostCode-->
+		<div class="form-group">
+			<label for="email">Postcode:</label>
+			<input type="number" class="form-control" id="email" placeholder="Enter Postcode" name="pickupPostCode" pattern="^[0-9]{4}$">
+		</div>
+		
+		<!--Pickup State-->
+		<div class="form-group">
+			<label for="state">State:</label>
+			<select class="form-control" id="state" name="pickupState">
+				<option value="" disabled selected>- Select State -</option>
+				<option>QLD</option>
+				<option>NSW</option>
+				<option>ACT</option>
+				<option>VIC</option>
+				<option>SA</option>
+				<option>WA</option>
+				<option>NT</option>
+			</select>
 		</div>
 
-
+		<div class="row">
+      			<div class="col-sm-2 col-xs-2">
+			<img id="shortcut3" src="images/3icon.png" alt="3"></img>
+			</div>
+			<div class="col-sm-10 col-xs-10">
+			<h3>Recipient Details</h3>
+			</div>
+		</div>
+		
 		<!--Fullname of Recipient-->
 		<div class="form-group">
 			<label for="recipientName">Recipient Name:</label>
@@ -190,13 +211,28 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 		</div>
 
 		<div class="row">
-			 <div class="col-sm-2 col-xs-2">
-			<img id="shortcut3" src="images/4icon.png" alt="4">
-			  </img>
+			<div class="col-sm-2 col-xs-2">
+			<img id="shortcut3" src="images/4icon.png" alt="4"></img>
 			</div>
 			<div class="col-sm-10 col-xs-10">
 			<h3>Delivery</h3>
-			  </div>
+			</div>
+		</div>
+		
+		<!--delivery Time-->
+		<div class="form-group">
+			<label for="pickupTime">Preferred Pickup Time:</label>
+			<input type="datetime-local" class="form-control" id="deliveryTime" name="deliveryTime"
+			<?php
+			  date_default_timezone_set('Australia/Brisbane');
+			  $dateMin = date('Y-m-d TH:i:s a');
+			  echo "min='".$dateMin."'";
+
+			  $date = date_create($dateMin);
+			  date_modify($date,"+1 year");
+			  $dateMax = date_format($date, "Y-m-d TH:i:s a");
+			  echo " max='".$dateMax."'";
+			?>>
 		</div>
 
 		<!--Delivery Address-->
@@ -226,8 +262,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 			</select>
 		</div>
 
-<<<<<<< HEAD
-		<button type="submit" class="btn btn-default">Place Order</button>
+		<button type="submit" class="btnbtn-default">Submit</button>
 
 	</form>
 </div>

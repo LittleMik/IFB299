@@ -23,6 +23,7 @@
 	require_once 'php/ordersDB.php';
 	require_once 'php/usersDB.php';
 	$orderObject = getOrderObject(htmlspecialchars($_GET["orderID"]));
+	$userObject = getUserObjectFromID($orderObject->userID);
 
 	if($_SERVER["REQUEST_METHOD"] === "POST")
 	{
@@ -89,7 +90,7 @@
 		<!--Customer Email-->
 		<div class="form-group">
 			<label for="inputEmail" class="sr-only">Customer email address</label>
-			<input value="<?php echo getEmail($orderObject->userID) ?>" type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+			<input value="<?php echo $userObject->email ?>" type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
 		</div>
 		
 		<!--Order Description-->
@@ -149,7 +150,7 @@
 		<!--Pickup Time-->
 		<div class="form-group">
 			<label for="pickupTime">Pickup Time:</label>
-			<input value="<?php echo $orderObject->pickupTime ?>" type="datetime-local" value= class="form-control" id="pickupTime" name="pickupTime"
+			<input value="<?php echo str_replace(' ', 'T', $orderObject->pickupTime); ?>" type="datetime-local" value= class="form-control" id="pickupTime" name="pickupTime"
 			<?php
 			  date_default_timezone_set('Australia/Brisbane');
 			  $dateMin = date('Y-m-d TH:i:s a');
@@ -200,7 +201,7 @@
 		<!--Delivery State-->
 		<div class="form-group">
 			<label for="state">State:</label>
-			
+			<?php echo $orderObject->deliveryState ?>
 			<select class="form-control" id="state" name="deliveryState">
 				<option value="" disabled selected>- Select State -</option>
 				<option <?php $selected = ($orderObject->deliveryState == "QLD") ?  'selected' :  ''; echo $selected;?>>QLD</option>

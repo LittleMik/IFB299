@@ -60,7 +60,7 @@
 	}
 	
 	//Get a user object from the user ID
-	function getUserObjectFromID($userID) {
+	function getUserObjectFromID($thisUserID) {
 		require 'pdo.inc';
 		try
 		{
@@ -68,7 +68,7 @@
 			"SELECT userID, email, firstName, lastName, phoneNumber, address, postcode, state FROM users WHERE userID = :userID limit 1"
 			);
 
-			$stmt->bindValue(':userID', $userID);
+			$stmt->bindValue(':userID', $thisUserID);
 
 			$stmt->execute();
 

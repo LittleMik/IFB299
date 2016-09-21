@@ -14,7 +14,8 @@ class Order{
 	
   	public $pickupAddress;
 	public $pickupPostcode;
-  	public $pickupTime;
+	public $pickupState;
+	public $pickupTime;
 	
   	public $deliveryAddress;
 	public $deliveryPostcode;
@@ -38,8 +39,7 @@ class Order{
         //Construct Order from scratch
 
   		//Set user defined fields
-        //$this->orderID = $args[0]->orderID;
-		$this->userID = $args[0];
+		/*$this->userID = $args[0];
 		$this->description = $args[1];
 		$this->signature = $args[2];
 		$this->priority = $args[3];
@@ -48,12 +48,36 @@ class Order{
 		$this->deliveryAddress = $args[6];
 		$this->recipientName = $args[7];
 		$this->recipientPhone = $args[8];
+		$this->orderID = $args[9];*/
+		
+		$this->orderID = $args[0];
+		$this->userID = $args[1];
+		$this->status = $args[2];
+		$this->description = $args[3];
+		$this->signature = $args[4];
+		$this->priority = $args[5];
+		
+		$this->pickupAddress = $args[6];
+		$this->pickupPostcode = $args[7];
+		$this->pickupState = $args[8];
+		$this->pickupTime = $args[9];
+		
+		$this->deliveryAddress = $args[10];
+		$this->deliveryPostcode = $args[11];
+		$this->deliveryState = $args[12];
+		$this->deliveryTime = $args[13];
+		
+		$this->recipientName = $args[14];
+		$this->recipientPhone = $args[15];
+		
+		
 
         //Set Default Status
         $this->status = "Ordered";
   		
   	}
 	
+	/* I don't think we need this anymore
 	function createCustomerOrder()
     {
 		require 'pdo.inc';
@@ -61,7 +85,14 @@ class Order{
 		{
 			// Prepare Query
 			$stmt = $pdo->prepare(
-			"INSERT INTO orders (userID, orderStatus, description, signature, deliveryPriority, pickupAddress, pickupTime, deliveryAddress, recipientName, recipientPhone) VALUES (:userID, :orderStatus, :description, :signature, :deliveryPriority, :pickupAddress, :pickupTime, :deliveryAddress, :recipientName, :recipientPhone)"
+			"INSERT INTO orders (userID, orderStatus, description, signature, 
+			deliveryPriority, pickupAddress, pickupPostcode, pickupState, 
+			pickupTime, deliveryAddress, deliveryPostcode, deliveryState, 
+			deliveryTime, recipientName, recipientPhone) 
+			
+			VALUES (:userID, :orderStatus, :description, :signature, :deliveryPriority, 
+			:pickupAddress, :pickupPostcode, :pickupState, :pickupTime, :deliveryAddress, 
+			:deliveryPostcode, :deliveryState, :deliveryTime, :recipientName, :recipientPhone)"
 		);
 
 		//Bind query parameter with it's given variable
@@ -71,8 +102,13 @@ class Order{
 		$stmt->bindParam(':signature', $this->signature);
 		$stmt->bindParam(':deliveryPriority', $this->priority);
 		$stmt->bindParam(':pickupAddress', $this->pickupAddress);
+		$stmt->bindParam(':pickupPostcode', $this->pickupPostcode);
+		$stmt->bindParam(':pickupState', $this->pickupState);
 		$stmt->bindParam(':pickupTime', $this->pickupTime);
 		$stmt->bindParam(':deliveryAddress', $this->deliveryAddress);
+		$stmt->bindParam(':deliveryPostcode', $this->deliveryAddress);
+		$stmt->bindParam(':deliveryState', $this->deliveryAddress);
+		$stmt->bindParam(':deliveryTime', $this->deliveryAddress);
 		$stmt->bindParam(':recipientName', $this->recipientName);
 		$stmt->bindParam(':recipientPhone', $this->recipientPhone);
 
@@ -93,7 +129,7 @@ class Order{
 			echo $e->getMessage();
 			echo '<p>'.$e.'</p>';
 		}
-	}
+	}*/ 
 
 	function editOrder()
     {
@@ -102,7 +138,17 @@ class Order{
 		{
 			// Prepare Query
 			$stmt = $pdo->prepare(
-			"INSERT INTO orders (userID, orderStatus, description, signature, deliveryPriority, pickupAddress, pickupTime, deliveryAddress, recipientName, recipientPhone) VALUES (:userID, :orderStatus, :description, :signature, :deliveryPriority, :pickupAddress, :pickupTime, :deliveryAddress, :recipientName, :recipientPhone)"
+			"UPDATE orders 
+			SET description = :description,
+			signature = :signature
+			deliveryPriority = :deliveryPriority,
+			pickupAddress = :pickupAddress,
+			pickupTime = :pickupTime,
+			deliveryAddress = :deliveryAddress,
+			recipientName = :recipientName,
+			recipientPhone = :recipientPhone
+			
+			WHERE orderID = :orderID;"
 		);
 
 		//Bind query parameter with it's given variable
@@ -136,15 +182,21 @@ class Order{
 		}
 	}	
 	
-	function createPhoneOrder()
+	function createOrder()
     {
 		require 'pdo.inc';
-		
 		try
 		{
 			// Prepare Query
 			$stmt = $pdo->prepare(
-			"INSERT INTO orders (userID, orderStatus, description, signature, deliveryPriority, pickupAddress, pickupTime, deliveryAddress, recipientName, recipientPhone) VALUES (:userID, :orderStatus, :description, :signature, :deliveryPriority, :pickupAddress, :pickupTime, :deliveryAddress, :recipientName, :recipientPhone)"
+			"INSERT INTO orders (userID, orderStatus, description, signature, 
+			deliveryPriority, pickupAddress, pickupPostcode, pickupState, 
+			pickupTime, deliveryAddress, deliveryPostcode, deliveryState, 
+			deliveryTime, recipientName, recipientPhone) 
+			
+			VALUES (:userID, :orderStatus, :description, :signature, :deliveryPriority, 
+			:pickupAddress, :pickupPostcode, :pickupState, :pickupTime, :deliveryAddress, 
+			:deliveryPostcode, :deliveryState, :deliveryTime, :recipientName, :recipientPhone)"
 		);
 
 		//Bind query parameter with it's given variable
@@ -154,8 +206,13 @@ class Order{
 		$stmt->bindParam(':signature', $this->signature);
 		$stmt->bindParam(':deliveryPriority', $this->priority);
 		$stmt->bindParam(':pickupAddress', $this->pickupAddress);
+		$stmt->bindParam(':pickupPostcode', $this->pickupPostcode);
+		$stmt->bindParam(':pickupState', $this->pickupState);
 		$stmt->bindParam(':pickupTime', $this->pickupTime);
 		$stmt->bindParam(':deliveryAddress', $this->deliveryAddress);
+		$stmt->bindParam(':deliveryPostcode', $this->deliveryAddress);
+		$stmt->bindParam(':deliveryState', $this->deliveryAddress);
+		$stmt->bindParam(':deliveryTime', $this->deliveryAddress);
 		$stmt->bindParam(':recipientName', $this->recipientName);
 		$stmt->bindParam(':recipientPhone', $this->recipientPhone);
 

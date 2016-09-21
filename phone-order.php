@@ -28,7 +28,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 	"signature"=>checkSet($_POST['signature']),
 	"priority"=>checkSet($_POST['priority']),
 	"pickupAddress"=>checkAddress($_POST['pickupAddress']),
-	"pickupTime"=>checkTime($_POST['pickupTime']),
+	//"pickupTime"=>checkTime($_POST['pickupTime']),
 	"deliveryAddress"=>checkAddress($_POST['deliveryAddress']),
 	"deliveryState"=>checkState($_POST['deliveryState']),
 	"recipientName"=>checkFullName($_POST['recipientName']),
@@ -41,7 +41,6 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 	if($valid === false)
 	{
 	  $formValid = false;
-	  echo $_POST[$field] . "<br />";
 	  echo "Invalid " . $field . " detected<br />";
 	}
   }
@@ -52,13 +51,17 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 	require_once 'php/orders.php';
 	require_once 'php/users.php';
 	require_once 'php/packages.php';
+	require_once 'php/usersDB.php';
+	require_once 'php/status.php';
 
 	$user = unserialize($_SESSION['user']);
 	
-	require_once 'php/usersDB.php';
-	$order = new Order(getID($_POST['email']), $_POST['description'], $_POST['signature'], $_POST['priority'], $_POST['pickupAddress'], $_POST['pickupTime'], $_POST['deliveryAddress'], $_POST['recipientName'], $_POST['recipientPhone']);
+	$order = new Order(0, getID($_POST['email']), Status::Ordered, $_POST['description'], $_POST['signature'], 
+	$_POST['priority'], $_POST['pickupAddress'], $_POST['pickupPostCode'], $_POST['pickupState'], $_POST['pickupTime'], 
+	$_POST['deliveryAddress'], $_POST['deliveryPostCode'], $_POST['deliveryState'], $_POST['deliveryTime'], 
+	$_POST['recipientName'], $_POST['recipientPhone']);
 
-	$orderID = $order->createPhoneOrder();
+	$orderID = $order->createOrder();
 	
 	//Create arrays containing all package descriptions and weights
 	$packageDescriptions = $_POST['packageDescription'];
@@ -151,7 +154,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 
 		<!--Pickup Time-->
 		<div class="form-group">
-			<label for="pickupTime">Pickup Time:</label>
+			<label for="pickupTime">Preferred Pickup Time:</label>
 			<input type="datetime-local" class="form-control" id="pickupTime" name="pickupTime"
 			<?php
 			  date_default_timezone_set('Australia/Brisbane');
@@ -171,6 +174,27 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 			<label class="radio-inline"><input type="radio" name="otherPickupAddress" disabled>Your Address</label>
 			<label class="radio-inline"><input type="radio" name="otherPickupAddress" checked="checked">Other</label>
 			<input type="text" class="form-control" id="pickupAddress" name="pickupAddress">
+		</div>
+		
+		<!--Pickup PostCode-->
+		<div class="form-group">
+			<label for="email">Postcode:</label>
+			<input type="number" class="form-control" id="email" placeholder="Enter Postcode" name="pickupPostCode" pattern="^[0-9]{4}$">
+		</div>
+		
+		<!--Pickup State-->
+		<div class="form-group">
+			<label for="state">State:</label>
+			<select class="form-control" id="state" name="pickupState">
+				<option value="" disabled selected>- Select State -</option>
+				<option>QLD</option>
+				<option>NSW</option>
+				<option>ACT</option>
+				<option>VIC</option>
+				<option>SA</option>
+				<option>WA</option>
+				<option>NT</option>
+			</select>
 		</div>
 
 		<div class="row">
@@ -201,6 +225,22 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 			<div class="col-sm-10 col-xs-10">
 			<h3>Delivery</h3>
 			</div>
+		</div>
+		
+		<!--delivery Time-->
+		<div class="form-group">
+			<label for="pickupTime">Preferred Pickup Time:</label>
+			<input type="datetime-local" class="form-control" id="deliveryTime" name="deliveryTime"
+			<?php
+			  date_default_timezone_set('Australia/Brisbane');
+			  $dateMin = date('Y-m-d TH:i:s a');
+			  echo "min='".$dateMin."'";
+
+			  $date = date_create($dateMin);
+			  date_modify($date,"+1 year");
+			  $dateMax = date_format($date, "Y-m-d TH:i:s a");
+			  echo " max='".$dateMax."'";
+			?>>
 		</div>
 
 		<!--Delivery Address-->
