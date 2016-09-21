@@ -118,13 +118,13 @@
             <p>Type: {$order['deliveryPriority']}</p>
           </td>
           <td>
-            <p>Time: {$order['pickupTime']}</p>
+            <p>Preferred Time: {$order['pickupTime']}</p>
             <p>Address: {$order['pickupAddress']}</p>
             <p>Postcode: {$order['pickupPostcode']}</p>
             <p>State: {$order['pickupState']}</p>
           </td>
           <td>
-            <p>Time: {$order['deliveryTime']}</p>
+            <p>Preferred Time: {$order['deliveryTime']}</p>
             <p>Recipient: {$order['recipientName']}</p>
             <p>Recipient Phone: {$order['recipientPhone']}</p>
             <p>Address: {$order['deliveryAddress']}</p>
