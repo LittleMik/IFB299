@@ -48,22 +48,6 @@ class User
 		}
 	}
 
-	//Saves User to Database
-	function saveToDatabase()
-	{
-
-
-		//If the user already has an id (i.e. is being modified) run the update user function otherwise create a user
-
-		if($this->id != ""){
-
-		} else {
-
-		}
-
-
-	}
-
 	//Create a customer account that has the role hard coded to '0'
 	function createCustomerAccount($password)
 	{
@@ -233,6 +217,6 @@ class User
 	function updateAccount() {
 		updateUser($this);
 	}
-	}
+}
 
 ?>
