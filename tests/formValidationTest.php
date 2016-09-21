@@ -354,12 +354,12 @@
     public static function providerCheckTime()
     {
         return array(
-          array("0000-00-00 00:00:00", true),
-          array("2016-09-14 14:03:00", true),
-          array("2016-10-01 20:13:05", true),
-          array("2016-10-01 20:13:05A", false),
-          array("-102-10-01 20:13:05", false),
-          array("20000-110-01 20:13:05", false),
+          array("0000-00-00T00:00:00", true),
+          array("2016-09-14T14:03:00", true),
+          array("2016-10-01T20:13:05", true),
+          array("2016-10-01T20:13:05A", false),
+          array("-102-10-01T20:13:05", false),
+          array("20000-110-01T20:13:05", false),
           array(20, false),
           array("20/11/1995", false),
           array("", false)

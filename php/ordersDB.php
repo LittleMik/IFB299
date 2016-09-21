@@ -98,7 +98,7 @@
 				  echo "<th>Edit Order</th>";
 				}
 			}
-			
+
     echo  '</tr>
         </thead>
       <tbody>';
@@ -120,11 +120,16 @@
           <td>
             <p>Time: {$order['pickupTime']}</p>
             <p>Address: {$order['pickupAddress']}</p>
+            <p>Postcode: {$order['pickupPostcode']}</p>
+            <p>State: {$order['pickupState']}</p>
           </td>
           <td>
+            <p>Time: {$order['deliveryTime']}</p>
             <p>Recipient: {$order['recipientName']}</p>
             <p>Recipient Phone: {$order['recipientPhone']}</p>
             <p>Address: {$order['deliveryAddress']}</p>
+            <p>Postcode: {$order['deliveryPostcode']}</p>
+            <p>State: {$order['deliveryState']}</p>
           </td>
           <td>{$order['orderStatus']}</td>
           <td><a href='view-order.php?orderID={$order['orderID']}'>View</a>";
@@ -193,16 +198,16 @@
 		  }
 		}
 	}
-  
+
 	function getOrderObject($orderID) {
 		require_once 'orders.php';
 		$order = getOrder($orderID);
-		
-		$orderObject = new Order($order['orderID'], $order['userID'],$order['orderStatus'], $order['description'], 
+
+		$orderObject = new Order($order['orderID'], $order['userID'],$order['orderStatus'], $order['description'],
 		$order['signature'], $order['deliveryPriority'], $order['pickupAddress'], $order['pickupPostcode'],
 		$order['pickupState'], $order['pickupTime'], $order['deliveryAddress'], $order['deliveryPostcode'],
 		$order['deliveryState'], $order['deliveryTime'], $order['recipientName'], $order['recipientPhone']);
-		
+
 		return $orderObject;
 	}
 
@@ -278,10 +283,14 @@
         <td>
           <p>Preferred Time: {$order['pickupTime']}</p>
           <p>Address: {$order['pickupAddress']}</p>
+          <p>Postcode: {$order['pickupPostcode']}</p>
+          <p>State: {$order['pickupState']}</p>
         </td>
         <td>
           <p>Preferred Time: {$order['deliveryTime']}</p>
           <p>Address: {$order['deliveryAddress']}</p>
+          <p>Postcode: {$order['deliveryPostcode']}</p>
+          <p>State: {$order['deliveryState']}</p>
         </td>
         <td>
           <p>Name: {$order['recipientName']}</p>
