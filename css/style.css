@@ -1459,6 +1459,9 @@
     background-color:#171F68;
     
   }
+  .footer .col-md-4 {
+  	height:2000px;	
+  }
   
   .footer section {
     background: none;
