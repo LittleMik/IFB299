@@ -1307,7 +1307,7 @@
 }
 
 /* Order Icon 1 */
-#shortcut3 {
+#shortcut3 img {
   width: 20px;
   height: 20px;
   margin-left: 40%;
@@ -1316,7 +1316,7 @@
 }
 
 /* Order Icon 2,3,4 */
-#shortcut2 {
+#shortcut2 img {
   width: 20px;
   height: 20px;
   margin-left: 40%;
