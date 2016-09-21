@@ -80,8 +80,18 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 
 <?php require 'includes/header.inc' ?>
 
-<div class="container">
-	<h2>Order Details</h2>
+<img id="shortcut1" src="images/createphoneorder.png" alt="Banner">
+
+<div class="container1">
+
+	<div class="row1">
+		<div class="col-sm-2 col-xs-2">
+		<img id="shortcut3" src="images/1icon.png" alt="1"></img>
+		</div>
+		<div class="col-sm-10 col-xs-10">
+		<h3>Order Details</h3>
+		</div>
+	</div>
 	<form method="post" autocomplete="on" onsubmit="return validate(this)" action="<?php echo "https://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];?>">
 		<!--Customer Email-->
 		<div class="form-group">
@@ -130,7 +140,14 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 			</div>
 		</div>
 
-		<h3>Pick Up</h3>
+		<div class="row">
+		        <div class="col-sm-2 col-xs-2">
+		  	<img id="shortcut3" src="images/2icon.png" alt="2"></img>
+			</div>
+			<div class="col-sm-10 col-xs-10">
+		    	<h3>Pick Up</h3>
+		  	</div>
+		</div>
 
 		<!--Pickup Time-->
 		<div class="form-group">
@@ -156,7 +173,15 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 			<input type="text" class="form-control" id="pickupAddress" name="pickupAddress">
 		</div>
 
-		<h3>Recipient Details</h3>
+		<div class="row">
+      			<div class="col-sm-2 col-xs-2">
+			<img id="shortcut3" src="images/3icon.png" alt="3"></img>
+			</div>
+			<div class="col-sm-10 col-xs-10">
+			<h3>Recipient Details</h3>
+			</div>
+		</div>
+		
 		<!--Fullname of Recipient-->
 		<div class="form-group">
 			<label for="recipientName">Recipient Name:</label>
@@ -169,7 +194,14 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 			<input type="tel" class="form-control" id="recipientPhone" placeholder="Enter Phone Number" name="recipientPhone" maxlength="16" pattern="^(?:\(\+?[0-9]{2}\))?(?:[0-9]{6,10}|[0-9]{3,4}(?:(?:\s[0-9]{3,4}){1,2}))$" required>
 		</div>
 
-		<h3>Delivery</h3>
+		<div class="row">
+			<div class="col-sm-2 col-xs-2">
+			<img id="shortcut3" src="images/4icon.png" alt="4"></img>
+			</div>
+			<div class="col-sm-10 col-xs-10">
+			<h3>Delivery</h3>
+			</div>
+		</div>
 
 		<!--Delivery Address-->
 		<div class="form-group">
@@ -198,7 +230,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 			</select>
 		</div>
 
-		<button type="submit" class="btn btn-default">Submit</button>
+		<button type="submit" class="btnbtn-default">Submit</button>
 
 	</form>
 </div>
