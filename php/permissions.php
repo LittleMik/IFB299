@@ -21,7 +21,6 @@
       'phone-order.php' => Roles::Coordinator,
       'edit-accounts.php' => Roles::Admin,
       'view-users.php' => Roles::Manager,
-      'order-information.php' => Roles::Manager,
       'package-information.php' => Roles::Manager
     );
 

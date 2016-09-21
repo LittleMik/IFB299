@@ -76,111 +76,71 @@ class Order{
         $this->status = "Ordered";
   		
   	}
-	
-	/* I don't think we need this anymore
-	function createCustomerOrder()
-    {
-		require 'pdo.inc';
-		try
-		{
-			// Prepare Query
-			$stmt = $pdo->prepare(
-			"INSERT INTO orders (userID, orderStatus, description, signature, 
-			deliveryPriority, pickupAddress, pickupPostcode, pickupState, 
-			pickupTime, deliveryAddress, deliveryPostcode, deliveryState, 
-			deliveryTime, recipientName, recipientPhone) 
-			
-			VALUES (:userID, :orderStatus, :description, :signature, :deliveryPriority, 
-			:pickupAddress, :pickupPostcode, :pickupState, :pickupTime, :deliveryAddress, 
-			:deliveryPostcode, :deliveryState, :deliveryTime, :recipientName, :recipientPhone)"
-		);
-
-		//Bind query parameter with it's given variable
-		$stmt->bindParam(':userID', $this->userID);
-		$stmt->bindParam(':orderStatus', $this->status);
-		$stmt->bindParam(':description', $this->description);
-		$stmt->bindParam(':signature', $this->signature);
-		$stmt->bindParam(':deliveryPriority', $this->priority);
-		$stmt->bindParam(':pickupAddress', $this->pickupAddress);
-		$stmt->bindParam(':pickupPostcode', $this->pickupPostcode);
-		$stmt->bindParam(':pickupState', $this->pickupState);
-		$stmt->bindParam(':pickupTime', $this->pickupTime);
-		$stmt->bindParam(':deliveryAddress', $this->deliveryAddress);
-		$stmt->bindParam(':deliveryPostcode', $this->deliveryAddress);
-		$stmt->bindParam(':deliveryState', $this->deliveryAddress);
-		$stmt->bindParam(':deliveryTime', $this->deliveryAddress);
-		$stmt->bindParam(':recipientName', $this->recipientName);
-		$stmt->bindParam(':recipientPhone', $this->recipientPhone);
-
-		//Run query
-		$stmt->execute();
-		
-		$last_id = $pdo->lastInsertId();
-
-		//Close connection
-		$stmt = null;
-		//Destroy PDO Object
-		$pdo = null;
-		
-		return $last_id;
-
-		}catch(PDOException $e){
-			//Output Error
-			echo $e->getMessage();
-			echo '<p>'.$e.'</p>';
-		}
-	}*/ 
 
 	function editOrder()
-    {
-		require 'pdo.inc';
+   {
+	    require 'pdo.inc';
 		try
 		{
 			// Prepare Query
 			$stmt = $pdo->prepare(
-			"UPDATE orders 
-			SET description = :description,
-			signature = :signature
-			deliveryPriority = :deliveryPriority,
-			pickupAddress = :pickupAddress,
-			pickupTime = :pickupTime,
-			deliveryAddress = :deliveryAddress,
-			recipientName = :recipientName,
+			"UPDATE orders
+			SET userID = :userID,
+			orderStatus = :orderStatus, 
+			description = :description, 
+			signature = :signature, 
+			deliveryPriority = :deliveryPriority, 
+			pickupAddress = :pickupAddress, 
+			pickupPostcode = :pickupPostcode, 
+			pickupState = :pickupState, 
+			pickupTime = :pickupTime, 
+			deliveryAddress = :deliveryAddress, 
+			deliveryPostcode = :deliveryPostcode, 
+			deliveryState = :deliveryState, 
+			deliveryTime = :deliveryTime, 
+			recipientName = :recipientName, 
 			recipientPhone = :recipientPhone
-			
 			WHERE orderID = :orderID;"
-		);
+			);
 
-		//Bind query parameter with it's given variable
-		$stmt->bindParam(':userID', $this->userID);
-		$stmt->bindParam(':orderStatus', $this->status);
-		$stmt->bindParam(':description', $this->description);
-		$stmt->bindParam(':signature', $this->signature);
-		$stmt->bindParam(':deliveryPriority', $this->priority);
-		$stmt->bindParam(':pickupAddress', $this->pickupAddress);
-		$stmt->bindParam(':pickupTime', $this->pickupTime);
-		$stmt->bindParam(':deliveryAddress', $this->deliveryAddress);
-		$stmt->bindParam(':recipientName', $this->recipientName);
-		$stmt->bindParam(':recipientPhone', $this->recipientPhone);
+			//Bind query parameter with it's given variable
+			$stmt->bindParam(':userID', $this->userID);
+			$stmt->bindParam(':orderStatus', $this->status);
+			$stmt->bindParam(':description', $this->description);
+			$stmt->bindParam(':signature', $this->signature);
+			$stmt->bindParam(':deliveryPriority', $this->priority);
+			$stmt->bindParam(':pickupAddress', $this->pickupAddress);
+			$stmt->bindParam(':pickupPostcode', $this->pickupPostcode);
+			$stmt->bindParam(':pickupState', $this->pickupState);
+			$stmt->bindParam(':pickupTime', $this->pickupTime);
+			$stmt->bindParam(':deliveryAddress', $this->deliveryAddress);
+			$stmt->bindParam(':deliveryPostcode', $this->deliveryPostcode);
+			$stmt->bindParam(':deliveryState', $this->deliveryState);
+			$stmt->bindParam(':deliveryTime', $this->deliveryTime);
+			$stmt->bindParam(':recipientName', $this->recipientName);
+			$stmt->bindParam(':recipientPhone', $this->recipientPhone);
+			$stmt->bindParam(':orderID', $this->orderID);
 
-		//Run query
-		$stmt->execute();
-		
-		$last_id = $pdo->lastInsertId();
+			//Run query
+			$stmt->execute();
+			//get id of newly inserted row
+			$last_id = $pdo->lastInsertId();
+			
+			echo '<script>alert('.$last_id.')</script>';
 
-		//Close connection
-		$stmt = null;
-		//Destroy PDO Object
-		$pdo = null;
-		
-		return $last_id;
+			//Close connection
+			$stmt = null;
+			//Destroy PDO Object
+			$pdo = null;
+			//Return id of newly inserted row
+			return $last_id;
 
 		}catch(PDOException $e){
 			//Output Error
 			echo $e->getMessage();
 			echo '<p>'.$e.'</p>';
 		}
-	}	
+	}
 	
 	function createOrder()
     {
@@ -196,37 +156,37 @@ class Order{
 			
 			VALUES (:userID, :orderStatus, :description, :signature, :deliveryPriority, 
 			:pickupAddress, :pickupPostcode, :pickupState, :pickupTime, :deliveryAddress, 
-			:deliveryPostcode, :deliveryState, :deliveryTime, :recipientName, :recipientPhone)"
-		);
+			:deliveryPostcode, :deliveryState, :deliveryTime, :recipientName, :recipientPhone
+			)");
 
-		//Bind query parameter with it's given variable
-		$stmt->bindParam(':userID', $this->userID);
-		$stmt->bindParam(':orderStatus', $this->status);
-		$stmt->bindParam(':description', $this->description);
-		$stmt->bindParam(':signature', $this->signature);
-		$stmt->bindParam(':deliveryPriority', $this->priority);
-		$stmt->bindParam(':pickupAddress', $this->pickupAddress);
-		$stmt->bindParam(':pickupPostcode', $this->pickupPostcode);
-		$stmt->bindParam(':pickupState', $this->pickupState);
-		$stmt->bindParam(':pickupTime', $this->pickupTime);
-		$stmt->bindParam(':deliveryAddress', $this->deliveryAddress);
-		$stmt->bindParam(':deliveryPostcode', $this->deliveryAddress);
-		$stmt->bindParam(':deliveryState', $this->deliveryAddress);
-		$stmt->bindParam(':deliveryTime', $this->deliveryAddress);
-		$stmt->bindParam(':recipientName', $this->recipientName);
-		$stmt->bindParam(':recipientPhone', $this->recipientPhone);
+			//Bind query parameter with it's given variable
+			$stmt->bindParam(':userID', $this->userID);
+			$stmt->bindParam(':orderStatus', $this->status);
+			$stmt->bindParam(':description', $this->description);
+			$stmt->bindParam(':signature', $this->signature);
+			$stmt->bindParam(':deliveryPriority', $this->priority);
+			$stmt->bindParam(':pickupAddress', $this->pickupAddress);
+			$stmt->bindParam(':pickupPostcode', $this->pickupPostcode);
+			$stmt->bindParam(':pickupState', $this->pickupState);
+			$stmt->bindParam(':pickupTime', $this->pickupTime);
+			$stmt->bindParam(':deliveryAddress', $this->deliveryAddress);
+			$stmt->bindParam(':deliveryPostcode', $this->deliveryPostcode);
+			$stmt->bindParam(':deliveryState', $this->deliveryState);
+			$stmt->bindParam(':deliveryTime', $this->deliveryTime);
+			$stmt->bindParam(':recipientName', $this->recipientName);
+			$stmt->bindParam(':recipientPhone', $this->recipientPhone);
 
-		//Run query
-		$stmt->execute();
-		//get id of newly inserted row
-		$last_id = $pdo->lastInsertId();
+			//Run query
+			$stmt->execute();
+			//get id of newly inserted row
+			$last_id = $pdo->lastInsertId();
 
-		//Close connection
-		$stmt = null;
-		//Destroy PDO Object
-		$pdo = null;
-		//Return id of newly inserted row
-		return $last_id;
+			//Close connection
+			$stmt = null;
+			//Destroy PDO Object
+			$pdo = null;
+			//Return id of newly inserted row
+			return $last_id;
 
 		}catch(PDOException $e){
 			//Output Error
