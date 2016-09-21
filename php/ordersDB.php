@@ -198,10 +198,10 @@
 		require_once 'orders.php';
 		$order = getOrder($orderID);
 		
-		$orderObject = new Order($order['userID'], $order['description'], 
-		$order['signature'], $order['deliveryPriority'], $order['pickupAddress'],
-		$order['pickupTime'], $order['deliveryAddress'], $order['firstName'], 
-		$order['deliveryAddress'], $order['recipientName'], $order['recipientPhone'], $order['orderID']);
+		$orderObject = new Order($order['orderID'], $order['userID'],$order['orderStatus'], $order['description'], 
+		$order['signature'], $order['deliveryPriority'], $order['pickupAddress'], $order['pickupPostcode'],
+		$order['pickupState'], $order['pickupTime'], $order['deliveryAddress'], $order['deliveryPostcode'],
+		$order['deliveryState'], $order['deliveryTime'], $order['recipientName'], $order['recipientPhone']);
 		
 		return $orderObject;
 	}
