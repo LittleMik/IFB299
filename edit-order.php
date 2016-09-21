@@ -68,7 +68,7 @@
 
 		$user = unserialize($_SESSION['user']);
 
-		$order = new Order(0, getID($_POST['email']), Status::Ordered, $_POST['description'], $_POST['signature'], 
+		$order = new Order((htmlspecialchars($_GET["orderID"])), getID($_POST['email']), Status::Ordered, $_POST['description'], $_POST['signature'], 
 		$_POST['priority'], $_POST['pickupAddress'], $_POST['pickupPostCode'], $_POST['pickupState'], $_POST['pickupTime'], 
 		$_POST['deliveryAddress'], $_POST['deliveryPostCode'], $_POST['deliveryState'], $_POST['deliveryTime'], 
 		$_POST['recipientName'], $_POST['recipientPhone']);
@@ -76,7 +76,7 @@
 		$orderID = $order->editOrder();
 
 		//Redirect Script
-		//header('Location: view-order.php?orderID=262');
+		header('Location: view-order.php?orderID='.$_GET['orderID']);
 	}
 }
 ?>

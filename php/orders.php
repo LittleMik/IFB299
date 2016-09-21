@@ -77,6 +77,7 @@ class Order{
   		
   	}
 
+	//Function to edit the 
 	function editOrder()
    {
 	    require 'pdo.inc';
@@ -125,8 +126,6 @@ class Order{
 			$stmt->execute();
 			//get id of newly inserted row
 			$last_id = $pdo->lastInsertId();
-			
-			echo '<script>alert('.$last_id.')</script>';
 
 			//Close connection
 			$stmt = null;

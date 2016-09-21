@@ -327,7 +327,7 @@
       <tbody>';
 
       //Check if packages are present in query results
-      if(empty($stmtPackages))
+      if($stmtPackages->rowCount() == 0)
       {
         echo "
         <tr><h3>No packages can be found for this order...</h3></tr>
