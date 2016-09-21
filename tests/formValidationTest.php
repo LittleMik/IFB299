@@ -18,7 +18,9 @@
 
       $this->assertEquals($expectedResult, $result);
     }
-
+    /**
+    * Check Email DataProvider
+    */
     public static function providerCheckEmail()
     {
         return array(
@@ -65,7 +67,9 @@
 
       $this->assertEquals($expectedResult, $result);
     }
-
+    /**
+    * Check Password DataProvider
+    */
     public static function providerCheckPassword()
     {
         return array(
@@ -90,7 +94,9 @@
 
       $this->assertEquals($expectedResult, $result);
     }
-
+    /**
+    * Check Name DataProvider
+    */
     public static function providerCheckName()
     {
         return array(
@@ -115,7 +121,9 @@
 
       $this->assertEquals($expectedResult, $result);
     }
-
+    /**
+    * Check Full Name DataProvider
+    */
     public static function providerCheckFullName()
     {
         return array(
@@ -140,7 +148,9 @@
 
       $this->assertEquals($expectedResult, $result);
     }
-
+    /**
+    * Check Phone DataProvider
+    */
     public static function providerCheckPhone()
     {
         return array(
@@ -169,7 +179,9 @@
 
       $this->assertEquals($expectedResult, $result);
     }
-
+    /**
+    * Check Address DataProvider
+    */
     public static function providerCheckAddress()
     {
         return array(
@@ -198,7 +210,9 @@
 
       $this->assertEquals($expectedResult, $result);
     }
-
+    /**
+    * Check Post DataProvider
+    */
     public static function providerCheckPost()
     {
         return array(
@@ -228,7 +242,9 @@
 
       $this->assertEquals($expectedResult, $result);
     }
-
+    /**
+    * Check State DataProvider
+    */
     public static function providerCheckState()
     {
         return array(
@@ -261,7 +277,9 @@
 
       $this->assertEquals($expectedResult, $result);
     }
-
+    /**
+    * Check Match DataProvider
+    */
     public static function providerCheckMatch()
     {
         return array(
@@ -296,7 +314,9 @@
 
       $this->assertEquals($expectedResult, $result);
     }
-
+    /**
+    * Check Weight Data Provider
+    */
     public static function providerCheckWeight()
     {
         return array(
@@ -310,6 +330,134 @@
           array(0, false),
           array("0", false),
           array("not a weight", false),
+          array("", false)
+        );
+    }
+
+    /**
+    * Test Time Verification
+    * @dataProvider providerCheckTime
+    */
+    public function testCheckTime($time, $expectedResult)
+    {
+      $result = checkTime($time);
+
+      var_dump($time);
+      var_dump($expectedResult);
+      var_dump($result);
+
+      $this->assertEquals($expectedResult, $result);
+    }
+    /**
+    * Check Time Data Provider
+    */
+    public static function providerCheckTime()
+    {
+        return array(
+          array("0000-00-00 00:00:00", true),
+          array("2016-09-14 14:03:00", true),
+          array("2016-10-01 20:13:05", true),
+          array("2016-10-01 20:13:05A", false),
+          array("-102-10-01 20:13:05", false),
+          array("20000-110-01 20:13:05", false),
+          array(20, false),
+          array("20/11/1995", false),
+          array("", false)
+        );
+    }
+
+    /**
+    * Test Status Verification
+    * @dataProvider providerCheckStatus
+    */
+    public function testCheckStatus($status, $expectedResult)
+    {
+      $result = checkStatus($status);
+
+      var_dump($status);
+      var_dump($expectedResult);
+      var_dump($result);
+
+      $this->assertEquals($expectedResult, $result);
+    }
+    /**
+    * Check Status Data Provider
+    */
+    public static function providerCheckStatus()
+    {
+        return array(
+          array("Ordered", true),
+          array("Picking Up", true),
+          array("Picked Up", true),
+          array("Storing", true),
+          array("Delivering", true),
+          array("Delivered", true),
+          array("22222", false),
+          array(0, false),
+          array("0", false),
+          array("Delivereddd", false),
+          array("", false)
+        );
+    }
+
+    /**
+    * Test Priority Verification
+    * @dataProvider providerCheckPriority
+    */
+    public function testCheckPriority($priority, $expectedResult)
+    {
+      $result = checkPriority($priority);
+
+      var_dump($priority);
+      var_dump($expectedResult);
+      var_dump($result);
+
+      $this->assertEquals($expectedResult, $result);
+    }
+    /**
+    * Check Priority Data Provider
+    */
+    public static function providerCheckPriority()
+    {
+        return array(
+          array("Standard", true),
+          array("Express", true),
+          array("1", false),
+          array(0, false),
+          array("0", false),
+          array(":^)", false),
+          array("", false)
+        );
+    }
+
+    /**
+    * Test Check Int Verification
+    * @dataProvider providerCheckInt
+    */
+    public function testCheckInt($int, $expectedResult)
+    {
+      $result = checkIntID($int);
+
+      var_dump($int);
+      var_dump($expectedResult);
+      var_dump($result);
+
+      $this->assertEquals($expectedResult, $result);
+    }
+    /**
+    * Check Int Data Provider
+    */
+    public static function providerCheckInt()
+    {
+        return array(
+          array(30, true),
+          array(1, true),
+          array(99, true),
+          array("99", true),
+          array("1", true),
+          array("0", false),
+          array(0, false),
+          array(":^)", false),
           array("", false)
         );
     }

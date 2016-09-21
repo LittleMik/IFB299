@@ -146,16 +146,35 @@
     }
   }
 
-  //to do
+  /**
+  * Verify Time Stamp is Valid
+  * Args: $time
+  * Returns true if time stamp vaild,
+  * false if invalid
+  */
   function checkTime($time)
   {
+    //Check input exists
     if(isset($time) && $time !== ""){
-      return true;
+
+      //Check input against timestamp format
+      if(preg_match('/^\d{4}-(?:(?:0\d)|(?:1[0-2]))-(?:(?:[0-2]\d)|(?:3[01]))\s(?:(?:[01]\d)|(?:2[0-3])):[0-5]\d:[0-5]\d$/', $time))
+      {
+        return true;
+      }else{
+        return false;
+      }
     }else{
       return false;
     }
   }
 
+  /**
+  * Verify Status is Vaild
+  * Args: $status
+  * Returns true if status is valid,
+  * false if invalid
+  */
   function checkStatus($status)
   {
     if(isset($status))
@@ -180,6 +199,8 @@
     //Check set
     if(isset($priority))
     {
+
+      //Check priority matches one of the predefined delivery priorities
       if(preg_match('/^Standard|Express$/', $priority))
       {
         return true;
@@ -198,6 +219,7 @@
   */
   function checkIntID($id)
   {
+    //Validate input is an integer
     if(filter_var($id, FILTER_VALIDATE_INT))
     {
       return true;
@@ -205,5 +227,5 @@
       return false;
     }
   }
-  
+
  ?>
