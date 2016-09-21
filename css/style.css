@@ -67,7 +67,7 @@
   /*Logo in Navigation */
   .navbar-brand {
     padding: 0px;
-    background-color: #8C1B16; /* Remove this when the brand logo's padding is fixed*/
+    background-color: #171F68; /* Remove this when the brand logo's padding is fixed*/
   }
   
   /*Navigation List */
@@ -441,7 +441,7 @@
   /*Logo in Navigation */
   .navbar-brand {
     padding: 0px;
-    background-color: #8C1B16; /* Still need to fix the brand logo's padding*/
+    background-color: #171F68; /* Still need to fix the brand logo's padding*/
   }
   
   /*Navigation List */
@@ -808,7 +808,7 @@
   /*Logo in Navigation */
   .navbar-brand {
     padding: 0px;
-    background-color: #8C1B16; /* Remove this when the brand logo's padding is fixed*/
+    background-color: #171F68; /* Remove this when the brand logo's padding is fixed*/
   }
    
   .navbar-brand img {
@@ -1184,7 +1184,7 @@
   /*Logo in Navigation */
   .navbar-brand {
     padding: 0px;
-    background-color: #8C1B16; /* Remove this when the brand logo's padding is fixed*/
+    background-color: #171F68; /* Remove this when the brand logo's padding is fixed*/
   }
   
   .navbar-brand img {
@@ -1507,6 +1507,9 @@
 
 }
 
+.navbar-header a:hover {
+  background-color:  #8C1B16;
+}
 
 .footer p {
 	/*color: #ffffff;*/
