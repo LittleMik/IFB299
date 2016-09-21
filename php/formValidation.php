@@ -158,7 +158,7 @@
     if(isset($time) && $time !== ""){
 
       //Check input against timestamp format
-      if(preg_match('/^\d{4}-(?:(?:0\d)|(?:1[0-2]))-(?:(?:[0-2]\d)|(?:3[01]))\s(?:(?:[01]\d)|(?:2[0-3])):[0-5]\d:[0-5]\d$/', $time))
+      if(preg_match('/^\d{4}-(?:(?:0\d)|(?:1[0-2]))-(?:(?:[0-2]\d)|(?:3[01]))T(?:(?:[01]\d)|(?:2[0-3])):[0-5]\d:[0-5]\d$/', $time))
       {
         return true;
       }else{

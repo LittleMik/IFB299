@@ -242,7 +242,7 @@
     border-radius: 4px;
   }
   
-  /* Form pink box */
+  /* Order Form Pink Box/Background */
   .container1{
     max-width: 900px;
     background-color:#D88A7A;
@@ -251,10 +251,19 @@
     margin-bottom: 20%
   }
   
-  /*Table Stuff */
+  /*View Order */
+  .form-group h2, h3 {
+   color: #8C1B16;
+  }
+  
+  
+  
+  /*Tables */
   #view-order p {
     color:black;
   }
+  
+  
   
   /*Footer */
   .footer {
