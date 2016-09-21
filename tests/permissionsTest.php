@@ -62,11 +62,11 @@
         array(Roles::Admin, 'view-users.php', true),
 
         //Edit Order Information
-        array(Roles::Customer, 'order-information.php', false),
-        array(Roles::Driver, 'order-information.php', false),
-        array(Roles::Coordinator, 'order-information.php', false),
-        array(Roles::Manager, 'order-information.php', true),
-        array(Roles::Admin, 'order-information.php', true),
+        array(Roles::Customer, 'edit-order.php', false),
+        array(Roles::Driver, 'edit-order.php', false),
+        array(Roles::Coordinator, 'edit-order.php', true),
+        array(Roles::Manager, 'edit-order.php', true),
+        array(Roles::Admin, 'edit-order.php', true),
 
         //Edit Package Information
         array(Roles::Customer, 'package-information.php', false),

@@ -5,12 +5,14 @@
   class UsersTest extends \PHPUnit_Framework_TestCase
   {
     /**
-    * Test Permission Checking
+    * Test User Constructor
     * @dataProvider providerConstructorUser
     */
-    public function testConstructorUser($email, $firstName, $lastName, $phone, $address, $postCode, $state)
+    public function testConstructorUser($email, $firstName, $lastName, $phone, $role, $address, $postCode, $state)
     {
-      $user = new User(null, $email, $firstName, $lastName, $phone, $address, $postCode, $state);
+      $id = null;
+
+      $user = new User($id, $email, $firstName, $lastName, $phone, $role, $address, $postCode, $state);
 
       var_dump($user->email);
       var_dump($user->firstName);
@@ -29,7 +31,7 @@
       $this->assertEquals($state, $user->state);
     }
     /**
-    * Check Permission DataProvider
+    * Test User Constructor DataProvider
     */
     public static function providerConstructorUser()
     {
@@ -39,36 +41,30 @@
           "bob@email.com",
           "Bob","Marley",
           "(07)3129 1290",
+          "0",
           "15 Herp Street, Derp",
-          "postCode" => "4001",
+          "4001",
           "QLD"
         ),
         array(
-          "email" => "bob@email.com",
-          "firstName" => "Bob",
-          "lastName" => "Marley",
-          "phone" => "(07)3129 1290",
-          "address" => "15 Herp Street, Derp",
-          "postCode" => "4001",
-          "state" => "QLD"
+          "misha@rip.com",
+          "Misha",
+          "TheD00D",
+          "3129 1290",
+          "4",
+          "52 Merp Drive, Derp",
+          "3234",
+          "VIC"
           ),
         array(
-          "email" => "bob@email.com",
-          "firstName" => "Bob",
-          "lastName" => "Marley",
-          "phone" => "(07)3129 1290",
-          "address" => "15 Herp Street, Derp",
-          "postCode" => "4001",
-          "state" => "QLD"
-          ),
-        array(
-          "email" => "bob@email.com",
-          "firstName" => "Bob",
-          "lastName" => "Marley",
-          "phone" => "(07)3129 1290",
-          "address" => "15 Herp Street, Derp",
-          "postCode" => "4001",
-          "state" => "QLD"
+          "herp@email.com",
+          "Herp",
+          "Derp",
+          "0429 123 123",
+          "3",
+          "15 Herp Street, Derp",
+          "2342",
+          "NSW"
         ),
       );
   }
