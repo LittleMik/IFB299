@@ -1297,9 +1297,9 @@
   
   /* Order and Phone Banner */
   #shortcut1 {
-  width: 500px;
+  width: 200px;
   height: 50px;
-  margin-top: 100px;
+  margin-top: 50px;
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -1309,7 +1309,7 @@
 #shortcut3 img {
   width: 40px;
   height: 40px;
-  margin-left: 40%;
+  margin-left: 20%;
   display: block;
   float: left;
 }
@@ -1318,7 +1318,7 @@
 #shortcut2 img {
   width: 40px;
   height: 40px;
-  margin-left: 40%;
+  margin-left: 20%;
   display: block;
   float: left;
   margin-top: 20%;
