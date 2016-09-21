@@ -39,7 +39,7 @@
 	<section id="login">
 		<div class="loginform">
 			<form method="POST" class="form-signin">
-			<!--Insert form logo image here-->
+			<img src="images/login.png" alt="Login">
 			<h2 class="form-signin-heading">LOG IN</h2>
 			<div id="error"></div>
 			<label for="inputEmail" class="sr-only">Email address</label>
