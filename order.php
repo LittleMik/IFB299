@@ -21,7 +21,6 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
   //PHP Field Validation
   $errors = array(
 	"description"=>checkDescription($_POST['description']),
-	"totalWeight"=>checkWeight($_POST['totalWeight']),
 	"signature"=>checkSet($_POST['signature']),
 	"priority"=>checkSet($_POST['priority']),
 	"pickupAddress"=>checkAddress($_POST['pickupAddress']),
@@ -48,19 +47,29 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
   {
 	require_once 'php/orders.php';
 	require_once 'php/users.php';
+	require_once 'php/packages.php';
 
 	$user = unserialize($_SESSION['user']);
 
-	$order = new Order($user->id, $_POST['description'], $_POST['totalWeight'], $_POST['signature'], $_POST['priority'], $_POST['pickupAddress'], $_POST['pickupTime'], $_POST['deliveryAddress'], $_POST['recipientName'], $_POST['recipientPhone']);
-
-	$order->createCustomerOrder();
-
+	$order = new Order($user->id, $_POST['description'], $_POST['signature'], $_POST['priority'], $_POST['pickupAddress'], $_POST['pickupTime'], $_POST['deliveryAddress'], $_POST['recipientName'], $_POST['recipientPhone']);
+	
+	//Create the new order, and store the order id (returned) in the $orderID variable
+	$orderID = $order->createCustomerOrder();
+	
+	//Create arrays containing all package descriptions and weights
+	$packageDescriptions = $_POST['packageDescription'];
+	$packageWeights = $_POST['weight'];
+	
+	//Loop through all packages and add them to the database
+	$i = 0;
+	while($i < sizeof($packageDescriptions)){
+		$package = new Package($orderID, $packageWeights[$i], $packageDescriptions[$i]);
+		$package->saveToDB();
+		$i++;
+	}
+	
 	//Redirect Script
-			echo "
-				<script>
-		alert('Order Created');
-					window.location.href = 'index.php';
-				</script>";
+	header('Location: ../index.php');
   }
 }
 ?>
@@ -76,11 +85,22 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 			<label for="comment">Description:</label>
 			<textarea class="form-control" rows="5" id="comment" maxlength="140" name="description"></textarea>*max 140 characters
 		</div>
-
-		<!--Order Weight-->
-		<div class="form-group">
-			<label for="weight">Weight:</label>
-			<input type="number" class="form-control" id="weight" placeholder="Weight in KGs" name="totalWeight" maxlength="4" pattern="^[0-9]{4}$" required>KGs
+		
+		<!--Packages
+			Code for adding extra packages is in customJavascript.hs
+		-->
+		<div class="input_fields_wrap">
+			<div>
+				<button type="button" class="add_field_button">Add Package</button>
+				<div class="form-group">
+					<label for="comment">Package Description:</label>
+					<input type="text" class="form-control" id="package-description" maxlength="50" name="packageDescription[]" required></textarea>*max 50 characters
+				</div>
+				<div class="form-group">
+					<label for="weight">Package Weight:</label>
+					<input type="text" class="form-control" id="package-weight" maxlength="50" name="weight[]" required></textarea>*max 50 characters
+				</div>
+			</div>
 		</div>
 
 		<!--Signature Required-->
@@ -169,7 +189,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 			</select>
 		</div>
 
-		<button type="submit" class="btn btn-default">Submit</button>
+		<button type="submit" class="btn btn-default">Place Order</button>
 
 	</form>
 </div>

@@ -107,7 +107,6 @@
           </td>
           <td>
             <p>Desc: {$order['description']}</p>
-            <p>Weight: {$order['totalWeight']}KG</p>
             <p>Type: {$order['deliveryPriority']}</p>
           </td>
           <td>
@@ -198,13 +197,10 @@
     require 'pdo.inc';
 
     try{
-
-      $where = " orderID = :orderID";
-
       //Set Query
       $query = "SELECT *
       FROM packages
-      WHERE $where
+      WHERE orderID = :orderID
       ORDER BY packageID ASC";
 
       $stmt = $pdo->prepare($query);
@@ -252,7 +248,6 @@
         </td>
         <td>
           <p>Desc: {$order['description']}</p>
-          <p>Total Weight: {$order['totalWeight']}KG</p>
           <p>Type: {$order['deliveryPriority']}</p>";
       if($order['signature'] === '1')
       {
@@ -300,12 +295,13 @@
 		<thead>
           <tr>
             <th>ID</th>
-            <th>Status</th>
+			<th>Description</th>
+            <!-- <th>Status</th> -->
             <th>Weight</th>
-            <th>Time: PickedUp</th>
+            <!-- <th>Time: PickedUp</th>
             <th>Time: Stored</th>
             <th>Time: Delivery</th>
-            <th>Time: Delivered</th>
+            <th>Time: Delivered</th> -->
           </tr>
         </thead>
       <tbody>';
@@ -324,9 +320,10 @@
           echo "
             <tr>
               <td>{$package['packageID']}</td>
-              <td>{$package['packageStatus']}</td>
+			  <td>{$package['packageDescription']}</td>
+              <!-- <td>{$package['packageStatus']}</td> -->
               <td>{$package['packageWeight']}KG</td>
-              <td>
+              <!-- <td>
                 <p>Time: {$package['pickupTime']}</p>
               </td>
               <td>
@@ -337,7 +334,7 @@
               </td>
               <td>
                 <p>Time: {$package['delivered']}</p>
-              </td>";
+              </td> -->";
 
           //Verify User Permission to Edit Orders
           require_once 'php/permissions.php';

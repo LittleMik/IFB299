@@ -9,7 +9,6 @@ class Order{
   	public $userID;
   	public $status;
   	public $description;
-  	public $totalWeight;
   	public $signature;
   	public $priority;
   	public $pickupAddress;
@@ -36,7 +35,6 @@ class Order{
 			$this->userID = $args[0]->userID;
 			$this->status = $args[0]->orderStatus;
 			$this->description = $args[0]->description;
-			$this->totalWeight = $args[0]->totalWeight;
 			$this->signature = $args[0]->signature;
 			$this->priority = $args[0]->deliveryPriority;
 			$this->pickupAddress = $args[0]->pickupAddress;
@@ -53,14 +51,13 @@ class Order{
         //$this->orderID = $args[0]->orderID;
 		$this->userID = $args[0];
 		$this->description = $args[1];
-		$this->totalWeight = $args[2];
-		$this->signature = $args[3];
-		$this->priority = $args[4];
-		$this->pickupAddress = $args[5];
-		$this->pickupTime = $args[6];
-		$this->deliveryAddress = $args[7];
-		$this->recipientName = $args[8];
-		$this->recipientPhone = $args[9];
+		$this->signature = $args[2];
+		$this->priority = $args[3];
+		$this->pickupAddress = $args[4];
+		$this->pickupTime = $args[5];
+		$this->deliveryAddress = $args[6];
+		$this->recipientName = $args[7];
+		$this->recipientPhone = $args[8];
 
         //Set Default Status
         $this->status = "Ordered";
@@ -74,14 +71,13 @@ class Order{
 		{
 			// Prepare Query
 			$stmt = $pdo->prepare(
-			"INSERT INTO orders (userID, orderStatus, description, totalWeight, signature, deliveryPriority, pickupAddress, pickupTime, deliveryAddress, recipientName, recipientPhone) VALUES (:userID, :orderStatus, :description, :totalWeight, :signature, :deliveryPriority, :pickupAddress, :pickupTime, :deliveryAddress, :recipientName, :recipientPhone)"
+			"INSERT INTO orders (userID, orderStatus, description, signature, deliveryPriority, pickupAddress, pickupTime, deliveryAddress, recipientName, recipientPhone) VALUES (:userID, :orderStatus, :description, :signature, :deliveryPriority, :pickupAddress, :pickupTime, :deliveryAddress, :recipientName, :recipientPhone)"
 		);
 
 		//Bind query parameter with it's given variable
 		$stmt->bindParam(':userID', $this->userID);
 		$stmt->bindParam(':orderStatus', $this->status);
 		$stmt->bindParam(':description', $this->description);
-		$stmt->bindParam(':totalWeight', $this->totalWeight);
 		$stmt->bindParam(':signature', $this->signature);
 		$stmt->bindParam(':deliveryPriority', $this->priority);
 		$stmt->bindParam(':pickupAddress', $this->pickupAddress);
@@ -92,11 +88,15 @@ class Order{
 
 		//Run query
 		$stmt->execute();
+		
+		$last_id = $pdo->lastInsertId();
 
 		//Close connection
 		$stmt = null;
 		//Destroy PDO Object
 		$pdo = null;
+		
+		return $last_id;
 
 		}catch(PDOException $e){
 			//Output Error
@@ -113,14 +113,13 @@ class Order{
 		{
 			// Prepare Query
 			$stmt = $pdo->prepare(
-			"INSERT INTO orders (userID, orderStatus, description, totalWeight, signature, deliveryPriority, pickupAddress, pickupTime, deliveryAddress, recipientName, recipientPhone) VALUES (:userID, :orderStatus, :description, :totalWeight, :signature, :deliveryPriority, :pickupAddress, :pickupTime, :deliveryAddress, :recipientName, :recipientPhone)"
+			"INSERT INTO orders (userID, orderStatus, description, signature, deliveryPriority, pickupAddress, pickupTime, deliveryAddress, recipientName, recipientPhone) VALUES (:userID, :orderStatus, :description, :signature, :deliveryPriority, :pickupAddress, :pickupTime, :deliveryAddress, :recipientName, :recipientPhone)"
 		);
 
 		//Bind query parameter with it's given variable
 		$stmt->bindParam(':userID', $this->userID);
 		$stmt->bindParam(':orderStatus', $this->status);
 		$stmt->bindParam(':description', $this->description);
-		$stmt->bindParam(':totalWeight', $this->totalWeight);
 		$stmt->bindParam(':signature', $this->signature);
 		$stmt->bindParam(':deliveryPriority', $this->priority);
 		$stmt->bindParam(':pickupAddress', $this->pickupAddress);
@@ -131,11 +130,15 @@ class Order{
 
 		//Run query
 		$stmt->execute();
+		//get id of newly inserted row
+		$last_id = $pdo->lastInsertId();
 
 		//Close connection
 		$stmt = null;
 		//Destroy PDO Object
 		$pdo = null;
+		//Return id of newly inserted row
+		return $last_id;
 
 		}catch(PDOException $e){
 			//Output Error
