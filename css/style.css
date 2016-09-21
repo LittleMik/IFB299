@@ -202,12 +202,64 @@
   float: left;
   margin-top: 20%;
 }
+/* Create order and edit order background image*/
+#im {
+      width: 900px;
+      height: 1000px;
+      display: block;
+      margin-left: auto;
+      position:relative;
+      margin-top: 0;
+      margin-right: auto;
+      z-index: -1;
+}
+/*Create order and edit order box*/
+.container2{
+      background-color:#F2D5A0;
+      margin-top:  -888px;
+      margin-left: 35%;
+      margin-right: 20%;
+      padding: 0px 5px;
+      margin-bottom: 20%;
+}
+/*Form css edit and create*/
+.form-group1 {
+    margin-left: 3%;
+    margin-right: 3%;
+    color: #BA2020;
+}
 
 /* Form CSS */
 .form-group {
   margin-left: 17%;
   margin-right: 3%;
 }
+
+/*Text */
+.texts {
+  margin-left: 3%;
+  color: #BA2020;
+}
+
+
+.texts2 {
+  margin-left: 3%;
+  color: #BA2020;
+}
+
+/*Summit button*/
+.btn1btn-default {
+
+  width: 160px;
+  height: 40px;
+  margin-top: 2%;
+  margin-bottom: 4%;
+  margin-right: 5%;
+  margin-left: 70%;
+  background-color:#BA2020;
+  color: white;
+}
+
 .row1 {
   padding-top: 10%;
 }

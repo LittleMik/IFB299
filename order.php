@@ -68,7 +68,8 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 	//Loop through all packages and add them to the database
 	$i = 0;
 	while($i < sizeof($packageDescriptions)){
-		$package = new Package($orderID, $packageWeights[$i], $packageDescriptions[$i]);
+		//Note that '0' is given as package id, only to indicate that it has not been set yet
+		$package = new Package(0, $orderID, $packageWeights[$i], $packageDescriptions[$i]);
 		$package->saveToDB();
 		$i++;
 	}

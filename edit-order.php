@@ -74,14 +74,30 @@
 		$_POST['recipientName'], $_POST['recipientPhone']);
 
 		$orderID = $order->editOrder();
+		
+		//Create arrays containing all package descriptions and weights
+		$packageDescriptions = $_POST['packageDescription'];
+		$packageWeights = $_POST['weight'];
+		$packageIDs = $_POST['hiddenPackageID'];
+
+		//Loop through all packages and add them to the database
+		$i = 0;
+		while($i < sizeof($packageDescriptions)){
+			//Note that '0' is given as package id, only to indicate that it has not been set yet
+			$package = new Package($packageIDs[$i], $orderID, $packageWeights[$i], $packageDescriptions[$i]);
+			$package->updateToDB();
+			$i++;
+		}
 
 		//Redirect Script
-		header('Location: view-order.php?orderID='.$_GET['orderID']);
+		//header('Location: view-order.php?orderID='.$_GET['orderID']);
 	}
 }
 ?>
 
 <?php require 'includes/header.inc' ?>
+
+
 
 <div class="container1">
 
@@ -127,6 +143,11 @@
 				<label><input <?php if($orderObject->priority == "Standard"){echo "checked='checked'";}  ?> type="radio" name="priority" value="Standard">Standard (5-7 Business Days)</label>
 			</div>
 		</div>
+		
+		<?php 
+		
+		displayPackageInputs($orderObject->orderID); 
+		?>
 
 		<div class="row">
 		    <div class="col-sm-2 col-xs-2">
