@@ -36,7 +36,7 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="col-sm-2 control-label" for="inputCustomerName">Recipient Name:</label>
+						<label class="col-sm-2 control-label" for="inputCustomerName">Cutomer Name:</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="inputCustomerName" placeholder="Customer Name" name="customerName" maxlength="255" pattern="^[\w]{2,255}(?:\s[\w]{2,255})*(?!=\W)$">
 						</div>
