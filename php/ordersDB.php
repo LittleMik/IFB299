@@ -364,22 +364,6 @@
               <td>
                 <p>Time: {$package['delivered']}</p>
               </td> -->";
-
-          //Verify User Permission to Edit Orders
-          require_once 'php/permissions.php';
-
-          if(isset($_SESSION['role']))
-          {
-            if(checkPermission($_SESSION['role'], 'package-information.php') === true)
-            {
-              echo "
-                <td>
-                  <a href='package-information.php?packageID={$package['packageID']}'>Edit</a>
-                </td>
-              </tr>";
-            }
-          }
-
           //Close Cell and Row tags
           echo "
               </td>

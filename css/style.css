@@ -202,7 +202,19 @@
   float: left;
   margin-top: 20%;
 }
-/* Create order and edit order background image*/
+/*Order Buttons */
+.add_field_button {
+ margin-left:20%;
+ margin-bottom:10px;
+ padding:5px;
+  }
+  
+ .remove_field{
+  margin-left:20%;
+	
+  }
+
+/* Create create acc and edit acc background image*/
 #im {
       width: 900px;
       height: 1000px;
@@ -534,12 +546,160 @@
     display: block;
     margin: auto;
   }
+  /* Order and Phone Banner */
+  #shortcut1 {
+  max-width: 900px;
+  width: 800px;
+  height: 100px;
+  margin-top: 100px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Order Icon 1 */
+  #shortcut3 {
+	width: 70px;
+	height: 70px;
+	margin-left: 40%;
+	display: block;
+	float: left;
+  }
+
+/* Order Icon 2,3,4 */
+  #shortcut2 {
+	width: 70px;
+	height: 70px;
+	margin-left: 40%;
+	display: block;
+	float: left;
+	margin-top: 20%;
+  }
   
+  /*Order Buttons */
+  .add_field_button {
+   margin-left:20%;
+   margin-bottom:10px;
+   padding:5px;
+	}
+  
+ .remove_field{
+  margin-left:20%;
+	
+  }
+  
+  /* Create create acc and edit acc background image*/
+#im {
+      width: 900px;
+      height: 1000px;
+      display: block;
+      margin-left: auto;
+      position:relative;
+      margin-top: 0;
+      margin-right: auto;
+      z-index: -1;
+}
+/*Create order and edit order box*/
+.container2{
+      background-color:#F2D5A0;
+      margin-top:  -888px;
+      margin-left: 35%;
+      margin-right: 20%;
+      padding: 0px 5px;
+      margin-bottom: 20%;
+}
+/*Form css edit and create*/
+.form-group1 {
+    margin-left: 3%;
+    margin-right: 3%;
+    color: #BA2020;
+}
+
+/* Form CSS */
+.form-group {
+  margin-left: 17%;
+  margin-right: 3%;
+}
+
+/*Text */
+.texts {
+  margin-left: 3%;
+  color: #BA2020;
+}
+
+
+.texts2 {
+  margin-left: 3%;
+  color: #BA2020;
+}
+
+/*Summit button*/
+.btn1btn-default {
+
+  width: 160px;
+  height: 40px;
+  margin-top: 2%;
+  margin-bottom: 4%;
+  margin-right: 5%;
+  margin-left: 70%;
+  background-color:#BA2020;
+  color: white;
+}
+
+.row1 {
+  padding-top: 10%;
+}
+
+/*Form Submit Button */
+  .btnbtn-default{
+  max-width: 900px;
+  width: 800px;
+  height: 100px;
+  margin-top: 5%;
+  margin-bottom: -50%;
+  margin-right: 5%;
+  margin-left: 5%;
+  background-color:#010326;
+  color: white;
+}
+
+/* Form pink box */
+  .container1{
+    max-width: 900px;
+    background-color:#D88A7A;
+    margin: -50px auto 0;
+    padding: 0px 5px;
+    margin-bottom: 20%
+  }
   section {
     /*Greg commented this out, section is just used to divide the page
 	into semantic sections, it should probably just be the same colour as the body.
     background-color: #D88A7A;*/
     border-radius: 4px;
+  }
+  
+  /* Order Form Pink Box/Background */
+  .container1{
+    max-width: 900px;
+    background-color:#D88A7A;
+    margin: -50px auto 0;
+    padding: 0px 5px;
+    margin-bottom: 20%
+  }
+  
+  /*View Order */
+  .form-group h2 {
+   color: #8C1B16;
+  }
+  
+  #filter-order h3 {
+   color: #8C1B16;
+  }
+  
+  
+  /*Tables */
+  #view-order p {
+    color:black;
   }
   
   /*Footer */
@@ -758,12 +918,163 @@
     margin: auto;
   }
   
+  
+  /* Order and Phone Banner */
+  #shortcut1 {
+  max-width: 900px;
+  width: 800px;
+  height: 100px;
+  margin-top: 100px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Order Icon 1 */
+#shortcut3 {
+  width: 70px;
+  height: 70px;
+  margin-left: 40%;
+  display: block;
+  float: left;
+}
+
+/* Order Icon 2,3,4 */
+#shortcut2 {
+  width: 70px;
+  height: 70px;
+  margin-left: 40%;
+  display: block;
+  float: left;
+  margin-top: 20%;
+}
+/*Order Buttons */
+.add_field_button {
+ margin-left:20%;
+ margin-bottom:10px;
+ padding:5px;
+  }
+  
+ .remove_field{
+  margin-left:20%;
+	
+  }
+
+/* Create create acc and edit acc background image*/
+#im {
+      width: 900px;
+      height: 1000px;
+      display: block;
+      margin-left: auto;
+      position:relative;
+      margin-top: 0;
+      margin-right: auto;
+      z-index: -1;
+}
+/*Create order and edit order box*/
+.container2{
+      background-color:#F2D5A0;
+      margin-top:  -888px;
+      margin-left: 35%;
+      margin-right: 20%;
+      padding: 0px 5px;
+      margin-bottom: 20%;
+}
+/*Form css edit and create*/
+.form-group1 {
+    margin-left: 3%;
+    margin-right: 3%;
+    color: #BA2020;
+}
+
+/* Form CSS */
+.form-group {
+  margin-left: 17%;
+  margin-right: 3%;
+}
+
+/*Text */
+.texts {
+  margin-left: 3%;
+  color: #BA2020;
+}
+
+
+.texts2 {
+  margin-left: 3%;
+  color: #BA2020;
+}
+
+/*Summit button*/
+.btn1btn-default {
+
+  width: 160px;
+  height: 40px;
+  margin-top: 2%;
+  margin-bottom: 4%;
+  margin-right: 5%;
+  margin-left: 70%;
+  background-color:#BA2020;
+  color: white;
+}
+
+.row1 {
+  padding-top: 10%;
+}
+
+/*Form Submit Button */
+  .btnbtn-default{
+  max-width: 900px;
+  width: 800px;
+  height: 100px;
+  margin-top: 5%;
+  margin-bottom: -50%;
+  margin-right: 5%;
+  margin-left: 5%;
+  background-color:#010326;
+  color: white;
+}
+
+/* Form pink box */
+  .container1{
+    max-width: 900px;
+    background-color:#D88A7A;
+    margin: -50px auto 0;
+    padding: 0px 5px;
+    margin-bottom: 20%
+  }
+  
   section {
      /*Greg commented this out, section is just used to divide the page
 	into semantic sections, it should probably just be the same colour as the body.
     background-color: #D88A7A;*/
     border-radius: 4px;
   }
+  
+  /* Order Form Pink Box/Background */
+  .container1{
+    max-width: 900px;
+    background-color:#D88A7A;
+    margin: -50px auto 0;
+    padding: 0px 5px;
+    margin-bottom: 20%
+  }
+  
+  /*View Order */
+  .form-group h2 {
+   color: #8C1B16;
+  }
+  
+  #filter-order h3 {
+   color: #8C1B16;
+  }
+  
+  
+  /*Tables */
+  #view-order p {
+    color:black;
+  }
+  
   
   /*Footer */
   .footer {
@@ -983,12 +1294,162 @@
     margin: auto;
   }
   
+  
+  /* Order and Phone Banner */
+  #shortcut1 {
+  width: 250px;
+  height: 50px;
+  margin-top: 0px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Order Icon 1 */
+#shortcut3 img {
+  width: 35px;
+  height: 35px;
+  margin-left: 5%;
+  display: block;
+  float: left;
+}
+
+/* Order Icon 2,3,4 */
+#shortcut2 img {
+  width: 35px;
+  height: 35px;
+  margin-left: 5%;
+  display: block;
+  float: left;
+  margin-top: 20%;
+}
+/*Order Buttons */
+.add_field_button {
+ margin-left:20%;
+ margin-bottom:10px;
+ padding:5px;
+  }
+  
+ .remove_field{
+  margin-left:20%;
+	
+  }
+
+/* Create create acc and edit acc background image*/
+#im {
+      width: 900px;
+      height: 1000px;
+      display: block;
+      margin-left: auto;
+      position:relative;
+      margin-top: 0;
+      margin-right: auto;
+      z-index: -1;
+}
+/*Create order and edit order box*/
+.container2{
+      background-color:#F2D5A0;
+      margin-top:  -888px;
+      margin-left: 35%;
+      margin-right: 20%;
+      padding: 0px 5px;
+      margin-bottom: 20%;
+}
+/*Form css edit and create*/
+.form-group1 {
+    margin-left: 3%;
+    margin-right: 3%;
+    color: #BA2020;
+}
+
+/* Form CSS */
+.form-group {
+  margin-left: 17%;
+  margin-right: 3%;
+}
+
+/*Text */
+.texts {
+  margin-left: 3%;
+  color: #BA2020;
+}
+
+
+.texts2 {
+  margin-left: 3%;
+  color: #BA2020;
+}
+
+/*Summit button*/
+.btn1btn-default {
+
+  width: 160px;
+  height: 40px;
+  margin-top: 2%;
+  margin-bottom: 4%;
+  margin-right: 5%;
+  margin-left: 70%;
+  background-color:#BA2020;
+  color: white;
+}
+
+.row1 {
+  padding-top: 10%;
+}
+
+/*Form Submit Button */
+  .btnbtn-default{
+  max-width: 900px;
+  width: 800px;
+  height: 100px;
+  margin-top: 5%;
+  margin-bottom: -50%;
+  margin-right: 5%;
+  margin-left: 5%;
+  background-color:#010326;
+  color: white;
+}
+
+/* Form pink box */
+  .container1{
+    max-width: 900px;
+    background-color:#D88A7A;
+    margin: -50px auto 0;
+    padding: 0px 5px;
+    margin-bottom: 20%
+  }
+  
   section {
     /*Greg commented this out, section is just used to divide the page
 	into semantic sections, it should probably just be the same colour as the body.
     background-color: #D88A7A;*/
     border-radius: 4px;
   }
+  
+  /* Order Form Pink Box/Background */
+  .container1{
+    max-width: 900px;
+    background-color:#D88A7A;
+    margin: -50px auto 0;
+    padding: 0px 5px;
+    margin-bottom: 20%
+  }
+  
+  /*View Order */
+  .form-group h2 {
+   color: #8C1B16;
+  }
+  
+  #filter-order h3 {
+   color: #8C1B16;
+  }
+  
+  
+  /*Tables */
+  #view-order p {
+    color:black;
+  }
+  
   
   /*Footer */
   .footer {
@@ -1001,7 +1462,8 @@
   
   .footer section {
     background: none;
-    padding:
+    padding:;
+    height:100;
   }
   
   .footer h2 {

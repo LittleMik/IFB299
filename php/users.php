@@ -40,7 +40,7 @@ class User
 			$this->phone = $args[4];
 			$this->role = $args[5];
 			$this->address = $args[6];
-			$this->postCode = $args[7];
+			$this->postcode = $args[7];			
 			$this->state = $args[8];
 		} else {
 			echo 'User created with wrong number of arguments';
@@ -71,7 +71,7 @@ class User
 		  $stmt->bindParam(':lastName', $this->lastName);
 		  $stmt->bindParam(':phoneNumber', $this->phone);
 		  $stmt->bindParam(':address', $this->address);
-		  $stmt->bindParam(':postcode', $this->postCode);
+		  $stmt->bindParam(':postcode', $this->postcode);
 		  $stmt->bindParam(':state', $this->state);
 
 		  //Run query
@@ -131,7 +131,7 @@ class User
 		  $stmt->bindParam(':lastName', $this->lastName);
 		  $stmt->bindParam(':phoneNumber', $this->phone);
 		  $stmt->bindParam(':address', $this->address);
-		  $stmt->bindParam(':postcode', $this->postCode);
+		  $stmt->bindParam(':postcode', $this->postcode);
 		  $stmt->bindParam(':state', $this->state);
 
 		  //Run query
@@ -193,7 +193,7 @@ class User
 			$stmt->bindParam(':lastName', $this->lastName);
 			$stmt->bindParam(':phoneNumber', $this->phone);
 			$stmt->bindParam(':address', $this->address);
-			$stmt->bindParam(':postcode', $this->postCode);
+			$stmt->bindParam(':postcode', $this->postcode);
 			$stmt->bindParam(':state', $this->state);
 			$stmt->bindParam(':userID', $this->id);
 
