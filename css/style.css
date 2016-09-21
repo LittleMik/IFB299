@@ -252,13 +252,11 @@
   }
   
   /*View Order */
-  .form-group h2 {
+  #filter-order h2 h3 {
    color: #8C1B16;
   }
   
-  #filter-order h3 {
-   color: #8C1B16;
-  }
+
   
   
   /*Tables */
