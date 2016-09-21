@@ -252,7 +252,7 @@
   }
   
   /*View Order */
-  .form-group h2 {
+  .form-group h2, h3 {
    color: #8C1B16;
   }
   
