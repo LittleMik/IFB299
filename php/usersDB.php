@@ -49,10 +49,8 @@
 			getRole($userInfo['userID']),
 			$userInfo['address'],
 			$userInfo['postcode'],
-			$userInfo['state']
-		);
-		
-		return $user;
+			$userInfo['state']);		
+			return $user;
 		
 		} catch (PDOException $e){
 			echo $e->getMessage();

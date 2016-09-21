@@ -122,22 +122,23 @@
 		<div class="form-group1">
 			<label for="address">Address:</label>
 			<input type="text" class="form-control" id="address" <?php $attribute = ($thisUser->address == "") ? "placeholder = 'Enter Address'" : "value = '".$thisUser->address."'"; echo $attribute; ?> name="address" maxlength="255" pattern="^[0-9]{1,5},?\s\w{2,64}\s\w{2,64},?\s\w{2,64}$">
-
+			
 			<label for="postCode">Postcode:</label>
-			<input type="number" size="4" class="form-control" id="postCode" <?php $attribute = ($thisUser->postcode == "") ? "placeholder = 'Enter Address'" : "value = '".$thisUser->postcode."'"; echo $attribute; ?> name="postCode" pattern="^[0-9]{4}$">
+			<input type="number" size="4" class="form-control" id="postCode" <?php $attribute = ($thisUser->postcode == "") ? "placeholder = 'Enter Postcode'" : "value = '".$thisUser->postcode."'"; echo $attribute; ?> name="postCode" pattern="^[0-9]{4}$">
 		</div>
 
 		<div class="form-group1">
 			<label for="state">State:</label>
+			<?php if($thisUser->state == "A"){echo 'selected';} ?>
 			<select class="form-control" id="state" name="state">
-				<option value="" disabled selected>- Select State -</option>
-				<option>QLD</option>
-				<option>NSW</option>
-				<option>ACT</option>
-				<option>VIC</option>
-				<option>SA</option>
-				<option>WA</option>
-				<option>NT</option>
+				<option<?php if($thisUser->state == ""){echo ' selected ';}?> value="" disabled>- Select State -</option>
+				<option<?php if($thisUser->state == "QLD"){echo ' selected ';}?>>QLD</option>
+				<option<?php if($thisUser->state == "NSW"){echo ' selected ';}?>>NSW</option>
+				<option<?php if($thisUser->state == "ACT"){echo ' selected ';}?>>ACT</option>
+				<option<?php if($thisUser->state == "VIC"){echo ' selected ';}?>>VIC</option>
+				<option<?php if($thisUser->state == "SA"){echo ' selected ';}?>>SA</option>
+				<option<?php if($thisUser->state == "WA"){echo ' selected ';}?>>WA</option>
+				<option<?php if($thisUser->state == "NT"){echo ' selected ';}?>>NT</option>
 			</select>
 		</div>
 
