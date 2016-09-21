@@ -80,18 +80,25 @@
 
 <?php require 'includes/header.inc' ?>
 
-<div class="container">
+<img id="im" src="images/background1.png" alt="Banner"> </img>
+
+<div class="container2">
+	
+	<div class= "texts">
 	<h2>Edit your Account</h2>
+	</div>
 
 	<form method="post" autocomplete="on" onsubmit="return validate(this)">
-		<div class="form-group">
+		<div class="form-group1">
 			<label for="email">Email Address:</label>
 			<input type="email" class="form-control" id="email" value="<?php echo $thisUser->email ?>" name="email" maxlength="255" required>
 		</div>
 
+		<div class= "texts">
 		<h3>Personal Details</h3>
+  		</div>
 
-		<div class="form-group">
+		<div class="form-group1">
 			<label for="firstName">First Name:</label>
 			<input type="text" class="form-control" id="firstName" value="<?php echo $thisUser->firstName ?>" name="firstName" maxlength="255" pattern="^\w{2,255}(?!=\W)$" required>
 
@@ -99,16 +106,20 @@
 			<input type="text" class="form-control" id="lastName" value="<?php echo $thisUser->lastName ?>" name="lastName" maxlength="255" pattern="^\w{2,255}(?!=\W)$" required>
 		</div>
 
+		<div class= "texts">
 		<h3>Phone Number</h3>
+  		</div>
 
-		<div class="form-group">
+		<div class="form-group1">
 			<label for="phone">Phone Number:</label>
 			<input type="tel" class="form-control" id="phone" value="<?php echo $thisUser->phone ?>" name="phone"  maxlength="16" pattern="^(?:\(\+?[0-9]{2}\))?(?:[0-9]{6,10}|[0-9]{3,4}(?:(?:\s[0-9]{3,4}){1,2}))$" required>
 		</div>
 
+		<div class= "texts">
 		<h3>Address</h3>
+  		</div>
 
-		<div class="form-group">
+		<div class="form-group1">
 			<label for="address">Address:</label>
 			<input type="text" class="form-control" id="address" <?php $attribute = ($thisUser->address == "") ? "placeholder = 'Enter Address'" : "value = '".$thisUser->address."'"; echo $attribute; ?> name="address" maxlength="255" pattern="^[0-9]{1,5},?\s\w{2,64}\s\w{2,64},?\s\w{2,64}$">
 
@@ -116,7 +127,7 @@
 			<input type="number" size="4" class="form-control" id="postCode" <?php $attribute = ($thisUser->postcode == "") ? "placeholder = 'Enter Address'" : "value = '".$thisUser->postcode."'"; echo $attribute; ?> name="postCode" pattern="^[0-9]{4}$">
 		</div>
 
-		<div class="form-group">
+		<div class="form-group1">
 			<label for="state">State:</label>
 			<select class="form-control" id="state" name="state">
 				<option value="" disabled selected>- Select State -</option>
@@ -130,7 +141,7 @@
 			</select>
 		</div>
 
-		<button type="submit" class="btn btn-default">Save and Submit</button>
+		<button type="submit" class="btn1btn-default">Save and Submit</button>
 
 	</form>
 </div>
