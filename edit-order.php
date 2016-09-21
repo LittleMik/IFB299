@@ -28,65 +28,72 @@
 	if($_SERVER["REQUEST_METHOD"] === "POST")
 	{
 
-	  $errors = array();
-	  $formValid = true;
+		$errors = array();
+		$formValid = true;
 
-	  //Get Dependancies
-	  require_once 'php/formValidation.php';
+		//Get Dependancies
+		require_once 'php/formValidation.php';
 
-	  //PHP Field Validation
-	  $errors = array(
+		//PHP Field Validation
+		$errors = array(
 		"description"=>checkDescription($_POST['description']),
-		"totalWeight"=>checkWeight($_POST['totalWeight']),
 		"signature"=>checkSet($_POST['signature']),
 		"priority"=>checkSet($_POST['priority']),
 		"pickupAddress"=>checkAddress($_POST['pickupAddress']),
-		"pickupTime"=>checkTime($_POST['pickupTime']),
+		//"pickupTime"=>checkTime($_POST['pickupTime']),
 		"deliveryAddress"=>checkAddress($_POST['deliveryAddress']),
 		"deliveryState"=>checkState($_POST['deliveryState']),
 		"recipientName"=>checkFullName($_POST['recipientName']),
 		"recipientPhone"=>checkPhone($_POST['recipientPhone']),
-	  );
+	);
 
-	  //Check for presence of errors and output
-	  foreach($errors as $field => $valid)
-	  {
+	//Check for presence of errors and output
+	foreach($errors as $field => $valid)
+	{
 		if($valid === false)
-		{
-		  $formValid = false;
-		  echo $_POST[$field] . "<br />";
-		  echo "Invalid " . $field . " detected<br />";
-		}
-	  }
+	{
+	  $formValid = false;
+	  echo "Invalid " . $field . " detected<br />";
+	}
+	}
 
-	  //Complete Registration Process
-	  if($formValid)
-	  {
+	//Complete Registration Process
+	if($formValid)
+	{
 		require_once 'php/orders.php';
 		require_once 'php/users.php';
-
+		require_once 'php/packages.php';
+		require_once 'php/usersDB.php';
+		require_once 'php/status.php';
 
 		$user = unserialize($_SESSION['user']);
 
-		$order = new Order($user->id, $_POST['description'], $_POST['totalWeight'], $_POST['signature'], $_POST['priority'], $_POST['pickupAddress'], $_POST['pickupTime'], $_POST['deliveryAddress'], $_POST['recipientName'], $_POST['recipientPhone']);
+		$order = new Order(0, getID($_POST['email']), Status::Ordered, $_POST['description'], $_POST['signature'], 
+		$_POST['priority'], $_POST['pickupAddress'], $_POST['pickupPostCode'], $_POST['pickupState'], $_POST['pickupTime'], 
+		$_POST['deliveryAddress'], $_POST['deliveryPostCode'], $_POST['deliveryState'], $_POST['deliveryTime'], 
+		$_POST['recipientName'], $_POST['recipientPhone']);
 
-		$order->createCustomerOrder();
+		$orderID = $order->editOrder();
 
 		//Redirect Script
-				echo "
-					<script>
-						alert('Order Created');
-						window.location.href = 'index.php';
-					</script>";
-	  }
+		//header('Location: view-order.php?orderID=262');
 	}
+}
 ?>
 
 <?php require 'includes/header.inc' ?>
 
-<div class="container">
-	<h2>Order Details</h2>
-	<form method="post" autocomplete="on" onsubmit="return validate(this)" action="<?php echo "https://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];?>">
+<div class="container1">
+
+	<div class="row1">
+		<div class="col-sm-2 col-xs-2">
+		<img id="shortcut3" src="images/1icon.png" alt="1"></img>
+		</div>
+		<div class="col-sm-10 col-xs-10">
+		<h3>Order Details</h3>
+		</div>
+	</div>
+	<form method="post" autocomplete="on" onsubmit="return validate(this)">
 		<!--Customer Email-->
 		<div class="form-group">
 			<label for="inputEmail" class="sr-only">Customer email address</label>
@@ -102,55 +109,38 @@
 		<!--Signature Required-->
 		<div class="form-group">
 			<label>Require Signature Upon Delivery?</label>
-			<?php 
-				if($orderObject->signature == 1){
-					echo '
-						<label class="radio-inline"><input type="radio" name="signature" value="1" checked="checked">Yes</label>
-						label class="radio-inline"><input type="radio" name="signature" value="0">No</label>
-					';
-				} else {
-					echo '
-						<label class="radio-inline"><input type="radio" name="signature" value="1">Yes</label>
-						label class="radio-inline"><input type="radio" name="signature" checked="checked" value="0">No</label>
-					';
-				}
-			?>
-			
+			<label class="radio-inline">
+				<input <?php if($orderObject->signature == "1"){echo "checked='checked'";}  ?> type="radio" name="signature" value="1">
+			Yes</label>
+			<label class="radio-inline">
+				<input <?php if($orderObject->signature == "0"){echo "checked='checked'";}  ?> type="radio" name="signature" value="0">
+			No</label>
 		</div>
 
 		<!--Priority (Order Type)-->
 		<div class="form-group">
 			<label>Delivery Priority</label>
-			<?php 
-				if($orderObject->signature == "Express"){
-					echo '
-						<div class="radio">
-							<label><input type="radio" name="priority" checked="checked" value="Express">Express (1-2 Business Days)</label>
-						</div>
-						<div class="radio">
-							<label><input type="radio" name="priority" value="Standard">Standard (5-7 Business Days)</label>
-						</div>
-					';
-				} else {
-					echo '
-						<div class="radio">
-							<label><input type="radio" name="priority" value="Express">Express (1-2 Business Days)</label>
-						</div>
-						<div class="radio">
-							<label><input type="radio" name="priority" value="Standard" checked="checked">Standard (5-7 Business Days)</label>
-						</div>
-					';
-				}
-			?>
-			
+			<div class="radio">
+				<label><input <?php if($orderObject->priority == "Express"){echo "checked='checked'";}  ?> type="radio" name="priority" value="Express">Express (1-2 Business Days)</label>
+			</div>
+			<div class="radio">
+				<label><input <?php if($orderObject->priority == "Standard"){echo "checked='checked'";}  ?> type="radio" name="priority" value="Standard">Standard (5-7 Business Days)</label>
+			</div>
 		</div>
 
-		<h3>Pick Up</h3>
+		<div class="row">
+		    <div class="col-sm-2 col-xs-2">
+		  	<img id="shortcut3" src="images/2icon.png" alt="2"></img>
+			</div>
+			<div class="col-sm-10 col-xs-10">
+		    	<h3>Pick Up</h3>
+		  	</div>
+		</div>
 
 		<!--Pickup Time-->
 		<div class="form-group">
-			<label for="pickupTime">Pickup Time:</label>
-			<input value="<?php echo str_replace(' ', 'T', $orderObject->pickupTime); ?>" type="datetime-local" value= class="form-control" id="pickupTime" name="pickupTime"
+			<label for="pickupTime">Preferred Pickup Time:</label>
+			<input value="<?php echo str_replace(' ', 'T', $orderObject->pickupTime); ?>" type="datetime-local" type="datetime-local" class="form-control" id="pickupTime" name="pickupTime"
 			<?php
 			  date_default_timezone_set('Australia/Brisbane');
 			  $dateMin = date('Y-m-d TH:i:s a');
@@ -166,12 +156,38 @@
 		<!--Pickup Address-->
 		<div class="form-group">
 			<label>Pickup Address:</label>
-			<label class="radio-inline"><input type="radio" onclick="getAddress('pickupAddress');" name="otherPickupAddress">Your Address</label>
-			<label class="radio-inline"><input type="radio" name="otherPickupAddress" checked="checked">Other</label>
 			<input value="<?php echo $orderObject->pickupAddress ?>" type="text" class="form-control" id="pickupAddress" name="pickupAddress">
 		</div>
+		
+		<!--Pickup PostCode-->
+		<div class="form-group">
+			<label for="email">Postcode:</label>
+			<input value="<?php echo $orderObject->pickupPostcode ?>" type="number" class="form-control" id="email" placeholder="Enter Postcode" name="pickupPostCode" pattern="^[0-9]{4}$">
+		</div>
+		
+		<!--Pickup State-->
+		<div class="form-group">
+			<label for="state">State:</label>
+			<select class="form-control" id="state" name="pickupState">
+				<option <?php if($orderObject->pickupState == "QLD"){echo 'selected';}?> >QLD</option>
+				<option <?php if($orderObject->pickupState == "NSW"){echo 'selected';}?> >NSW</option>
+				<option <?php if($orderObject->pickupState == "ACT"){echo 'selected';}?> >ACT</option>
+				<option <?php if($orderObject->pickupState == "VIC"){echo 'selected';}?> >VIC</option>
+				<option <?php if($orderObject->pickupState == "SA"){echo 'selected';}?> >SA</option>
+				<option <?php if($orderObject->pickupState == "WA"){echo 'selected';}?> >WA</option>
+				<option <?php if($orderObject->pickupState == "NT"){echo 'selected';}?> >NT</option>
+			</select>
+		</div>
 
-		<h3>Recipient Details</h3>
+		<div class="row">
+      			<div class="col-sm-2 col-xs-2">
+			<img id="shortcut3" src="images/3icon.png" alt="3"></img>
+			</div>
+			<div class="col-sm-10 col-xs-10">
+			<h3>Recipient Details</h3>
+			</div>
+		</div>
+		
 		<!--Fullname of Recipient-->
 		<div class="form-group">
 			<label for="recipientName">Recipient Name:</label>
@@ -184,7 +200,30 @@
 			<input value="<?php echo $orderObject->recipientPhone ?>" type="tel" class="form-control" id="recipientPhone" placeholder="Enter Phone Number" name="recipientPhone" maxlength="16" pattern="^(?:\(\+?[0-9]{2}\))?(?:[0-9]{6,10}|[0-9]{3,4}(?:(?:\s[0-9]{3,4}){1,2}))$" required>
 		</div>
 
-		<h3>Delivery</h3>
+		<div class="row">
+			<div class="col-sm-2 col-xs-2">
+			<img id="shortcut3" src="images/4icon.png" alt="4"></img>
+			</div>
+			<div class="col-sm-10 col-xs-10">
+			<h3>Delivery</h3>
+			</div>
+		</div>
+		
+		<!--delivery Time-->
+		<div class="form-group">
+			<label for="pickupTime">Preferred Pickup Time:</label>
+			<input value="<?php echo str_replace(' ', 'T', $orderObject->deliveryTime); ?>" type="datetime-local" class="form-control" id="deliveryTime" name="deliveryTime"
+			<?php
+			  date_default_timezone_set('Australia/Brisbane');
+			  $dateMin = date('Y-m-d TH:i:s a');
+			  echo "min='".$dateMin."'";
+
+			  $date = date_create($dateMin);
+			  date_modify($date,"+1 year");
+			  $dateMax = date_format($date, "Y-m-d TH:i:s a");
+			  echo " max='".$dateMax."'";
+			?>>
+		</div>
 
 		<!--Delivery Address-->
 		<div class="form-group">
@@ -194,27 +233,26 @@
 
 		<!--Delivery PostCode-->
 		<div class="form-group">
-			<label for="email">Postcode:</label>
+			<label for="deliveryPostCode">Postcode:</label>
 			<input value="<?php echo $orderObject->deliveryPostcode ?>" type="number" class="form-control" id="email" placeholder="Enter Postcode" name="deliveryPostCode" pattern="^[0-9]{4}$">
 		</div>
 
 		<!--Delivery State-->
 		<div class="form-group">
 			<label for="state">State:</label>
-			<?php echo $orderObject->deliveryState ?>
+			<?php echo $orderObject->deliveryState.'<br>'.$orderObject->deliveryState == "NSW"; ?>
 			<select class="form-control" id="state" name="deliveryState">
-				<option value="" disabled selected>- Select State -</option>
-				<option <?php $selected = ($orderObject->deliveryState == "QLD") ?  'selected' :  ''; echo $selected;?>>QLD</option>
-				<option <?php $selected = ($orderObject->deliveryState == "NSW") ?  'selected' :  ''; echo $selected;?>>NSW</option>
-				<option <?php $selected = ($orderObject->deliveryState == "ACT") ?  'selected' :  ''; echo $selected;?>>ACT</option>
-				<option <?php $selected = ($orderObject->deliveryState == "VIC") ?  'selected' :  ''; echo $selected;?>>VIC</option>
-				<option <?php $selected = ($orderObject->deliveryState == "SA") ?  'selected' :  ''; echo $selected;?>>SA</option>
-				<option <?php $selected = ($orderObject->deliveryState == "WA") ?  'selected' :  ''; echo $selected;?>>WA</option>
-				<option <?php $selected = ($orderObject->deliveryState == "NT") ?  'selected' :  ''; echo $selected;?>>NT</option>
+				<option <?php if($orderObject->deliveryState == "QLD"){echo 'selected';}?> >QLD</option>
+				<option <?php if($orderObject->deliveryState == "NSW"){echo 'selected';}?> >NSW</option>
+				<option <?php if($orderObject->deliveryState == "ACT"){echo 'selected';}?> >ACT</option>
+				<option <?php if($orderObject->deliveryState == "VIC"){echo 'selected';}?> >VIC</option>
+				<option <?php if($orderObject->deliveryState == "SA"){echo 'selected';}?> >SA</option>
+				<option <?php if($orderObject->deliveryState == "WA"){echo 'selected';}?> >WA</option>
+				<option <?php if($orderObject->deliveryState == "NT"){echo 'selected';}?> >NT</option>
 			</select>
 		</div>
 
-		<button type="submit" class="btn btn-default">Submit</button>
+		<button type="submit" class="btnbtn-default">Submit</button>
 
 	</form>
 </div>
