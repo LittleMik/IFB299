@@ -375,8 +375,7 @@
 		//Close Table Tags
 		echo "
 		</tbody>
-		</table>
-		</div>";
+		</table>";
 
 	}
 

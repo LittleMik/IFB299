@@ -29,8 +29,8 @@ class User
 		//Construct User according to the arguments provided
 		$args = func_get_args();
 		$numArgs = func_num_args();
-
-		if($numArgs === 9){
+		if($numArgs === 9)
+		{
 			//Construct User from scratch
 			//Set user defined fields
 			$this->id = $args[0];
@@ -40,7 +40,7 @@ class User
 			$this->phone = $args[4];
 			$this->role = $args[5];
 			$this->address = $args[6];
-			$this->postcode = $args[7];			
+			$this->postcode = $args[7];
 			$this->state = $args[8];
 		} else {
 			echo 'User created with wrong number of arguments';

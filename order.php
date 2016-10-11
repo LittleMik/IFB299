@@ -1,10 +1,10 @@
 <?php require 'includes/head.inc' ?>
 
 <?php
-  if(!isset($_SESSION['login']))
-  {
-    header("Location:login.php");
-  }
+	if(!isset($_SESSION['login']))
+	{
+		header("Location:login.php");
+	}
 ?>
 
 
@@ -12,71 +12,71 @@
 if($_SERVER["REQUEST_METHOD"] === "POST")
 {
 
-  $errors = array();
-  $formValid = true;
+	$errors = array();
+	$formValid = true;
 
-  //Get Dependancies
-  require_once 'php/formValidation.php';
+	//Get Dependancies
+	require_once 'php/formValidation.php';
 
-  //PHP Field Validation
-  $errors = array(
-	"description"=>checkDescription($_POST['description']),
-	"signature"=>checkSet($_POST['signature']),
-	"priority"=>checkSet($_POST['priority']),
-	"pickupAddress"=>checkAddress($_POST['pickupAddress']),
-	//"pickupTime"=>checkTime($_POST['pickupTime']),
-	"deliveryAddress"=>checkAddress($_POST['deliveryAddress']),
-	"deliveryState"=>checkState($_POST['deliveryState']),
-	"recipientName"=>checkFullName($_POST['recipientName']),
-	"recipientPhone"=>checkPhone($_POST['recipientPhone']),
-  );
+	//PHP Field Validation
+	$errors = array(
+		"description"=>checkDescription($_POST['description']),
+		"signature"=>checkSet($_POST['signature']),
+		"priority"=>checkSet($_POST['priority']),
+		"pickupAddress"=>checkAddress($_POST['pickupAddress']),
+		//"pickupTime"=>checkTime($_POST['pickupTime']),
+		"deliveryAddress"=>checkAddress($_POST['deliveryAddress']),
+		"deliveryState"=>checkState($_POST['deliveryState']),
+		"recipientName"=>checkFullName($_POST['recipientName']),
+		"recipientPhone"=>checkPhone($_POST['recipientPhone']),
+	);
 
-  //Check for presence of errors and output
-  foreach($errors as $field => $valid)
-  {
-	if($valid === false)
+	//Check for presence of errors and output
+	foreach($errors as $field => $valid)
 	{
-	  $formValid = false;
-	  echo $_POST[$field] . "<br />";
-	  echo "Invalid " . $field . " detected<br />";
+		if($valid === false)
+		{
+			$formValid = false;
+			echo $_POST[$field] . "<br />";
+			echo "Invalid " . $field . " detected<br />";
+		}
 	}
-  }
 
-  //Complete Registration Process
-  if($formValid)
-  {
-	require_once 'php/orders.php';
-	require_once 'php/users.php';
-	require_once 'php/packages.php';
-	require_once 'php/status.php';
-	require_once 'php/usersDB.php';
+	//Complete Registration Process
+	if($formValid)
+	{
+		require_once 'php/orders.php';
+		require_once 'php/users.php';
+		require_once 'php/packages.php';
+		require_once 'php/status.php';
+		require_once 'php/usersDB.php';
 
-	$user = unserialize($_SESSION['user']);
+		$user = unserialize($_SESSION['user']);
 
-	$order = new Order(0, $user->id, Status::Ordered, $_POST['description'], $_POST['signature'], 
-	$_POST['priority'], $_POST['pickupAddress'], $_POST['pickupPostCode'], $_POST['pickupState'], $_POST['pickupTime'], 
-	$_POST['deliveryAddress'], $_POST['deliveryPostCode'], $_POST['deliveryState'], $_POST['deliveryTime'], 
-	$_POST['recipientName'], $_POST['recipientPhone']);
-	
-	//Create the new order, and store the order id (returned) in the $orderID variable
-	$orderID = $order->createOrder();
-	
-	//Create arrays containing all package descriptions and weights
-	$packageDescriptions = $_POST['packageDescription'];
-	$packageWeights = $_POST['weight'];
-	
-	//Loop through all packages and add them to the database
-	$i = 0;
-	while($i < sizeof($packageDescriptions)){
-		//Note that '0' is given as package id, only to indicate that it has not been set yet
-		$package = new Package(0, $orderID, $packageWeights[$i], $packageDescriptions[$i]);
-		$package->saveToDB();
-		$i++;
+		$order = new Order(0, $user->id, Status::Ordered, $_POST['description'], $_POST['signature'],
+		$_POST['priority'], $_POST['pickupAddress'], $_POST['pickupPostCode'], $_POST['pickupState'], $_POST['pickupTime'],
+		$_POST['deliveryAddress'], $_POST['deliveryPostCode'], $_POST['deliveryState'], $_POST['deliveryTime'],
+		$_POST['recipientName'], $_POST['recipientPhone']);
+
+		//Create the new order, and store the order id (returned) in the $orderID variable
+		$orderID = $order->createOrder();
+
+		//Create arrays containing all package descriptions and weights
+		$packageDescriptions = $_POST['packageDescription'];
+		$packageWeights = $_POST['weight'];
+
+		//Loop through all packages and add them to the database
+		$i = 0;
+		while($i < sizeof($packageDescriptions)){
+			//Note that '0' is given as package id, only to indicate that it has not been set yet
+			$package = new Package(0, $orderID, $packageWeights[$i], $packageDescriptions[$i]);
+			$package->saveToDB();
+			$i++;
+		}
+
+		//Redirect Script
+		//header('Location: ../index.php');
 	}
-	
-	//Redirect Script
-	//header('Location: ../index.php');
-  }
 }
 ?>
 
@@ -94,13 +94,13 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 		<h3>Order Details</h3>
 		</div>
 	</div>
-	<form method="post" autocomplete="on" onsubmit="return validate(this)" action="<?php echo "https://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];?>">		
+	<form method="post" autocomplete="on" onsubmit="return validate(this)" action="<?php echo "https://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];?>">
 		<!--Order Description-->
 		<div class="form-group">
 			<label for="comment">Description:</label>
 			<textarea class="form-control" rows="5" id="comment" maxlength="140" name="description"></textarea>*max 140 characters
 		</div>
-		
+
 		<!--Packages
 			Code for adding extra packages is in customJavascript.hs
 		-->
@@ -137,12 +137,12 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 		</div>
 
 		<div class="row">
-		        <div class="col-sm-2 col-xs-2">
-		  	<img id="shortcut3" src="images/2icon.png" alt="2"></img>
+						<div class="col-sm-2 col-xs-2">
+				<img id="shortcut3" src="images/2icon.png" alt="2"></img>
 			</div>
 			<div class="col-sm-10 col-xs-10">
-		    	<h3>Pick Up</h3>
-		  	</div>
+					<h3>Pick Up</h3>
+				</div>
 		</div>
 
 		<!--Pickup Time-->
@@ -150,14 +150,14 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 			<label for="pickupTime">Preferred Pickup Time:</label>
 			<input type="datetime-local" class="form-control" id="pickupTime" name="pickupTime"
 			<?php
-			  date_default_timezone_set('Australia/Brisbane');
-			  $dateMin = date('Y-m-d TH:i:s a');
-			  echo "min='".$dateMin."'";
+				date_default_timezone_set('Australia/Brisbane');
+				$dateMin = date('Y-m-d TH:i:s a');
+				echo "min='".$dateMin."'";
 
-			  $date = date_create($dateMin);
-			  date_modify($date,"+1 year");
-			  $dateMax = date_format($date, "Y-m-d TH:i:s a");
-			  echo " max='".$dateMax."'";
+				$date = date_create($dateMin);
+				date_modify($date,"+1 year");
+				$dateMax = date_format($date, "Y-m-d TH:i:s a");
+				echo " max='".$dateMax."'";
 			?>>
 		</div>
 
@@ -168,13 +168,13 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 			<label class="radio-inline"><input type="radio" name="otherPickupAddress" checked="checked">Other</label>
 			<input type="text" class="form-control" id="pickupAddress" name="pickupAddress">
 		</div>
-		
+
 		<!--Pickup PostCode-->
 		<div class="form-group">
 			<label for="email">Postcode:</label>
 			<input type="number" class="form-control" id="email" placeholder="Enter Postcode" name="pickupPostCode" pattern="^[0-9]{4}$">
 		</div>
-		
+
 		<!--Pickup State-->
 		<div class="form-group">
 			<label for="state">State:</label>
@@ -191,14 +191,14 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 		</div>
 
 		<div class="row">
-      			<div class="col-sm-2 col-xs-2">
+						<div class="col-sm-2 col-xs-2">
 			<img id="shortcut3" src="images/3icon.png" alt="3"></img>
 			</div>
 			<div class="col-sm-10 col-xs-10">
 			<h3>Recipient Details</h3>
 			</div>
 		</div>
-		
+
 		<!--Fullname of Recipient-->
 		<div class="form-group">
 			<label for="recipientName">Recipient Name:</label>
@@ -219,20 +219,20 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 			<h3>Delivery</h3>
 			</div>
 		</div>
-		
+
 		<!--delivery Time-->
 		<div class="form-group">
 			<label for="pickupTime">Preferred Pickup Time:</label>
 			<input type="datetime-local" class="form-control" id="deliveryTime" name="deliveryTime"
 			<?php
-			  date_default_timezone_set('Australia/Brisbane');
-			  $dateMin = date('Y-m-d TH:i:s a');
-			  echo "min='".$dateMin."'";
+				date_default_timezone_set('Australia/Brisbane');
+				$dateMin = date('Y-m-d TH:i:s a');
+				echo "min='".$dateMin."'";
 
-			  $date = date_create($dateMin);
-			  date_modify($date,"+1 year");
-			  $dateMax = date_format($date, "Y-m-d TH:i:s a");
-			  echo " max='".$dateMax."'";
+				$date = date_create($dateMin);
+				date_modify($date,"+1 year");
+				$dateMax = date_format($date, "Y-m-d TH:i:s a");
+				echo " max='".$dateMax."'";
 			?>>
 		</div>
 
