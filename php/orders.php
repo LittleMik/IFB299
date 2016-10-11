@@ -1,44 +1,44 @@
 <?php
 
-  /**
-   *
-   */
+	/**
+	 *
+	 */
 class Order{
 
-  	public $orderID;
-  	public $userID;
-  	public $status;
-  	public $description;
-  	public $signature;
-  	public $priority;
-	
-  	public $pickupAddress;
-	public $pickupPostcode;
-	public $pickupState;
-	public $pickupTime;
-	
-  	public $deliveryAddress;
-	public $deliveryPostcode;
-	public $deliveryState;
-	public $deliveryTime;
-	
-  	public $recipientName;
-    public $recipientPhone;
+		public $orderID;
+		public $userID;
+		public $status;
+		public $description;
+		public $signature;
+		public $priority;
 
-    /**
-  	 * Constructor
-  	 * Precondition: Argument must be either user table row
-  	 * or a verified set of client order information
-  	 */
-  	function __construct()
-  	{
-  		# code...
-  		//Construct Order according to the arguments provided
-  		$args = func_get_args();
-      $numArgs = func_num_args();
-        //Construct Order from scratch
+		public $pickupAddress;
+		public $pickupPostcode;
+		public $pickupState;
+		public $pickupTime;
 
-  		//Set user defined fields
+		public $deliveryAddress;
+		public $deliveryPostcode;
+		public $deliveryState;
+		public $deliveryTime;
+
+		public $recipientName;
+		public $recipientPhone;
+
+		/**
+		 * Constructor
+		 * Precondition: Argument must be either user table row
+		 * or a verified set of client order information
+		 */
+		function __construct()
+		{
+			# code...
+			//Construct Order according to the arguments provided
+			$args = func_get_args();
+			$numArgs = func_num_args();
+				//Construct Order from scratch
+
+			//Set user defined fields
 		/*$this->userID = $args[0];
 		$this->description = $args[1];
 		$this->signature = $args[2];
@@ -49,57 +49,57 @@ class Order{
 		$this->recipientName = $args[7];
 		$this->recipientPhone = $args[8];
 		$this->orderID = $args[9];*/
-		
+
 		$this->orderID = $args[0];
 		$this->userID = $args[1];
 		$this->status = $args[2];
 		$this->description = $args[3];
 		$this->signature = $args[4];
 		$this->priority = $args[5];
-		
+
 		$this->pickupAddress = $args[6];
 		$this->pickupPostcode = $args[7];
 		$this->pickupState = $args[8];
 		$this->pickupTime = $args[9];
-		
+
 		$this->deliveryAddress = $args[10];
 		$this->deliveryPostcode = $args[11];
 		$this->deliveryState = $args[12];
 		$this->deliveryTime = $args[13];
-		
+
 		$this->recipientName = $args[14];
 		$this->recipientPhone = $args[15];
-		
-		
 
-        //Set Default Status
-        $this->status = "Ordered";
-  		
-  	}
 
-	//Function to edit the 
+
+		//Set Default Status
+		$this->status = "Ordered";
+
+		}
+
+	//Function to edit the
 	function editOrder()
-   {
-	    require 'pdo.inc';
+	 {
+			require 'pdo.inc';
 		try
 		{
 			// Prepare Query
 			$stmt = $pdo->prepare(
 			"UPDATE orders
 			SET userID = :userID,
-			orderStatus = :orderStatus, 
-			description = :description, 
-			signature = :signature, 
-			deliveryPriority = :deliveryPriority, 
-			pickupAddress = :pickupAddress, 
-			pickupPostcode = :pickupPostcode, 
-			pickupState = :pickupState, 
-			pickupTime = :pickupTime, 
-			deliveryAddress = :deliveryAddress, 
-			deliveryPostcode = :deliveryPostcode, 
-			deliveryState = :deliveryState, 
-			deliveryTime = :deliveryTime, 
-			recipientName = :recipientName, 
+			orderStatus = :orderStatus,
+			description = :description,
+			signature = :signature,
+			deliveryPriority = :deliveryPriority,
+			pickupAddress = :pickupAddress,
+			pickupPostcode = :pickupPostcode,
+			pickupState = :pickupState,
+			pickupTime = :pickupTime,
+			deliveryAddress = :deliveryAddress,
+			deliveryPostcode = :deliveryPostcode,
+			deliveryState = :deliveryState,
+			deliveryTime = :deliveryTime,
+			recipientName = :recipientName,
 			recipientPhone = :recipientPhone
 			WHERE orderID = :orderID;"
 			);
@@ -140,21 +140,21 @@ class Order{
 			echo '<p>'.$e.'</p>';
 		}
 	}
-	
+
 	function createOrder()
-    {
+		{
 		require 'pdo.inc';
 		try
 		{
 			// Prepare Query
 			$stmt = $pdo->prepare(
-			"INSERT INTO orders (userID, orderStatus, description, signature, 
-			deliveryPriority, pickupAddress, pickupPostcode, pickupState, 
-			pickupTime, deliveryAddress, deliveryPostcode, deliveryState, 
-			deliveryTime, recipientName, recipientPhone) 
-			
-			VALUES (:userID, :orderStatus, :description, :signature, :deliveryPriority, 
-			:pickupAddress, :pickupPostcode, :pickupState, :pickupTime, :deliveryAddress, 
+			"INSERT INTO orders (userID, orderStatus, description, signature,
+			deliveryPriority, pickupAddress, pickupPostcode, pickupState,
+			pickupTime, deliveryAddress, deliveryPostcode, deliveryState,
+			deliveryTime, recipientName, recipientPhone)
+
+			VALUES (:userID, :orderStatus, :description, :signature, :deliveryPriority,
+			:pickupAddress, :pickupPostcode, :pickupState, :pickupTime, :deliveryAddress,
 			:deliveryPostcode, :deliveryState, :deliveryTime, :recipientName, :recipientPhone
 			)");
 
@@ -193,7 +193,7 @@ class Order{
 			echo '<p>'.$e.'</p>';
 		}
 	}
-	
+
 	//return an array containing all the package objects in this order
 	function getPackages(){
 		require_once 'ordersDB.php';
@@ -205,7 +205,7 @@ class Order{
 			$packages[$i] = new Package($package['packageID'], $package['packageWeight'], $package['packageDescription']);
 			$i++;
 		}
-		
+
 		return $packages;
 	}
 }

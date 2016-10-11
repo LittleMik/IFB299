@@ -1,9 +1,11 @@
 <?php require 'includes/head.inc' ?>
 
+<!-- Authentication -->
 <?php
 	//Verify User Permission to View Page
 	require_once 'php/permissions.php';
 
+	//Check Role
 	if(isset($_SESSION['role']))
 	{
 		if(checkPermission($_SESSION['role'], 'view-order.php') === false)
@@ -18,15 +20,15 @@
 	}
 ?>
 
-<?php require 'includes/header.inc' ?>
-
+<!--the header, see the file for the code-->
+<?php include 'includes/header.inc' ?>
 <section id="filter-order">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-9">
 				<form method="POST" class="form-order-lookup form-horizontal">
 					<div class="form-group">
-						<h2 class="form-order-lookup">Orders</h2>
+						<h2 class="form-order-lookup">Delivery Schedule</h2>
 						<div id="error"></div>
 					</div>
 					<div class="form-group">
@@ -58,24 +60,27 @@
 					</div>
 
 					<div class="form-group">
-						<label class="col-sm-2 control-label" for="inputStatus">Order Status</label>
+						<label class="col-sm-2 control-label" for="inputStatus">Delivery Type</label>
 						<div class="col-sm-10">
 							<select class="form-control" id="inputStatus" name="status">
-								<option value="" selected="">- Select Status -</option>
-								<option>Ordered</option>
+								<option value="" selected="">- Select Type -</option>
 								<option>Picking Up</option>
-								<option>Picked Up</option>
-								<option>Storing</option>
 								<option>Delivering</option>
-								<option>Delivered</option>
 							</select>
 						</div>
 					</div>
 
 					<div class="form-group">
-						<label class="col-sm-2 control-label" for="pickupTime">Pickup Time</label>
+						<label class="col-sm-2 control-label" for="pickupTime">Scheduled Time</label>
 						<div class="col-sm-10">
-							<input type="datetime-local" class="form-control" id="pickupTime" name="pickupTime">
+							<input type="datetime-local" class="form-control" id="scheduledTime" name="scheduledTime">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="pickupTime">Scheduled Time</label>
+						<div class="col-sm-10">
+							<input type="datetime-local" class="form-control" id="scheduledTime" name="scheduledTime">
 						</div>
 					</div>
 
@@ -85,7 +90,7 @@
 				</form>
 			</div>
 
-			<!--Filter Verification and Orders Output-->
+			<!--Filter Verification and Output Schedule-->
 			<?php
 				if($_SERVER["REQUEST_METHOD"] === "POST")
 				{
@@ -169,5 +174,33 @@
 			 ?>
 		</div>
 	</section>
+	<!--Output Schedule
+	<div class="container">
+			<div class="row">
+			<div class="col-md-4">
+				<section>
+					<a href="#">
+						<img id="shortcut" src="images/philosophy.png" alt="Our Philosophy"/>
+					</a>
+				</section>
+			</div>
+			<div class="col-md-4">
+				<section>
+					<a href="#">
+						<img id="shortcut" src="images/services.png" alt="Our Services"/>
+					</a>
+				</section>
+			</div>
+
+			<div class="col-md-4">
+				<section>
+					<a href="#">
+						<img id="shortcut" src="images/testimonials.png" alt="Testimonials"/>
+					</a>
+				</section>
+			</div>
+		 </div>
+	</div>-->
+
 
 <?php require 'includes/footer.inc' ?>
