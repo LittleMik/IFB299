@@ -106,16 +106,16 @@
 		
 		require_once 'php/status.php';
 						switch ($orderStatus){
-							case 1:
+							case PickingUp:
 								$orderStatusMessage = 'is being picked up';
 								break;
-							case 2:
+							case PickedUp:
 								$orderStatusMessage = 'has been picked up.';
 								break;
-							case 4:
+							case Delivering:
 								$orderStatusMessage = 'is being delivered to your recipient.';
 								break;
-							case 5:
+							case Delivered:
 								$orderStatusMessage = 'has been successfully delivered.';
 								break;
 							default:
