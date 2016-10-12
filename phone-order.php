@@ -62,6 +62,12 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 	$_POST['recipientName'], $_POST['recipientPhone']);
 
 	$orderID = $order->createOrder();
+
+	//Send user an email confirming their order has been sent
+	require_once 'php/notifications.php';
+	sendConfirmOrder($_POST['email'], getFirstName($_POST['email']), $_POST['pickupAddress'], $_POST['pickupState'],
+	$_POST['pickupPostCode'], $_POST['pickupTime'], $_POST['deliveryAddress'], $_POST['deliveryState'], $_POST['deliveryPostCode'],
+	$_POST['recipientName'], $_POST['recipientPhone'], $_POST['deliveryTime']);
 	
 	//Create arrays containing all package descriptions and weights
 	$packageDescriptions = $_POST['packageDescription'];
@@ -96,7 +102,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 		<h3>Order Details</h3>
 		</div>
 	</div>
-	<form method="post" autocomplete="on" onsubmit="return validate(this)" action="<?php echo "https://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];?>">
+	<form method="post" autocomplete="on" onsubmit="return validate(this)">
 		<!--Customer Email-->
 		<div class="form-group">
 			<label for="inputEmail" class="sr-only">Customer email address</label>

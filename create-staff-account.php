@@ -70,6 +70,10 @@
 
 			$user->createStaffAccount($_POST['password']);
 
+			//Send user an email confirming their account creation.
+			require_once 'php/notifications.php';
+			sendConfirmAccount($_POST['email'], $_POST['firstName']);
+
 			//Redirect Script	
 			header('Location: ../index.php');
 		} 

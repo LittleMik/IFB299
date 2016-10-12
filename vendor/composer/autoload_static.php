@@ -4,8 +4,13 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit5132a209bc37177313904439cc79deff
+class ComposerStaticInit52b2803ed743b1c1c4970ffbc26cede0
 {
+    public static $files = array (
+        '3f8bdd3b35094c73a26f0106e3c0f8b2' => __DIR__ . '/..' . '/sendgrid/sendgrid/lib/SendGrid.php',
+        '9dda55337a76a24e949fbcc5d905a2c7' => __DIR__ . '/..' . '/sendgrid/sendgrid/lib/helpers/mail/Mail.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
         'p' => 
         array (
@@ -52,6 +57,13 @@ class ComposerStaticInit5132a209bc37177313904439cc79deff
     );
 
     public static $prefixesPsr0 = array (
+        'S' => 
+        array (
+            'SendGrid' => 
+            array (
+                0 => __DIR__ . '/..' . '/sendgrid/php-http-client/lib',
+            ),
+        ),
         'P' => 
         array (
             'Prophecy\\' => 
@@ -94,6 +106,7 @@ class ComposerStaticInit5132a209bc37177313904439cc79deff
         'PHPUnit_Framework_Constraint_ClassHasStaticAttribute' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/ClassHasStaticAttribute.php',
         'PHPUnit_Framework_Constraint_Composite' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/Composite.php',
         'PHPUnit_Framework_Constraint_Count' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/Count.php',
+        'PHPUnit_Framework_Constraint_DirectoryExists' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/DirectoryExists.php',
         'PHPUnit_Framework_Constraint_Exception' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/Exception.php',
         'PHPUnit_Framework_Constraint_ExceptionCode' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/ExceptionCode.php',
         'PHPUnit_Framework_Constraint_ExceptionMessage' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/ExceptionMessage.php',
@@ -111,8 +124,10 @@ class ComposerStaticInit5132a209bc37177313904439cc79deff
         'PHPUnit_Framework_Constraint_IsJson' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/IsJson.php',
         'PHPUnit_Framework_Constraint_IsNan' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/IsNan.php',
         'PHPUnit_Framework_Constraint_IsNull' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/IsNull.php',
+        'PHPUnit_Framework_Constraint_IsReadable' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/IsReadable.php',
         'PHPUnit_Framework_Constraint_IsTrue' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/IsTrue.php',
         'PHPUnit_Framework_Constraint_IsType' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/IsType.php',
+        'PHPUnit_Framework_Constraint_IsWritable' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/IsWritable.php',
         'PHPUnit_Framework_Constraint_JsonMatches' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/JsonMatches.php',
         'PHPUnit_Framework_Constraint_JsonMatches_ErrorMessageProvider' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/JsonMatches/ErrorMessageProvider.php',
         'PHPUnit_Framework_Constraint_LessThan' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/LessThan.php',
@@ -527,10 +542,10 @@ class ComposerStaticInit5132a209bc37177313904439cc79deff
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit5132a209bc37177313904439cc79deff::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit5132a209bc37177313904439cc79deff::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit5132a209bc37177313904439cc79deff::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit5132a209bc37177313904439cc79deff::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit52b2803ed743b1c1c4970ffbc26cede0::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit52b2803ed743b1c1c4970ffbc26cede0::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit52b2803ed743b1c1c4970ffbc26cede0::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit52b2803ed743b1c1c4970ffbc26cede0::$classMap;
 
         }, null, ClassLoader::class);
     }

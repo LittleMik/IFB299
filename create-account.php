@@ -58,6 +58,11 @@
 			$user = new User($ID, $_POST['email'], $_POST['firstName'], $_POST['lastName'], $_POST['phone'], $role, $_POST['address'], $_POST['postCode'], $_POST['state']);
 
 			$user->createCustomerAccount($_POST['password']);
+
+			//Send user an email confirming their account creation.
+			require_once 'php/notifications.php';
+			sendConfirmAccount($_POST['email'], $_POST['firstName']);
+			
 			
 			//Login to account just created
 			require_once 'php/usersDB.php';
@@ -78,7 +83,7 @@
 	<h2>Create an Account</h2>
 	</div>
 
-	<form method="post" autocomplete="on" onsubmit="return validate(this)" action="<?php echo "https://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];?>">
+	<form method="post" autocomplete="on" onsubmit="return validate(this)">
 
 		<div class="form-group1">
 			<label for="email">Email Address:</label>

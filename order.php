@@ -74,8 +74,14 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 			$i++;
 		}
 
+		//Send user an email confirming their order has been sent
+		require_once 'php/notifications.php';
+		sendConfirmOrder($user->email, $user->firstName, $_POST['pickupAddress'], $_POST['pickupState'],
+		$_POST['pickupPostCode'], $_POST['pickupTime'], $_POST['deliveryAddress'], $_POST['deliveryState'], $_POST['deliveryPostCode'],
+		$_POST['recipientName'], $_POST['recipientPhone'], $_POST['deliveryTime']);
+
 		//Redirect Script
-		//header('Location: ../index.php');
+		header('Location: ../index.php');
 	}
 }
 ?>
@@ -94,7 +100,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 		<h3>Order Details</h3>
 		</div>
 	</div>
-	<form method="post" autocomplete="on" onsubmit="return validate(this)" action="<?php echo "https://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];?>">
+	<form method="post" autocomplete="on" onsubmit="return validate(this)">
 		<!--Order Description-->
 		<div class="form-group">
 			<label for="comment">Description:</label>

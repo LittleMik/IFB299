@@ -32,8 +32,7 @@
 			<span class="sr-only">Next</span>
 		  </a>
 		</div>
-</div>
-	
+</div>	
 	
 <div class="container">
 	  <div class="row">

@@ -160,6 +160,28 @@
 		}
 	}
 
+  //Get the firstname of the user as specified by the userID
+	function getFirstName($email){
+		try
+		{
+			require 'pdo.inc';
+			$stmt = $pdo->prepare(
+			"SELECT firstName FROM users WHERE email = :email limit 1"
+		);
+
+		$stmt->bindValue(':email', $email);
+		$stmt->execute();
+
+		$result = $stmt->fetch();
+
+		return $result['firstName'];
+
+		} catch (PDOException $e){
+			echo $e->getMessage();
+			return 0;
+		}
+	}
+
   function searchUsers($email, $name, $role)
   {
     //Get PDO
