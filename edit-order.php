@@ -161,7 +161,7 @@
 		<!--Pickup Time-->
 		<div class="form-group">
 			<label for="pickupTime">Preferred Pickup Time:</label>
-			<input value="<?php echo str_replace(' ', 'T', $orderObject->pickupTime); ?>" type="datetime-local" type="datetime-local" class="form-control" id="pickupTime" name="pickupTime"
+			<input value="<?php echo str_replace(' ', 'T', $orderObject->pickupTime);/*Format string replacing the space with T to fit it in*/ ?>" type="datetime-local" type="datetime-local" class="form-control" id="pickupTime" name="pickupTime"
 			<?php
 			  date_default_timezone_set('Australia/Brisbane');
 			  $dateMin = date('Y-m-d TH:i:s a');
