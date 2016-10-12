@@ -76,7 +76,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 
 		//Send user an email confirming their order has been sent
 		require_once 'php/notifications.php';
-		sendConfirmOrder($user->email, $user->firstName, $_POST['pickupAddress'], $_POST['pickupState'],
+		sendConfirmOrder($user->email, $user->firstName, $_POST['description'], $_POST['pickupAddress'], $_POST['pickupState'],
 		$_POST['pickupPostCode'], $_POST['pickupTime'], $_POST['deliveryAddress'], $_POST['deliveryState'], $_POST['deliveryPostCode'],
 		$_POST['recipientName'], $_POST['recipientPhone'], $_POST['deliveryTime']);
 

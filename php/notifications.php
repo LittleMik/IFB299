@@ -51,12 +51,13 @@
 			sendNotification($recipientEmail, 'On the Spot account created.', $message);
 	}
 
-		/**
-	* Args: string recipientEmail (email address of intended recpient), string firstName (the firstname of the recipient).
+	/**
+	* Args: string recipientEmail (email address of intended recpient), string firstName (the firstname of the recipient), other variables are for the self describing 
+	* order information.
 	* 
 	* Sends email to address indicated notifying them there account has been created.
 	*/
-	function sendConfirmOrder($recipientEmail, $firstName, $pickAddress, $pickState, $pickPost, 
+	function sendConfirmOrder($recipientEmail, $firstName, $orderDescription, $orderID, $pickAddress, $pickState, $pickPost, 
 		$pickTime, $recpAddress, $recpState, $recpPost, $recpName, $recpPhone, $recpTime) {
 		$message = '
 			<html>
@@ -67,6 +68,9 @@
 						You have successfully made an order with the following details:
 					</p>
 					<p style = "padding-left: 30px">
+						Your order: '.$orderDescription.'<br>
+						Your order ID: '.$orderID.'<br><br>
+						With delivery information as follows: <br>
 						Pickup Address: '.$pickAddress.' <br>
 						Pickup State: '.$pickState.' <br>
 						Pickup Postcode: '.$pickPost.' <br>
@@ -91,4 +95,54 @@
 			//Send email
 			sendNotification($recipientEmail, 'Your order has been processed.', $message);
 	}
+	/**
+	* Args: string recipientEmail (email address of intended recpient), string firstName (the firstname of the recipient) and int orderstatus (a number indicating the current 
+	* state of the order. Other arguments are for the self describing 
+	* order information.
+	* 
+	* Sends email to address indicated notifying them that an order milestone (a significant event) has been completed.
+	*/
+	function milestoneUpdate($recipientEmail, $firstName, $orderStatus, $orderDescription, $orderID) {
+		
+		require_once 'php/status.php';
+						switch ($orderStatus){
+							case PickingUp:
+								$orderStatusMessage = 'is being picked up';
+								break;
+							case PickedUp:
+								$orderStatusMessage = 'has been picked up.';
+								break;
+							case Delivering:
+								$orderStatusMessage = 'is being delivered to your recipient.';
+								break;
+							case Delivered:
+								$orderStatusMessage = 'has been successfully delivered.';
+								break;
+							default:
+								$orderStatusMessage = 'Error: please contact us. This email should not have been sent.';
+						}
+		$message = '
+			<html>
+			<head></head>
+				<body>
+					<h3>Hello '.$firstName.'</h3>
+					<p>
+						Just letting you know, there has been an update with your order!
+					</p>
+					<p>
+						Your order: '.$orderDescription.'<br>
+						With an order ID of '.$orderID.$orderDescription.'
+					<p>
+						To view your order please click here (link to be added).
+					</p>
+					<p>
+						Regards, <br>
+						-<a href="https://ifb299-group52.herokuapp.com">The On the Spot team.</a>
+					</p>
+				</body>
+			</html>';
+			//Send email
+			sendNotification($recipientEmail, 'An update on your order', $message);
+	}
 ?>
+
