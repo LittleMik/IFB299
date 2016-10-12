@@ -106,6 +106,8 @@
 		//Output each result row as a single order
 		foreach($stmt as $order)
 		{
+			require_once 'php/status.php';
+			$orderStatus = Status::getStatusName($order['orderStatus']);
 			echo "
 				<tr>
 					<td>{$order['orderID']}</td>
@@ -131,7 +133,7 @@
 						<p>Postcode: {$order['deliveryPostcode']}</p>
 						<p>State: {$order['deliveryState']}</p>
 					</td>
-					<td>{$order['orderStatus']}</td>
+					<td>{$orderStatus}</td>
 					<td><a href='view-order.php?orderID={$order['orderID']}'>View</a>";
 
 			//Verify User Permission to Edit Orders
@@ -247,6 +249,8 @@
 	function displayPackages($order, $stmtPackages)
 	{
 		//Output Order Info
+		require_once 'php/status.php';
+		$orderStatus = Status::getStatusName($order['orderStatus']);
 		echo '
 		<h3>Order</h3>
 		<table class="table table-striped table-condensed table-responsive">
@@ -296,7 +300,7 @@
 					<p>Name: {$order['recipientName']}</p>
 					<p>Phone: {$order['recipientPhone']}</p>
 				</td>
-				<td>{$order['orderStatus']}</td>";
+				<td>{$orderStatus}</td>";
 
 		//Verify User Permission to Edit Orders
 		require_once 'php/permissions.php';
@@ -324,7 +328,7 @@
 		<thead>
 					<tr>
 						<th>ID</th>
-			<th>Description</th>
+						<th>Description</th>
 						<!-- <th>Status</th> -->
 						<th>Weight</th>
 						<!-- <th>Time: PickedUp</th>
@@ -408,6 +412,39 @@
 				</div>
 			</div>
 			';
+		}
+	}
+
+	function updateStatus($orderID, $status)
+	{
+		//Get PDO
+		require 'pdo.inc';
+
+		try{
+			// Prepare Query
+			$stmt = $pdo->prepare(
+			"UPDATE orders
+			SET orderStatus = :orderStatus
+			WHERE orderID = :orderID;"
+			);
+
+			//Bind values
+			$stmt->bindValue(':orderStatus', $status);
+			$stmt->bindValue(':orderID', $orderID);
+
+			//Run Query
+			$result = $stmt->execute();
+
+			//Close connection
+			$stmt = null;
+			//Destroy PDO Object
+			$pdo = null;
+
+			//Return Result of Statement
+			return $result;
+
+		} catch (PDOException $e){
+			echo $e->getMessage();
 		}
 	}
 ?>

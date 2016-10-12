@@ -26,7 +26,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-9">
-				<form method="POST" class="form-order-lookup form-horizontal">
+				<form method="POST" class="form-order-schedule form-horizontal">
 					<div class="form-group">
 						<h2 class="form-order-lookup">Delivery Schedule</h2>
 						<div id="error"></div>

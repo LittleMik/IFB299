@@ -81,7 +81,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 		$_POST['recipientName'], $_POST['recipientPhone'], $_POST['deliveryTime']);
 
 		//Redirect Script
-		header('Location: ../index.php');
+		header('Location:index.php');
 	}
 }
 ?>

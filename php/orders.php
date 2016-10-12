@@ -87,7 +87,6 @@ class Order{
 			$stmt = $pdo->prepare(
 			"UPDATE orders
 			SET userID = :userID,
-			orderStatus = :orderStatus,
 			description = :description,
 			signature = :signature,
 			deliveryPriority = :deliveryPriority,
@@ -106,7 +105,6 @@ class Order{
 
 			//Bind query parameter with it's given variable
 			$stmt->bindParam(':userID', $this->userID);
-			$stmt->bindParam(':orderStatus', $this->status);
 			$stmt->bindParam(':description', $this->description);
 			$stmt->bindParam(':signature', $this->signature);
 			$stmt->bindParam(':deliveryPriority', $this->priority);

@@ -61,6 +61,7 @@
 	if($formValid)
 	{
 		require_once 'php/orders.php';
+		require_once 'php/ordersDB.php';
 		require_once 'php/users.php';
 		require_once 'php/packages.php';
 		require_once 'php/usersDB.php';
@@ -68,13 +69,15 @@
 
 		$user = unserialize($_SESSION['user']);
 
-		$order = new Order((htmlspecialchars($_GET["orderID"])), getID($_POST['email']), Status::Ordered, $_POST['description'], $_POST['signature'], 
-		$_POST['priority'], $_POST['pickupAddress'], $_POST['pickupPostCode'], $_POST['pickupState'], $_POST['pickupTime'], 
-		$_POST['deliveryAddress'], $_POST['deliveryPostCode'], $_POST['deliveryState'], $_POST['deliveryTime'], 
+		updateStatus($_GET["orderID"], $_POST["status"]);
+
+		$order = new Order((htmlspecialchars($_GET["orderID"])), getID($_POST['email']), Status::Ordered, $_POST['description'], $_POST['signature'],
+		$_POST['priority'], $_POST['pickupAddress'], $_POST['pickupPostCode'], $_POST['pickupState'], $_POST['pickupTime'],
+		$_POST['deliveryAddress'], $_POST['deliveryPostCode'], $_POST['deliveryState'], $_POST['deliveryTime'],
 		$_POST['recipientName'], $_POST['recipientPhone']);
 
 		$orderID = $order->editOrder();
-		
+
 		//Create arrays containing all package descriptions and weights
 		$packageDescriptions = $_POST['packageDescription'];
 		$packageWeights = $_POST['weight'];
@@ -90,7 +93,7 @@
 		}
 
 		//Redirect Script
-		//header('Location: view-order.php?orderID='.$_GET['orderID']);
+		header('Location:view-order.php?orderID='.$_GET['orderID']);
 	}
 }
 ?>
@@ -115,7 +118,7 @@
 			<label for="inputEmail" class="sr-only">Customer email address</label>
 			<input value="<?php echo $userObject->email ?>" type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
 		</div>
-		
+
 		<!--Order Description-->
 		<div class="form-group">
 			<label for="comment">Description:</label>
@@ -143,10 +146,9 @@
 				<label><input <?php if($orderObject->priority == "Standard"){echo "checked='checked'";}  ?> type="radio" name="priority" value="Standard">Standard (5-7 Business Days)</label>
 			</div>
 		</div>
-		
-		<?php 
-		
-		displayPackageInputs($orderObject->orderID); 
+
+		<?php
+			displayPackageInputs($orderObject->orderID);
 		?>
 
 		<div class="row">
@@ -179,13 +181,13 @@
 			<label>Pickup Address:</label>
 			<input value="<?php echo $orderObject->pickupAddress ?>" type="text" class="form-control" id="pickupAddress" name="pickupAddress">
 		</div>
-		
+
 		<!--Pickup PostCode-->
 		<div class="form-group">
 			<label for="email">Postcode:</label>
 			<input value="<?php echo $orderObject->pickupPostcode ?>" type="number" class="form-control" id="email" placeholder="Enter Postcode" name="pickupPostCode" pattern="^[0-9]{4}$">
 		</div>
-		
+
 		<!--Pickup State-->
 		<div class="form-group">
 			<label for="state">State:</label>
@@ -208,7 +210,7 @@
 			<h3>Recipient Details</h3>
 			</div>
 		</div>
-		
+
 		<!--Fullname of Recipient-->
 		<div class="form-group">
 			<label for="recipientName">Recipient Name:</label>
@@ -229,7 +231,7 @@
 			<h3>Delivery</h3>
 			</div>
 		</div>
-		
+
 		<!--delivery Time-->
 		<div class="form-group">
 			<label for="pickupTime">Preferred Pickup Time:</label>
@@ -273,6 +275,22 @@
 			</select>
 		</div>
 
+		<!--Update Status Test-->
+		<?php
+		require_once 'php/status.php';
+		echo '
+		<div class="form-group">
+			<label for="statusTest">Update Status:</label>
+			<select class="form-control" id="statusTest" name="status">
+				<option value="'.Status::Ordered.'">Ordered</option>
+				<option value="'.Status::PickingUp.'">PickingUp</option>
+				<option value="'.Status::PickedUp.'">PickedUp</option>
+				<option value="'.Status::Storing.'">Storing</option>
+				<option value="'.Status::Delivering.'">Delivering</option>
+				<option value="'.Status::Delivered.'">Delivered</option>
+			</select>
+		</div>';
+		?>
 		<button type="submit" class="btnbtn-default">Submit</button>
 
 	</form>
