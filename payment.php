@@ -33,7 +33,7 @@
 			"orderID"=>checkIntID($_GET['orderID']),
 			"email"=>checkEmail($_POST['email']),
 			"type"=>checkPaymentType($_POST['type']),
-			"date"=>checkTime($_POST['date']),
+			//"date"=>checkTime($_POST['date']),
 			"amount"=>checkPaymentAmount($_POST['amount'])
 		);
 
@@ -60,7 +60,7 @@
 			if(addPayment($_GET['orderID'], $userID, $_POST['type'], $_POST['date'], $_POST['amount']))
 			{
 				//Redirect Script
-				header("Location: ../view-order.php?orderID={$_GET['orderID']}");
+				header("Location:view-order.php?orderID={$_GET['orderID']}");
 			}else{
 				echo "<script>alert('Sorry...it seems something went wrong with the database. [Error:Rejected Entry]');</script>";
 			}
