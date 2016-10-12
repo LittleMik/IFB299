@@ -228,4 +228,49 @@
 		}
 	}
 
+	/**
+	* Validate Payment Type from payment input
+	* Returns true if value matches predefined payment methods
+	*/
+	function checkPaymentType($type)
+	{
+		//Check set
+		if(isset($type))
+		{
+
+			//Check Payment Type matches one of the predefined method priorities
+			if(preg_match('/^Cash|Check|Bank Deposit$/', $type))
+			{
+				return true;
+			}else{
+				return false;
+			}
+		}else{
+			return true;
+		}
+	}
+
+	/**
+	* Validate Payment Amount from payment input
+	* Args: $amount
+	* Returns true if amount is valid,
+	* false if invalid
+	*/
+	function checkPaymentAmount($amount)
+	{
+		//Check set
+		if(isset($amount))
+		{
+
+			//Check Payment Amount matches either an integer or 2 placed decimal value
+			if(preg_match('/^\d+(?:.\d{2})*$/', $amount))
+			{
+				return true;
+			}else{
+				return false;
+			}
+		}else{
+			return true;
+		}
+	}
  ?>
