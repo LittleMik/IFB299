@@ -1,18 +1,18 @@
 <?php
 
   require_once 'users.php';
-	
+
 	//Login with email
 	function login($email)
 	{
 		$user = getUserObjectFromEmail($email);
-		
+
 		$_SESSION['login'] = true;
 		$_SESSION['firstname'] = $user->firstName;
 		$_SESSION['user'] = serialize($user);
 		$_SESSION['role'] = $user->role;
 	}
-	
+
 	function loginWithID($userID)
 	{
 		$user = getUserObjectFromID($userID);
@@ -22,7 +22,7 @@
 		$_SESSION['user'] = serialize($user);
 		$_SESSION['role'] = $user->role;
 	}
-	
+
 	//Get a user object from the user ID
 	function getUserObjectFromEmail($email) {
 		require 'pdo.inc';
@@ -49,14 +49,14 @@
 			getRole($userInfo['userID']),
 			$userInfo['address'],
 			$userInfo['postcode'],
-			$userInfo['state']);		
+			$userInfo['state']);
 			return $user;
-		
+
 		} catch (PDOException $e){
 			echo $e->getMessage();
 		}
 	}
-	
+
 	//Get a user object from the user ID
 	function getUserObjectFromID($thisUserID) {
 		require 'pdo.inc';
@@ -85,9 +85,9 @@
 			$userInfo['postcode'],
 			$userInfo['state']
 		);
-		
+
 		return $user;
-		
+
 		} catch (PDOException $e){
 			echo $e->getMessage();
 		}
@@ -137,7 +137,7 @@
 			return 0;
 		}
 	}
-	
+
 	//Get the email of the user as specified by the userID
 	function getEmail($userID){
 		try

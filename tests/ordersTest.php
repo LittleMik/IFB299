@@ -14,38 +14,41 @@
 
       var_dump(get_object_vars($order));
 
-      $this->assertEquals($orderID, $order->orderID);
-      $this->assertEquals($userID, $order->userID);
+      $this->assertEquals($orderID, $order->getID());
+      $this->assertEquals($userID, $order->getUserID());
 
-      $this->assertEquals($status, $order->status);
-      $this->assertEquals($description, $order->description);
-      $this->assertEquals($signature, $order->signature);
-      $this->assertEquals($priority, $order->priority);
+      $this->assertEquals($status, $order->getStatus());
+      $this->assertEquals($description, $order->getDescription());
+      $this->assertEquals($signature, $order->getSignature());
+      $this->assertEquals($priority, $order->getPriority());
 
-      $this->assertEquals($pickupAddress, $order->pickupAddress);
-      $this->assertEquals($pickupPostcode, $order->pickupPostcode);
-      $this->assertEquals($pickupState, $order->pickupState);
-      $this->assertEquals($pickupTime, $order->pickupTime);
+			$pickupDetails = $order->getPickup();
+      $this->assertEquals($pickupAddress, $pickupDetails['address']);
+      $this->assertEquals($pickupPostcode, $pickupDetails['postcode']);
+      $this->assertEquals($pickupState, $pickupDetails['state']);
+      $this->assertEquals($pickupTime, $pickupDetails['time']);
 
-      $this->assertEquals($deliveryAddress, $order->deliveryAddress);
-      $this->assertEquals($deliveryPostcode, $order->deliveryPostcode);
-      $this->assertEquals($deliveryState, $order->deliveryState);
-      $this->assertEquals($deliveryTime, $order->deliveryTime);
+			$deliveryDetails = $order->getDelivery();
+      $this->assertEquals($deliveryAddress, $deliveryDetails['address']);
+      $this->assertEquals($deliveryPostcode, $deliveryDetails['postcode']);
+      $this->assertEquals($deliveryState, $deliveryDetails['state']);
+      $this->assertEquals($deliveryTime, $deliveryDetails['time']);
 
-      $this->assertEquals($recipientName, $order->recipientName);
-      $this->assertEquals($recipientPhone, $order->recipientPhone);
+      $this->assertEquals($recipientName, $order->getRecipient());
+      $this->assertEquals($recipientPhone, $order->getRecipientPhone());
     }
     /**
     * Test Order Constructor DataProvider
     */
     public static function providerConstructorOrder()
     {
+			require_once './php/status.php';
       return array(
         //Create Staff Account
         array(
           "1",
       		"332",
-          "Ordered",
+          Status::Ordered,
           "Something Heavy",
           "1",
           "Express",
@@ -66,7 +69,7 @@
         array(
           "13",
       		"423",
-          "Ordered",
+          Status::Ordered,
           "Something Else",
           "0",
           "Standard",

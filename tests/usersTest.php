@@ -8,18 +8,18 @@
     * Test User Constructor
     * @dataProvider providerConstructorUser
     */
-    public function testConstructorUser($email, $firstName, $lastName, $phone, $role, $address, $postCode, $state)
+    public function testConstructorUser($email, $firstName, $lastName, $phone, $role, $address, $postcode, $state)
     {
       $id = null;
 
-      $user = new User($id, $email, $firstName, $lastName, $phone, $role, $address, $postCode, $state);
+      $user = new User($id, $email, $firstName, $lastName, $phone, $role, $address, $postcode, $state);
 
       var_dump($user->email);
       var_dump($user->firstName);
       var_dump($user->lastName);
       var_dump($phone);
       var_dump($address);
-      var_dump($postCode);
+      var_dump($postcode);
       var_dump($state);
 
       $this->assertEquals($email, $user->email);
@@ -27,7 +27,7 @@
       $this->assertEquals($lastName, $user->lastName);
       $this->assertEquals($phone, $user->phone);
       $this->assertEquals($address, $user->address);
-      $this->assertEquals($postCode, $user->postCode);
+      $this->assertEquals($postcode, $user->postcode);
       $this->assertEquals($state, $user->state);
     }
     /**
