@@ -4,10 +4,10 @@
 	/**
 	* Args: string recipientEmail (email address of intended recpient), string subject (the email subject) &
 	* & string message (the email content).
-	* 
+	*
 	* Sends email to address indicated with $recipientEmail argument, with a subject of $subject and a message of $message.
 	*/
-	function sendNotification($recipientEmail, $subject, $message) 
+	function sendNotification($recipientEmail, $subject, $message)
 	{
 		$from = new SendGrid\Email(null, "notifications@onthespot.com");
 		$to = new SendGrid\Email(null, $recipientEmail);
@@ -26,7 +26,7 @@
 
 	/**
 	* Args: string recipientEmail (email address of intended recpient), string firstName (the firstname of the recipient).
-	* 
+	*
 	* Sends email to address indicated notifying them there account has been created.
 	*/
 	function sendConfirmAccount($recipientEmail, $firstName) {
@@ -52,13 +52,12 @@
 	}
 
 	/**
-	* Args: string recipientEmail (email address of intended recpient), string firstName (the firstname of the recipient), other variables are for the self describing 
+	* Args: string recipientEmail (email address of intended recpient), string firstName (the firstname of the recipient), other variables are for the self describing
 	* order information.
-	* 
+	*
 	* Sends email to address indicated notifying them there account has been created.
 	*/
-	function sendConfirmOrder($recipientEmail, $firstName, $orderDescription, $orderID, $pickAddress, $pickState, $pickPost, 
-		$pickTime, $recpAddress, $recpState, $recpPost, $recpName, $recpPhone, $recpTime) {
+	function sendConfirmOrder($recipientEmail, $firstName, $orderDescription, $orderID, $pickAddress, $pickState, $pickPost, $pickTime, $recpAddress, $recpState, $recpPost, $recpName, $recpPhone, $recpTime) {
 		$message = '
 			<html>
 			<head></head>
@@ -96,14 +95,14 @@
 			sendNotification($recipientEmail, 'Your order has been processed.', $message);
 	}
 	/**
-	* Args: string recipientEmail (email address of intended recpient), string firstName (the firstname of the recipient) and int orderstatus (a number indicating the current 
-	* state of the order. Other arguments are for the self describing 
+	* Args: string recipientEmail (email address of intended recpient), string firstName (the firstname of the recipient) and int orderstatus (a number indicating the current
+	* state of the order. Other arguments are for the self describing
 	* order information.
-	* 
+	*
 	* Sends email to address indicated notifying them that an order milestone (a significant event) has been completed.
 	*/
 	function milestoneUpdate($recipientEmail, $firstName, $orderStatus, $orderDescription, $orderID) {
-		
+
 		require_once 'php/status.php';
 						switch ($orderStatus){
 							case PickingUp:
@@ -145,4 +144,3 @@
 			sendNotification($recipientEmail, 'An update on your order', $message);
 	}
 ?>
-

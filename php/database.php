@@ -76,6 +76,7 @@
 		function update_statement($query, $parameters)
 		{
 			try{
+
 				//Prepare Query
 				$stmt = $this->pdo->prepare($query);
 
@@ -86,7 +87,7 @@
 				}
 
 				//Run Query
-				$result = $stmt->execute();
+				$stmt->execute();
 
 				//Get ID of updated row
 				$this->lastID = $this->pdo->lastInsertId();

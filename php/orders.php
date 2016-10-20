@@ -19,18 +19,8 @@ class Order{
 		private $priority;
 
 		private $pickupDetails;
-		//remove individual pickup details
-		private $pickupAddress;
-		private $pickupPostcode;
-		private $pickupState;
-		private $pickupTime;
 
 		private $deliveryDetails;
-		//remove individual delivery details
-		private $deliveryAddress;
-		private $deliveryPostcode;
-		private $deliveryState;
-		private $deliveryTime;
 
 		private $recipientName;
 		private $recipientPhone;
@@ -72,11 +62,6 @@ class Order{
 					'time' => $args[9]
 				);
 
-				$this->pickupAddress = $args[6];
-				$this->pickupPostcode = $args[7];
-				$this->pickupState = $args[8];
-				$this->pickupTime = $args[9];
-
 				//Delivery Details
 				$this->deliveryDetails = array(
 					'address' => $args[10],
@@ -84,11 +69,6 @@ class Order{
 					'state' => $args[12],
 					'time' => $args[13]
 				);
-
-				$this->deliveryAddress = $args[10];
-				$this->deliveryPostcode = $args[11];
-				$this->deliveryState = $args[12];
-				$this->deliveryTime = $args[13];
 
 				//Recipient
 				$this->recipientName = $args[14];
@@ -216,14 +196,14 @@ class Order{
 				':description' => $this->description,
 				':signature' => $this->signature,
 				':deliveryPriority' => $this->priority,
-				':pickupAddress' => $this->pickupAddress,
-				':pickupPostcode' => $this->pickupPostcode,
-				':pickupState' => $this->pickupState,
-				':pickupTime' => $this->pickupTime,
-				':deliveryAddress' => $this->deliveryAddress,
-				':deliveryPostcode' => $this->deliveryPostcode,
-				':deliveryState' => $this->deliveryState,
-				':deliveryTime' => $this->deliveryTime,
+				':pickupAddress' => $this->pickupDetails['address'],
+				':pickupPostcode' => $this->pickupDetails['postcode'],
+				':pickupState' => $this->pickupDetails['state'],
+				':pickupTime' => $this->pickupDetails['time'],
+				':deliveryAddress' => $this->deliveryDetails['address'],
+				':deliveryPostcode' => $this->deliveryDetails['postcode'],
+				':deliveryState' => $this->deliveryDetails['state'],
+				':deliveryTime' => $this->deliveryDetails['time'],
 				':recipientName' => $this->recipientName,
 				':recipientPhone' => $this->recipientPhone,
 				':orderID' => $this->orderID
@@ -239,6 +219,7 @@ class Order{
 			$db->destroy_pdo();
 			unset($db);
 
+			//Return ID
 			return $lastID;
 		}
 
@@ -248,56 +229,130 @@ class Order{
 		*/
 		function createOrder()
 		{
-			require 'pdo.inc';
-			try
-			{
-				// Prepare Query
-				$stmt = $pdo->prepare(
-				"INSERT INTO orders (userID, orderStatus, description, signature,
-				deliveryPriority, pickupAddress, pickupPostcode, pickupState,
-				pickupTime, deliveryAddress, deliveryPostcode, deliveryState,
-				deliveryTime, recipientName, recipientPhone)
+			//Create new database connection
+			require_once 'database.php';
+			$db = new Database();
 
-				VALUES (:userID, :orderStatus, :description, :signature, :deliveryPriority,
-				:pickupAddress, :pickupPostcode, :pickupState, :pickupTime, :deliveryAddress,
-				:deliveryPostcode, :deliveryState, :deliveryTime, :recipientName, :recipientPhone
-				)");
+			//Set Insert Query
+			$query = "INSERT INTO orders (
+			userID,
+			orderStatus,
+			description,
+			signature,
+			deliveryPriority,
+			pickupAddress,
+			pickupPostcode,
+			pickupState,
+			pickupTime,
+			deliveryAddress,
+			deliveryPostcode,
+			deliveryState,
+			deliveryTime,
+			recipientName,
+			recipientPhone)
 
-				//Bind query parameter with it's given variable
-				$stmt->bindParam(':userID', $this->userID);
-				$stmt->bindParam(':orderStatus', $this->status);
-				$stmt->bindParam(':description', $this->description);
-				$stmt->bindParam(':signature', $this->signature);
-				$stmt->bindParam(':deliveryPriority', $this->priority);
-				$stmt->bindParam(':pickupAddress', $this->pickupAddress);
-				$stmt->bindParam(':pickupPostcode', $this->pickupPostcode);
-				$stmt->bindParam(':pickupState', $this->pickupState);
-				$stmt->bindParam(':pickupTime', $this->pickupTime);
-				$stmt->bindParam(':deliveryAddress', $this->deliveryAddress);
-				$stmt->bindParam(':deliveryPostcode', $this->deliveryPostcode);
-				$stmt->bindParam(':deliveryState', $this->deliveryState);
-				$stmt->bindParam(':deliveryTime', $this->deliveryTime);
-				$stmt->bindParam(':recipientName', $this->recipientName);
-				$stmt->bindParam(':recipientPhone', $this->recipientPhone);
+			VALUES (
+			:userID,
+			:orderStatus,
+			:description,
+			:signature,
+			:deliveryPriority,
+			:pickupAddress,
+			:pickupPostcode,
+			:pickupState,
+			:pickupTime,
+			:deliveryAddress,
+			:deliveryPostcode,
+			:deliveryState,
+			:deliveryTime,
+			:recipientName,
+			:recipientPhone);";
 
-				//Run query
-				$stmt->execute();
-				//get id of newly inserted row
-				$last_id = $pdo->lastInsertId();
+			//Populate Parameters List
+			$parameters = array(
+				':userID' => $this->userID,
+				':orderStatus' => $this->status,
+				':description' => $this->description,
+				':signature' => $this->signature,
+				':deliveryPriority' => $this->priority,
+				':pickupAddress' => $this->pickupDetails['address'],
+				':pickupPostcode' => $this->pickupDetails['postcode'],
+				':pickupState' => $this->pickupDetails['state'],
+				':pickupTime' => $this->pickupDetails['time'],
+				':deliveryAddress' => $this->deliveryDetails['address'],
+				':deliveryPostcode' => $this->deliveryDetails['postcode'],
+				':deliveryState' => $this->deliveryDetails['state'],
+				':deliveryTime' => $this->deliveryDetails['time'],
+				':recipientName' => $this->recipientName,
+				':recipientPhone' => $this->recipientPhone
+			);
 
-				//Close connection
-				$stmt = null;
-				//Destroy PDO Object
-				$pdo = null;
-				//Return id of newly inserted row
-				return $last_id;
+			//Run Update Statment
+			$db->update_statement($query, $parameters);
 
-			}catch(PDOException $e){
-				//Output Error
-				echo $e->getMessage();
-				echo '<p>'.$e.'</p>';
-			}
+			//Get ID of new row
+			$lastID = $db->__get('lastID');
+
+			//Destroy Database Connection
+			$db->destroy_pdo();
+			unset($db);
+
+			//Return ID
+			return $lastID;
 		}
+
+		/**
+		* Get Order from Database
+		* Assigns order object variables with values from the database
+		* according to the orderID provided
+		*/
+		function getOrder($orderID)
+		{
+			//Create new database connection
+			require_once 'database.php';
+			$db = new Database();
+
+			//Set Select Query
+			$query = "SELECT DISTINCT *
+			FROM orders
+			WHERE orders.orderID = :orderID";
+
+			//Set Parameters
+			$parameters = array(
+				":orderID" => $orderID
+			);
+
+			//Get Order from Database
+			$stmt = $db->select_statement($query, $parameters);
+
+			$order = $stmt->fetch();
+
+			//Assign Order Values according to results
+			$this->orderID = $orderID;
+			$this->userID = $order['userID'];
+			$this->status = $order['orderStatus'];
+			$this->description = $order['description'];
+			$this->signature = $order['signature'];
+			$this->priority = $order['deliveryPriority'];
+
+			$this->pickupDetails = array(
+				'address' => $order['pickupAddress'],
+				'postcode' => $order['pickupPostcode'],
+				'state' => $order['pickupState'],
+				'time' => $order['pickupTime']
+			);
+
+			$this->deliveryDetails = array(
+				'address' => $order['deliveryAddress'],
+				'postcode' => $order['deliveryPostcode'],
+				'state' => $order['deliveryState'],
+				'time' => $order['deliveryTime']
+			);
+
+			$this->recipientName = $order['recipientName'];
+			$this->recipientPhone = $order['recipientPhone'];
+		}
+
 
 		//return an array containing all the package objects in this order
 		function getPackages(){

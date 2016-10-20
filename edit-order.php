@@ -20,9 +20,14 @@
 
 
 <?php
+	require_once 'php/orders.php';
 	require_once 'php/ordersDB.php';
 	require_once 'php/usersDB.php';
-	$order = getOrderObject(htmlspecialchars($_GET["orderID"]));
+
+	//Get Order
+	$order = new Order();
+	$order->getOrder(htmlspecialchars($_GET["orderID"]));
+	
 	$userObject = getUserObjectFromID($order->getUserID());
 
 	if($_SERVER["REQUEST_METHOD"] === "POST")
