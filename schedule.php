@@ -161,6 +161,11 @@
 						{
 							//Run Query and Output Results
 							require_once 'php/ordersDB.php';
+							$order = new Order();
+							$order->getOrder($_GET['orderID']);
+
+							require 'php/output.php';
+							$order->displayOrder();
 							displayPackages(getOrder($_GET['orderID']), getPackages($_GET['orderID']));
 
 						}else{

@@ -70,7 +70,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 		while($i < sizeof($packageDescriptions)){
 			//Note that '0' is given as package id, only to indicate that it has not been set yet
 			$package = new Package(0, $orderID, $packageWeights[$i], $packageDescriptions[$i]);
-			$package->saveToDB();
+			$package->createPackage();
 			$i++;
 		}
 

@@ -55,10 +55,10 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 	require_once 'php/status.php';
 
 	$user = unserialize($_SESSION['user']);
-	
-	$order = new Order(0, getID($_POST['email']), Status::Ordered, $_POST['description'], $_POST['signature'], 
-	$_POST['priority'], $_POST['pickupAddress'], $_POST['pickupPostCode'], $_POST['pickupState'], $_POST['pickupTime'], 
-	$_POST['deliveryAddress'], $_POST['deliveryPostCode'], $_POST['deliveryState'], $_POST['deliveryTime'], 
+
+	$order = new Order(0, getID($_POST['email']), Status::Ordered, $_POST['description'], $_POST['signature'],
+	$_POST['priority'], $_POST['pickupAddress'], $_POST['pickupPostCode'], $_POST['pickupState'], $_POST['pickupTime'],
+	$_POST['deliveryAddress'], $_POST['deliveryPostCode'], $_POST['deliveryState'], $_POST['deliveryTime'],
 	$_POST['recipientName'], $_POST['recipientPhone']);
 
 	$orderID = $order->createOrder();
@@ -68,17 +68,17 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 	sendConfirmOrder($_POST['email'], getFirstName($_POST['email']), $_POST['pickupAddress'], $_POST['pickupState'],
 	$_POST['pickupPostCode'], $_POST['pickupTime'], $_POST['deliveryAddress'], $_POST['deliveryState'], $_POST['deliveryPostCode'],
 	$_POST['recipientName'], $_POST['recipientPhone'], $_POST['deliveryTime']);
-	
+
 	//Create arrays containing all package descriptions and weights
 	$packageDescriptions = $_POST['packageDescription'];
 	$packageWeights = $_POST['weight'];
-	
+
 	//Loop through all packages and add them to the database
 	$i = 0;
 	while($i < sizeof($packageDescriptions)){
 		//Note that '0' is given as package id, only to indicate that it has not been set yet
 		$package = new Package(0, $orderID, $packageWeights[$i], $packageDescriptions[$i]);
-		$package->saveToDB();
+		$package->createPackage();
 		$i++;
 	}
 
@@ -108,13 +108,13 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 			<label for="inputEmail" class="sr-only">Customer email address</label>
 			<input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
 		</div>
-		
+
 		<!--Order Description-->
 		<div class="form-group">
 			<label for="comment">Description:</label>
 			<textarea class="form-control" rows="5" id="comment" maxlength="140" name="description"></textarea>*max 140 characters
 		</div>
-		
+
 		<!--Packages
 			Code for adding extra packages is in customJavascript.hs
 		-->
@@ -182,13 +182,13 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 			<label class="radio-inline"><input type="radio" name="otherPickupAddress" checked="checked">Other</label>
 			<input type="text" class="form-control" id="pickupAddress" name="pickupAddress">
 		</div>
-		
+
 		<!--Pickup PostCode-->
 		<div class="form-group">
 			<label for="email">Postcode:</label>
 			<input type="number" class="form-control" id="email" placeholder="Enter Postcode" name="pickupPostCode" pattern="^[0-9]{4}$">
 		</div>
-		
+
 		<!--Pickup State-->
 		<div class="form-group">
 			<label for="state">State:</label>
@@ -212,7 +212,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 			<h3>Recipient Details</h3>
 			</div>
 		</div>
-		
+
 		<!--Fullname of Recipient-->
 		<div class="form-group">
 			<label for="recipientName">Recipient Name:</label>
@@ -233,7 +233,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 			<h3>Delivery</h3>
 			</div>
 		</div>
-		
+
 		<!--delivery Time-->
 		<div class="form-group">
 			<label for="pickupTime">Preferred Pickup Time:</label>

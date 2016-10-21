@@ -1,11 +1,24 @@
 <?php
+	// ======================================== Database Class ======================================== //
+	/**
+	*	Database Class
+	*
+	*	Contains a PDO object for the execution of SQL queries and
+	* a value to save the lastID when executing update or insert queries
+	*
+	*	@author Michael Smallcombe & Greg Mills
+	*/
+	// ============================================================================================= //
 	class Database{
+
 		private $pdo;
 		private $lastID;
 
+		// ==================== Constructor ==================== //
 		/**
-		 * Constructor
-		 */
+		* Constructor
+		*
+		*/
 		function __construct()
 		{
 			//Setup New PDO
@@ -18,9 +31,14 @@
 			$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		}
 
+		// ==================== Getters ==================== //
 		/**
-		* Get Method
+		* Override of Get Method
 		* Returns variable corresponding to name
+		*
+		* @param (String) $var Variable name
+		*
+		* @return (mixed) variable corresponding to the input name or null
 		*/
 		function __get($var)
 		{
@@ -38,10 +56,16 @@
 			}
 		}
 
+		// ==================== Database Query Functions ==================== //
 		/**
+		* Select Statement
+		* Uses PDO to bind input values with an input query
+		* Returns a result statment
 		*
+		* @param (String) $query SQL Query for database
+		* @param (array) $parameters Containing values to bind against query inputs
 		*
-		*
+		* @return (PDOStatement) result statement from the select query
 		*/
 		function select_statement($query, $parameters)
 		{
@@ -69,9 +93,12 @@
 		}
 
 		/**
+		* Update Statement
+		* Uses PDO to bind input values with an input query
+		* Does not return a result statement and saves the lastInsertId of the query
 		*
-		*
-		*
+		* @param (String) $query SQL Query for database
+		* @param (array) $parameters Containing values to bind against query inputs
 		*/
 		function update_statement($query, $parameters)
 		{
@@ -102,8 +129,12 @@
 			}
 		}
 
-
-
+		// ==================== Helpers ==================== //
+		/**
+		* Destroy PDO
+		* Destroys the PDO Object to thoroughly terminate the connection with the database
+		*
+		*/
 		function destroy_pdo()
 		{
 			//Destroy PDO Object

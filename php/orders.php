@@ -1,15 +1,15 @@
 <?php
-// ======================================== Order Class ======================================== //
-/**
-*	Order Class
-*
-*	Contains details for orders and functionality to send and retrieve
-* order relevant information from the MySQL databse
-*
-*	@author Michael Smallcombe & Greg Mills
-*/
-// ============================================================================================= //
-class Order{
+	// ======================================== Order Class ======================================== //
+	/**
+	*	Order Class
+	*
+	*	Contains details for orders and functionality to send and retrieve
+	* order relevant information from the MySQL databse
+	*
+	*	@author Michael Smallcombe & Greg Mills
+	*/
+	// ============================================================================================= //
+	class Order{
 
 		private $orderID;
 		private $userID;
@@ -28,15 +28,15 @@ class Order{
 		// ==================== Constructor ==================== //
 		/**
 		 * Constructor
+		 *
 		 * Precondition: Argument must be either user table row
 		 * or a verified set of client order information
+		 *
 		 */
 		function __construct()
 		{
 			//Construct Order according to the arguments provided
-			$numArgs = func_num_args();
-
-			if($numArgs !== 0)
+			if(func_num_args() !== 0)
 			{
 				//Import Status
 				require_once 'status.php';
@@ -83,6 +83,8 @@ class Order{
 		/**
 		* Get ID
 		* Returns integer order's ID
+		*
+		* @return (integer) Contains the order's ID
 		*/
 		function getID()
 		{
@@ -91,6 +93,8 @@ class Order{
 		/**
 		* Get UserID
 		* Returns integer of userID assigned to the order
+		*
+		* @return (integer) Contains the user's ID
 		*/
 		function getUserID()
 		{
@@ -99,6 +103,8 @@ class Order{
 		/**
 		* Get Status
 		* Returns the order's current status
+		*
+		* @return (integer) Contains the order's status
 		*/
 		function getStatus()
 		{
@@ -107,6 +113,8 @@ class Order{
 		/**
 		* Get Description
 		* Returns order's description
+		*
+		* @return (String) Contains the order's description
 		*/
 		function getDescription()
 		{
@@ -115,6 +123,8 @@ class Order{
 		/**
 		* Get Signature
 		* Returns order's signature required property
+		*
+		* @return (integer) Used as a binary value to indicate the order's signature requirement
 		*/
 		function getSignature()
 		{
@@ -123,6 +133,8 @@ class Order{
 		/**
 		* Get Priority
 		* Returns order's priority type
+		*
+		* @return (String) Contains the order's priority type
 		*/
 		function getPriority()
 		{
@@ -131,6 +143,8 @@ class Order{
 		/**
 		* Get Pickup Details
 		* Returns array containing order's pickup details
+		*
+		* @return (array) Contains the order's pickup information
 		*/
 		function getPickup()
 		{
@@ -139,6 +153,8 @@ class Order{
 		/**
 		*	Get Delivery Details
 		*	Returns array containing order's delivery details
+		*
+		* @return (array) Contains the order's delivery information
 		*/
 		function getDelivery()
 		{
@@ -147,14 +163,18 @@ class Order{
 		/**
 		*	Get Recipient
 		*	Returns orders's recipient name
+		*
+		* @return (String) Contains the order's recipient name
 		*/
 		function getRecipient()
 		{
 			return $this->recipientName;
 		}
-		/*
+		/**
 		*	Get Recipient Phone
 		*	Returns order's recipient phone number
+		*
+		* @return (String) Contains the order recipient's phone number
 		*/
 		function getRecipientPhone()
 		{
@@ -162,70 +182,10 @@ class Order{
 		}
 
 		// ==================== Database Functions ==================== //
-		/*
-		* Edit Order
-		*	Updates Orders table entry for the corresponding orderID
-		*/
-		function editOrder()
-		{
-			//Create new database connection
-			require_once 'database.php';
-			$db = new Database();
-
-			//Set Update Query
-			$query = "UPDATE orders
-			SET userID = :userID,
-			description = :description,
-			signature = :signature,
-			deliveryPriority = :deliveryPriority,
-			pickupAddress = :pickupAddress,
-			pickupPostcode = :pickupPostcode,
-			pickupState = :pickupState,
-			pickupTime = :pickupTime,
-			deliveryAddress = :deliveryAddress,
-			deliveryPostcode = :deliveryPostcode,
-			deliveryState = :deliveryState,
-			deliveryTime = :deliveryTime,
-			recipientName = :recipientName,
-			recipientPhone = :recipientPhone
-			WHERE orderID = :orderID;";
-
-			//Populate Parameters List
-			$parameters = array(
-				':userID' => $this->userID,
-				':description' => $this->description,
-				':signature' => $this->signature,
-				':deliveryPriority' => $this->priority,
-				':pickupAddress' => $this->pickupDetails['address'],
-				':pickupPostcode' => $this->pickupDetails['postcode'],
-				':pickupState' => $this->pickupDetails['state'],
-				':pickupTime' => $this->pickupDetails['time'],
-				':deliveryAddress' => $this->deliveryDetails['address'],
-				':deliveryPostcode' => $this->deliveryDetails['postcode'],
-				':deliveryState' => $this->deliveryDetails['state'],
-				':deliveryTime' => $this->deliveryDetails['time'],
-				':recipientName' => $this->recipientName,
-				':recipientPhone' => $this->recipientPhone,
-				':orderID' => $this->orderID
-			);
-
-			//Run Update Statment
-			$db->update_statement($query, $parameters);
-
-			//Get ID of updated row
-			$lastID = $db->__get('lastID');
-
-			//Destroy Database Connection
-			$db->destroy_pdo();
-			unset($db);
-
-			//Return ID
-			return $lastID;
-		}
-
-		/*
+		/**
 		* Create Order
 		*	Creates a new entry in the Orders table for the given order
+		*
 		*/
 		function createOrder()
 		{
@@ -302,9 +262,73 @@ class Order{
 		}
 
 		/**
+		* Edit Order
+		*	Updates Orders table entry for the corresponding orderID
+		*
+		*/
+		function editOrder()
+		{
+			//Create new database connection
+			require_once 'database.php';
+			$db = new Database();
+
+			//Set Update Query
+			$query = "UPDATE orders
+				SET userID = :userID,
+				description = :description,
+				signature = :signature,
+				deliveryPriority = :deliveryPriority,
+				pickupAddress = :pickupAddress,
+				pickupPostcode = :pickupPostcode,
+				pickupState = :pickupState,
+				pickupTime = :pickupTime,
+				deliveryAddress = :deliveryAddress,
+				deliveryPostcode = :deliveryPostcode,
+				deliveryState = :deliveryState,
+				deliveryTime = :deliveryTime,
+				recipientName = :recipientName,
+				recipientPhone = :recipientPhone
+				WHERE orderID = :orderID;";
+
+			//Populate Parameters List
+			$parameters = array(
+				':userID' => $this->userID,
+				':description' => $this->description,
+				':signature' => $this->signature,
+				':deliveryPriority' => $this->priority,
+				':pickupAddress' => $this->pickupDetails['address'],
+				':pickupPostcode' => $this->pickupDetails['postcode'],
+				':pickupState' => $this->pickupDetails['state'],
+				':pickupTime' => $this->pickupDetails['time'],
+				':deliveryAddress' => $this->deliveryDetails['address'],
+				':deliveryPostcode' => $this->deliveryDetails['postcode'],
+				':deliveryState' => $this->deliveryDetails['state'],
+				':deliveryTime' => $this->deliveryDetails['time'],
+				':recipientName' => $this->recipientName,
+				':recipientPhone' => $this->recipientPhone,
+				':orderID' => $this->orderID
+			);
+
+			//Run Update Statment
+			$db->update_statement($query, $parameters);
+
+			//Get ID of updated row
+			$lastID = $db->__get('lastID');
+
+			//Destroy Database Connection
+			$db->destroy_pdo();
+			unset($db);
+
+			//Return ID
+			return $lastID;
+		}
+
+		/**
 		* Get Order from Database
 		* Assigns order object variables with values from the database
 		* according to the orderID provided
+		*
+		* @param (integer) $orderID Order's ID number
 		*/
 		function getOrder($orderID)
 		{
@@ -353,20 +377,114 @@ class Order{
 			$this->recipientPhone = $order['recipientPhone'];
 		}
 
+		/**
+		* Get Packagaes
+		* Returns an array containing all the packages for the order
+		*
+		* @return (array) Array of packages
+		*/
+		function getPackages()
+		{
+			//Import Packages Class
+			require_once 'packages.php';
 
-		//return an array containing all the package objects in this order
-		function getPackages(){
-			require_once 'ordersDB.php';
-			//get a pdo statement containing all of the package info
-			$stmtPackages = getPackages($this->orderID);
-			//store all the info into package objects, and put them into an array
-			$i = 0;
-			foreach($stmtPackages as $package){
-				$packages[$i] = new Package($package['packageID'], $package['packageWeight'], $package['packageDescription']);
-				$i++;
+			//Create new database connection
+			require_once 'database.php';
+			$db = new Database();
+
+			//Set Select Query
+			$query = "SELECT *
+			FROM packages
+			WHERE orderID = :orderID
+			ORDER BY packageID ASC";
+
+			//Set Parameter
+			$parameters = array(
+				':orderID' => $this->orderID
+			);
+
+			//Get Packages from Database
+			$stmt = $db->select_statement($query, $parameters);
+
+			//Output each result as a package and add to packages array
+			$packages = array();
+			foreach($stmt as $package)
+			{
+				array_push($packages, new Package($package['packageID'], $this->orderID, $package['packageWeight'], $package['packageDescription']));
 			}
 
+			//Return Array pf Packages
 			return $packages;
+		}
+
+		// ==================== Display/Output Functions ==================== //
+		/**
+		* Display Order
+		* Outputs the Order in a table row
+		*
+		*/
+		function displayOrder()
+		{
+			//Get Status Name
+			require_once 'status.php';
+			$orderStatus = Status::getStatusName($this->status);
+
+			//Get Order's User details
+			//temporary method use
+			require_once 'usersDB.php';
+			$user = getUserObjectFromID($this->userID);
+
+			//Output Order as Table Row
+			echo "
+				<tr>
+					<td>{$this->orderID}</td>
+					<td>
+						<p>{$user->firstName} {$user->lastName}</p>
+						<p>{$user->email}</p>
+					</td>
+					<td>
+						<p>Desc: {$this->description}</p>
+						<p>Type: {$this->priority}</p>";
+			if($this->signature === '1')
+			{
+				echo "<p>Signature Required</p>";
+			}
+			echo "
+					</td>
+					<td>
+						<p>Preferred Time: {$this->pickupDetails['time']}</p>
+						<p>Address: {$this->pickupDetails['address']}</p>
+						<p>State: {$this->pickupDetails['state']}</p>
+						<p>Postcode: {$this->pickupDetails['postcode']}</p>
+					</td>
+					<td>
+						<p>Preferred Time: {$this->deliveryDetails['time']}</p>
+						<p>Address: {$this->deliveryDetails['address']}</p>
+						<p>State: {$this->deliveryDetails['state']}</p>
+						<p>Postcode: {$this->deliveryDetails['postcode']}</p>
+					</td>
+					<td>
+						<p>Name: {$this->recipientName}</p>
+						<p>Phone: {$this->recipientPhone}</p>
+					</td>
+					<td>{$orderStatus}</td>";
+
+			//Verify User Permission to Edit Orders
+			require_once 'php/permissions.php';
+
+			if(isset($_SESSION['role']))
+			{
+				if(checkPermission($_SESSION['role'], 'edit-order.php') === true)
+				{
+					echo "
+						<td>
+							<a href='edit-order.php?orderID={$this->orderID}'>Edit</a>
+						</td>";
+				}
+			}
+
+			//Close Row Tag
+			echo "</tr>";
 		}
 	}
 ?>

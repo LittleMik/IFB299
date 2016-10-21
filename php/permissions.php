@@ -1,7 +1,4 @@
 <?php
-  /**
-  * look into session handling (security): http://blog.teamtreehouse.com/how-to-create-bulletproof-sessions
-  */
 
 
   /**

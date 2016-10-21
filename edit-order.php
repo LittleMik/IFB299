@@ -27,7 +27,7 @@
 	//Get Order
 	$order = new Order();
 	$order->getOrder(htmlspecialchars($_GET["orderID"]));
-	
+
 	$userObject = getUserObjectFromID($order->getUserID());
 
 	if($_SERVER["REQUEST_METHOD"] === "POST")
@@ -99,7 +99,7 @@
 			{
 				//Note that '0' is given as package id, only to indicate that it has not been set yet
 				$package = new Package($packageIDs[$i], $orderID, $packageWeights[$i], $packageDescriptions[$i]);
-				$package->updateToDB();
+				$package->editPackage();
 				$i++;
 			}
 

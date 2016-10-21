@@ -246,8 +246,11 @@
 		}
 	}
 
-	function displayPackages($order, $stmtPackages)
+	function displayPackages($order, $packages)
 	{
+		//Import packages
+		require_once 'php/packages.php';
+
 		//Output Order Info
 		require_once 'php/status.php';
 		$orderStatus = Status::getStatusName($order['orderStatus']);
@@ -340,34 +343,22 @@
 			<tbody>';
 
 			//Check if packages are present in query results
-			if($stmtPackages->rowCount() == 0)
+			if(empty($packages))
 			{
 				echo "
 				<tr><h3>No packages can be found for this order...</h3></tr>
 				</tbody>";
-			}else
+			}
+				else
 			{
 				//Output each result row as a single order
-				foreach($stmtPackages as $package)
+				foreach($packages as $package)
 				{
 					echo "
 						<tr>
-							<td>{$package['packageID']}</td>
-				<td>{$package['packageDescription']}</td>
-							<!-- <td>{$package['packageStatus']}</td> -->
-							<td>{$package['packageWeight']}KG</td>
-							<!-- <td>
-								<p>Time: {$package['pickupTime']}</p>
-							</td>
-							<td>
-								<p>Time: {$package['stored']}</p>
-							</td>
-							<td>
-								<p>Time: {$package['delivery']}</p>
-							</td>
-							<td>
-								<p>Time: {$package['delivered']}</p>
-							</td> -->";
+							<td>{$package->packageID}</td>
+							<td>{$package->description}</td>
+							<td>{$package->weight}KG</td>";
 					//Close Cell and Row tags
 					echo "
 							</td>
