@@ -159,20 +159,24 @@
 						require_once 'php/formValidation.php';
 						if(checkIntID($_GET['orderID']))
 						{
-							//Run Query and Output Results
+							//Retrieve Order
 							require_once 'php/ordersDB.php';
 							$order = new Order();
 							$order->getOrder($_GET['orderID']);
 
-							require 'php/output.php';
-							$order->displayOrder();
-							displayPackages(getOrder($_GET['orderID']), getPackages($_GET['orderID']));
+							//Retrieve Order's Packages
+							$packages = $order->getPackages();
 
-						}else{
+							//Output All Order Relevant Information
+							require_once 'php/output.php';
+							outputOrder($order);
+							outputPackages($packages);
 
+						}
+							else
+						{
 							//Output Error
 							echo "Invalid orderID detected<br />";
-
 						}
 					}
 				}

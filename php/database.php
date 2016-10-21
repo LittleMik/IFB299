@@ -9,7 +9,8 @@
 	*	@author Michael Smallcombe & Greg Mills
 	*/
 	// ============================================================================================= //
-	class Database{
+	class Database
+	{
 
 		private $pdo;
 		private $lastID;

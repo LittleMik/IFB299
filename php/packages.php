@@ -9,7 +9,8 @@
 	*	@author Michael Smallcombe & Greg Mills
 	*/
 	// ============================================================================================= //
-	class Package{
+	class Package
+	{
 
 		public $packageID;
 		public $orderID;
@@ -58,6 +59,26 @@
 		{
 			return $this->orderID;
 		}
+		/**
+		* Get Weight
+		* Returns weight of the package
+		*
+		* @return (integer) Contains the package's weight
+		*/
+		function getWeight()
+		{
+			return $this->weight;
+		}
+		/**
+		* Get Description
+		* Returns the description of the package
+		*
+		* @return (String) Contains the package's description field
+		*/
+		function getDescription()
+		{
+			return $this->description;
+		}
 
 		// ==================== Database Functions ==================== //
 		/**
@@ -96,7 +117,6 @@
 			$db->destroy_pdo();
 			unset($db);
 		}
-
 		/**
 		* Edit Package
 		*	Updates Package table entry for the corresponding packageID
@@ -128,7 +148,7 @@
 			$db->destroy_pdo();
 			unset($db);
 		}
-
+		
 		// ==================== Display/Output Functions ==================== //
 		/**
 		* Display Package

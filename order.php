@@ -53,7 +53,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 
 		$user = unserialize($_SESSION['user']);
 
-		$order = new Order(0, $user->id, Status::Ordered, $_POST['description'], $_POST['signature'],
+		$order = new Order(0, $user->getID(), Status::Ordered, $_POST['description'], $_POST['signature'],
 		$_POST['priority'], $_POST['pickupAddress'], $_POST['pickupPostCode'], $_POST['pickupState'], $_POST['pickupTime'],
 		$_POST['deliveryAddress'], $_POST['deliveryPostCode'], $_POST['deliveryState'], $_POST['deliveryTime'],
 		$_POST['recipientName'], $_POST['recipientPhone']);

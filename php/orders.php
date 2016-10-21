@@ -9,7 +9,8 @@
 	*	@author Michael Smallcombe & Greg Mills
 	*/
 	// ============================================================================================= //
-	class Order{
+	class Order
+	{
 
 		private $orderID;
 		private $userID;
@@ -45,7 +46,6 @@
 				$args = func_get_args();
 
 				//Construct NEW Order
-
 				//Order Details
 				$this->orderID = $args[0];
 				$this->userID = $args[1];
@@ -212,21 +212,21 @@
 			recipientPhone)
 
 			VALUES (
-			:userID,
-			:orderStatus,
-			:description,
-			:signature,
-			:deliveryPriority,
-			:pickupAddress,
-			:pickupPostcode,
-			:pickupState,
-			:pickupTime,
-			:deliveryAddress,
-			:deliveryPostcode,
-			:deliveryState,
-			:deliveryTime,
-			:recipientName,
-			:recipientPhone);";
+				:userID,
+				:orderStatus,
+				:description,
+				:signature,
+				:deliveryPriority,
+				:pickupAddress,
+				:pickupPostcode,
+				:pickupState,
+				:pickupTime,
+				:deliveryAddress,
+				:deliveryPostcode,
+				:deliveryState,
+				:deliveryTime,
+				:recipientName,
+				:recipientPhone);";
 
 			//Populate Parameters List
 			$parameters = array(
@@ -439,8 +439,8 @@
 				<tr>
 					<td>{$this->orderID}</td>
 					<td>
-						<p>{$user->firstName} {$user->lastName}</p>
-						<p>{$user->email}</p>
+						<p>{$user->getFirstName()} {$user->getLastName()}</p>
+						<p>{$user->getEmail()}</p>
 					</td>
 					<td>
 						<p>Desc: {$this->description}</p>

@@ -51,26 +51,24 @@
 		if($formValid)
 		{
 			require_once 'php/users.php';
-			//Set the customer role to 0, which is represents customer accounts.
-			$role = 0;
 			//Set the ID to null.
 			$ID = NULL;
-			$user = new User($ID, $_POST['email'], $_POST['firstName'], $_POST['lastName'], $_POST['phone'], $role, $_POST['address'], $_POST['postCode'], $_POST['state']);
+			$user = new User($ID, $_POST['email'], $_POST['firstName'], $_POST['lastName'], $_POST['phone'], $_POST['address'], $_POST['postCode'], $_POST['state']);
 
 			$user->createCustomerAccount($_POST['password']);
 
 			//Send user an email confirming their account creation.
 			require_once 'php/notifications.php';
 			sendConfirmAccount($_POST['email'], $_POST['firstName']);
-			
-			
+
+
 			//Login to account just created
 			require_once 'php/usersDB.php';
 			login($_POST['email']);
 
-			//Redirect Script	
+			//Redirect Script
 			header('Location: ../index.php');
-		} 
+		}
 	}
 ?>
 

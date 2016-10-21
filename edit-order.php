@@ -79,7 +79,7 @@
 			updateStatus($_GET["orderID"], $_POST["status"]);
 			//	Send user an email of the status update
 			require_once 'php/notifications.php';
-			milestoneUpdate($user->email, $user->firstName, $_POST["status"], $_POST['description'], $_GET["orderID"]);
+			milestoneUpdate($user->getEmail(), $user->getFirstName(), $_POST["status"], $_POST['description'], $_GET["orderID"]);
 
 			$order = new Order((htmlspecialchars($_GET["orderID"])), getID($_POST['email']), Status::Ordered, $_POST['description'], $_POST['signature'],
 			$_POST['priority'], $_POST['pickupAddress'], $_POST['pickupPostCode'], $_POST['pickupState'], $_POST['pickupTime'],
