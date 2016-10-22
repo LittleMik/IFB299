@@ -6,9 +6,10 @@ body {
   margin-bottom: 20px;
 }
 
-/*Middle Allign Text in Right Navigational Bar*/
+/*Middle Allign Text in Right Navigational Bar & Fixes Nav menu buttons colour*/
 .nav>li>a {
   padding: 15px;
+  color: #fff;
 }
 
 /*Removes margin space on the right of the Right Navigational Bar*/
