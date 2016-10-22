@@ -16,7 +16,14 @@ body {
   margin-right: -50px;
 }
 
-/*Navagational bar buttons hover-over colour set to same Logo Button hover colour */
+/*Navagational bar buttons hover-over colour set to #8C1B16 (Maroon colour)*/
 .nav>li>a:focus, .nav>li>a:hover {
+  background-color: #8C1B16;
+}
+
+/*'My Orders' dropdown menu button background colour set to #8C1B16 (Maroon colour)*/
+.nav .open > a,
+.nav .open > a:hover,
+.nav .open > a:focus {
   background-color: #8C1B16;
 }
