@@ -6,7 +6,12 @@ body {
   margin-bottom: 20px;
 }
 
-/*Right Navigational Bar Middle Allign Text*/
+/*Middle Allign Text in Right Navigational Bar*/
 .nav>li>a {
   padding: 15px;
+}
+
+/*Removes margin space on the right of the Right Navigational Bar*/
+.navbar-right {
+  margin-right: -50px;
 }
