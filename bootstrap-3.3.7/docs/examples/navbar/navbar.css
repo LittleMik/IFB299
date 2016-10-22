@@ -15,3 +15,8 @@ body {
 .navbar-right {
   margin-right: -50px;
 }
+
+/*Navagational bar buttons hover-over colour set to same Logo Button hover colour */
+.nav>li>a:focus, .nav>li>a:hover {
+  background-color: #8C1B16;
+}
