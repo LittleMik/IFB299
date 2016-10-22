@@ -28,7 +28,8 @@
 	$order = new Order();
 	$order->getOrder(htmlspecialchars($_GET["orderID"]));
 
-	$userObject = getUserObjectFromID($order->getUserID());
+	$user = new User();
+	$user->getUser($order->getUserID());
 
 	if($_SERVER["REQUEST_METHOD"] === "POST")
 	{
@@ -70,10 +71,7 @@
 			require_once 'php/packages.php';
 
 			require_once 'php/users.php';
-			require_once 'php/usersDB.php';
 			require_once 'php/status.php';
-
-			$user = unserialize($_SESSION['user']);
 
 			//Update Status and Notify Customer
 			updateStatus($_GET["orderID"], $_POST["status"]);
@@ -81,7 +79,7 @@
 			require_once 'php/notifications.php';
 			milestoneUpdate($user->getEmail(), $user->getFirstName(), $_POST["status"], $_POST['description'], $_GET["orderID"]);
 
-			$order = new Order((htmlspecialchars($_GET["orderID"])), getID($_POST['email']), Status::Ordered, $_POST['description'], $_POST['signature'],
+			$order = new Order((htmlspecialchars($_GET["orderID"])), $user->getID(), Status::Ordered, $_POST['description'], $_POST['signature'],
 			$_POST['priority'], $_POST['pickupAddress'], $_POST['pickupPostCode'], $_POST['pickupState'], $_POST['pickupTime'],
 			$_POST['deliveryAddress'], $_POST['deliveryPostCode'], $_POST['deliveryState'], $_POST['deliveryTime'],
 			$_POST['recipientName'], $_POST['recipientPhone']);
@@ -127,7 +125,7 @@
 		<!--Customer Email-->
 		<div class="form-group">
 			<label for="inputEmail" class="sr-only">Customer email address</label>
-			<input value="<?php echo $userObject->email ?>" type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+			<input value="<?php echo $user->getEmail(); ?>" type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
 		</div>
 
 		<!--Order Description-->
@@ -159,7 +157,7 @@
 		</div>
 
 		<?php
-			displayPackageInputs($order->getID());
+			displayPackageInputs($order->getPackages());
 		?>
 
 		<div class="row">

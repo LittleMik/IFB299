@@ -375,6 +375,10 @@
 
 			$this->recipientName = $order['recipientName'];
 			$this->recipientPhone = $order['recipientPhone'];
+
+			//Destroy Database Connection
+			$db->destroy_pdo();
+			unset($db);
 		}
 
 		/**
@@ -413,6 +417,10 @@
 				array_push($packages, new Package($package['packageID'], $this->orderID, $package['packageWeight'], $package['packageDescription']));
 			}
 
+			//Destroy Database Connection
+			$db->destroy_pdo();
+			unset($db);
+
 			//Return Array pf Packages
 			return $packages;
 		}
@@ -430,9 +438,9 @@
 			$orderStatus = Status::getStatusName($this->status);
 
 			//Get Order's User details
-			//temporary method use
-			require_once 'usersDB.php';
-			$user = getUserObjectFromID($this->userID);
+			require_once 'users.php';
+			$user = new User();
+			$user->getUser($this->userID);
 
 			//Output Order as Table Row
 			echo "

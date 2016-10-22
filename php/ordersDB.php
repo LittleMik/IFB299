@@ -160,16 +160,11 @@
 	}
 
 	//Display inputs for the packages in the order.
-	function displayPackageInputs($orderID){
-		require_once 'php/packages.php';
-
-		$stmtPackage = getPackages($orderID);
-		//Counter
-		//$i = 0;
-
-		foreach($stmtPackage as $package){
-			//$packageObjects[$i] = new Package($package['packageID'], package['orderID'], package['packageWeight'], package['packageDescription']);
-			//$i++;
+	function displayPackageInputs($packages)
+	{
+		//Output Inputs for Each Package in Packages array
+		foreach($packages as $package)
+		{
 			echo '
 			<!--Packages
 				Code for adding extra packages is in customJavascript.hs
@@ -178,13 +173,13 @@
 				<div>
 					<div class="form-group">
 						<label for="comment">Package Description:</label>
-						<input value = "'.$package['packageDescription'].'"type="text" class="form-control" id="package-description" maxlength="50" name="packageDescription[]" required></textarea>*max 50 characters
+						<input value = "'.$package->getDescription().'"type="text" class="form-control" id="package-description" maxlength="50" name="packageDescription[]" required></textarea>*max 50 characters
 					</div>
 					<div class="form-group">
 						<label for="weight">Package Weight:</label>
-						<input value="'.$package['packageWeight'].'" type="text" class="form-control" id="package-weight" maxlength="50" name="weight[]" required></textarea>*max 50 characters
+						<input value="'.$package->getWeight().'" type="text" class="form-control" id="package-weight" maxlength="50" name="weight[]" required></textarea>*max 50 characters
 					</div>
-					<input type="hidden" name="hiddenPackageID[]" value="'.$package['packageID'].'">
+					<input type="hidden" name="hiddenPackageID[]" value="'.$package->getID().'">
 				</div>
 			</div>
 			';

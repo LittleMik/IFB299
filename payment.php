@@ -51,8 +51,10 @@
 		if($formValid)
 		{
 			//Get UserID
-			require_once 'php/usersDB.php';
-			$userID = getID($_POST['email']);
+			require_once 'php/users.php';
+			$user = new User();
+			$user->getUserByEmail($_POST['email']);
+			$userID = $user->getID();
 
 			require_once 'php/paymentsDB.php';
 

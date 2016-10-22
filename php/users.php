@@ -349,5 +349,126 @@
 			$db->destroy_pdo();
 			unset($db);
 		}
+		/**
+		* Get User from Database
+		* Assigns user object variables with values from the database
+		* according to the userID provided
+		*
+		* @param (integer) $userID User's ID number
+		*/
+		function getUser($userID)
+		{
+			//Create new database connection
+			require_once 'database.php';
+			$db = new Database();
+
+			//Set User Select Query
+			$queryUsers = "SELECT DISTINCT *
+			FROM users
+			WHERE userID = :userID";
+
+			//Set UserID parameter
+			$parametersUsers = array(
+				':userID' => $userID
+			);
+
+			//Get User from Database
+			$stmt = $db->select_statement($queryUsers, $parametersUsers);
+
+			$user = $stmt->fetch();
+
+			//Assign User Values according to results
+			$this->id = $userID;
+			$this->email = $user['email'];
+			$this->firstName = $user['firstName'];
+			$this->lastName = $user['lastName'];
+			$this->phone = $user['phoneNumber'];
+			$this->address = $user['address'];
+			$this->postcode = $user['postcode'];
+			$this->state = $user['state'];
+
+			//Set Role Select Query
+			$queryRoles = "SELECT DISTINCT role
+			FROM roles
+			WHERE userID = :userID";
+
+			//Set Role parameters
+			$parametersRoles = array(
+				':userID' => $userID
+			);
+
+			//Get Role from Database
+			$stmt = $db->select_statement($queryRoles, $parametersRoles);
+
+			$role = $stmt->fetch();
+
+			//Assign User role
+			$this->role = $role['role'];
+
+			//Destroy Database Connection
+			$db->destroy_pdo();
+			unset($db);
+		}
+		/**
+		* Get User from Database using Email
+		* Assigns user object variables with values from the database
+		* according to the user email provided
+		*
+		* @param (String) $email User's email
+		*/
+		function getUserByEmail($email)
+		{
+			//Create new database connection
+			require_once 'database.php';
+			$db = new Database();
+
+			//Set Select Query
+			$query = "SELECT DISTINCT *
+			FROM users
+			WHERE email = :email";
+
+			//Set UserID parameter
+			$parameters = array(
+				':email' => $email
+			);
+
+			//Get User from Database
+			$stmt = $db->select_statement($query, $parameters);
+
+			$user = $stmt->fetch();
+
+			//Assign User Values according to results
+			$this->id = $user['userID'];
+			$this->email = $email;
+			$this->firstName = $user['firstName'];
+			$this->lastName = $user['lastName'];
+			$this->phone = $user['phoneNumber'];
+			$this->address = $user['address'];
+			$this->postcode = $user['postcode'];
+			$this->state = $user['state'];
+
+			//Set Role Select Query
+			$queryRoles = "SELECT DISTINCT role
+			FROM roles
+			WHERE userID = :userID";
+
+			//Set Role parameters
+			$parametersRoles = array(
+				':userID' => $this->id
+			);
+
+			//Get Role from Database
+			$stmt = $db->select_statement($queryRoles, $parametersRoles);
+
+			$role = $stmt->fetch();
+
+			//Assign User role
+			$this->role = $role['role'];
+
+			//Destroy Database Connection
+			$db->destroy_pdo();
+			unset($db);
+		}
+
 	}
 ?>
