@@ -1,221 +1,474 @@
 <?php
-
-/**
- * Class for User related functionality
- */
-class User
-{
-
-	//User Variables
-	public $id;
-	public $email;
-	public $password;
-	public $salt;
-	public $role;
-	public $firstName;
-	public $lastName;
-	public $phone;
-	public $address;
-	public $postcode;
-	public $state;
-
+	// ======================================== User Class ======================================== //
 	/**
-	 * Constructor
-	 * Precondition: Argument must be either user table row
-	 * or a verified set of client registration information
-	 */
-	function __construct()
+	*	User Class
+	*
+	*	Contains details for users and functionality to send and retrieve
+	* user relevant information from the MySQL databse
+	*
+	*	@author Michael Smallcombe & Greg Mills
+	*/
+	// ============================================================================================= //
+	class User
 	{
-		//Construct User according to the arguments provided
-		$args = func_get_args();
-		$numArgs = func_num_args();
-		if($numArgs === 9)
+
+		public $id;
+		public $email;
+		public $password;
+		public $salt;
+		public $role;
+		public $firstName;
+		public $lastName;
+		public $phone;
+		public $address;
+		public $postcode;
+		public $state;
+
+		// ==================== Constructor ==================== //
+		/**
+		 * Constructor
+		 * Precondition: Argument must be either user table row
+		 * or a verified set of client registration information
+		 *
+		 */
+		function __construct()
 		{
-			//Construct User from scratch
-			//Set user defined fields
-			$this->id = $args[0];
-			$this->email = $args[1];
-			$this->firstName = $args[2];
-			$this->lastName = $args[3];
-			$this->phone = $args[4];
-			$this->role = $args[5];
-			$this->address = $args[6];
-			$this->postcode = $args[7];
-			$this->state = $args[8];
-		} else {
-			echo 'User created with wrong number of arguments';
+			//Construct User according to the arguments provided
+			if(func_num_args() === 9)
+			{
+				$args = func_get_args();
+
+				//Construct NEW User
+				$this->id = $args[0];
+				$this->email = $args[1];
+				$this->firstName = $args[2];
+				$this->lastName = $args[3];
+				$this->phone = $args[4];
+				$this->role = $args[5];
+				$this->address = $args[6];
+				$this->postcode = $args[7];
+				$this->state = $args[8];
+			}
 		}
-	}
 
-	//Create a customer account that has the role hard coded to '0'
-	function createCustomerAccount($password)
-	{
-		require 'pdo.inc';
-
-		//Generate Salt
-		$salt = uniqid(mt_rand(), true);
-
-		try
+		// ==================== Getters ==================== //
+		/**
+		* Get ID
+		* Returns integer user's ID
+		*
+		* @return (integer) Contains the user's ID
+		*/
+		function getID()
 		{
-		  // Prepare Query to update user table
-		  $stmt = $pdo->prepare(
-			"INSERT INTO users (email, password, salt, firstName, lastName, phoneNumber, address, postcode, state)
-			VALUES (:email, SHA2(CONCAT(:password, :salt), 0), :salt, :firstName, :lastName, :phoneNumber, :address, :postcode, :state)"
-		  );
-
-		  //Bind query parameter with it's given variable
-		  $stmt->bindParam(':email', $this->email);
-		  $stmt->bindParam(':password', $password);
-		  $stmt->bindParam(':salt', $salt);
-		  $stmt->bindParam(':firstName', $this->firstName);
-		  $stmt->bindParam(':lastName', $this->lastName);
-		  $stmt->bindParam(':phoneNumber', $this->phone);
-		  $stmt->bindParam(':address', $this->address);
-		  $stmt->bindParam(':postcode', $this->postcode);
-		  $stmt->bindParam(':state', $this->state);
-
-		  //Run query
-		  $stmt->execute();
-
-		  //Close connection
-		  $stmt = null;
-
-		  //Prepare query to update role table
-		  $stmt = $pdo->prepare(
-				"INSERT INTO roles (userID, role)
-			SELECT userID, 0
-				FROM users
-				WHERE email = :email;"
-		  );
-
-		  //Bind query parameter with it's given variable
-		  $stmt->bindParam(':email', $this->email);
-
-		  //Run query
-		  $stmt->execute();
-
-		  //Close connection
-		  $stmt = null;
-
-		  //Destroy PDO Object
-		  $pdo = null;
-
-		}catch(PDOException $e){
-			//Output Error
-			echo $e->getMessage();
-			echo '<p>'.$e.'</p>';
+			return $this->id;
 		}
-	}
-
-	//Create a user account that has a role
-	function createStaffAccount($password)
-	{
-		require 'pdo.inc';
-
-		//Generate Salt
-		$salt = uniqid(mt_rand(), true);
-
-		try
+		/**
+		* Get Email
+		* Returns the email of the user
+		*
+		* @return (String) Contains the user's email
+		*/
+		function getEmail()
 		{
-		  // Prepare Query to update user table
-		  $stmt = $pdo->prepare(
-			"INSERT INTO users (email, password, salt, firstName, lastName, phoneNumber, address, postcode, state)
-			VALUES (:email, SHA2(CONCAT(:password, :salt), 0), :salt, :firstName, :lastName, :phoneNumber, :address, :postcode, :state)"
-		  );
-
-		  //Bind query parameter with it's given variable
-		  $stmt->bindParam(':email', $this->email);
-		  $stmt->bindParam(':password', $password);
-		  $stmt->bindParam(':salt', $salt);
-		  $stmt->bindParam(':firstName', $this->firstName);
-		  $stmt->bindParam(':lastName', $this->lastName);
-		  $stmt->bindParam(':phoneNumber', $this->phone);
-		  $stmt->bindParam(':address', $this->address);
-		  $stmt->bindParam(':postcode', $this->postcode);
-		  $stmt->bindParam(':state', $this->state);
-
-		  //Run query
-		  $stmt->execute();
-
-		  //Close connection
-		  $stmt = null;
-
-		  //Prepare query to update role table
-		  $stmt = $pdo->prepare(
-				"INSERT INTO roles (userID, role)
-			SELECT userID, :role
-				FROM users
-				WHERE email = :email;"
-		  );
-
-		  //Bind query parameter with it's given variable
-		  $stmt->bindParam(':role', $this->role);
-		  $stmt->bindParam(':email', $this->email);
-
-		  //Run query
-		  $stmt->execute();
-
-		  //Close connection
-		  $stmt = null;
-
-		  //Destroy PDO Object
-		  $pdo = null;
-
-		}catch(PDOException $e){
-			//Output Error
-			echo $e->getMessage();
-			echo '<p>'.$e.'</p>';
+			return $this->email;
 		}
-	}
-
-	function updateUser()
-	{
-		require 'php/pdo.inc';
-
-		try
+		/**
+		* Get First Name
+		* Returns the firstname of the user
+		*
+		* @return (String) Contains the user's firstname
+		*/
+		function getFirstName()
 		{
-			// Prepare Query to update user table
-			$stmt = $pdo->prepare(
-				"UPDATE users
-				SET email = :email,
-				firstName = :firstName,
-				lastName = :lastName,
-				phoneNumber = :phoneNumber,
-				address = :address,
-				postcode = :postcode,
-				state = :state
-				WHERE userID = :userID;"
-			);
+			return $this->firstName;
+		}
+		/**
+		* Get Last Name
+		* Returns the lastname of the user
+		*
+		* @return (String) Contains the user's lastname
+		*/
+		function getLastName()
+		{
+			return $this->lastName;
+		}
+		/**
+		* Get Phone
+		* Returns the phone number of the user
+		*
+		* @return (String) Contains the user's phone number
+		*/
+		function getPhone()
+		{
+			return $this->phone;
+		}
+		/**
+		* Get Role
+		* Returns the role of the user
+		*
+		* @return (integer) Contains the user's role
+		*/
+		function getRole()
+		{
+			return $this->role;
+		}
+		/**
+		* Get Role Name
+		* Returns the role name of the user
+		*
+		* @return (String) Contains the user's role name
+		*/
+		function getRoleName()
+		{
+			require_once 'status.php';
+			return getStatusName($this->role);
+		}
+		/**
+		* Get Address
+		* Returns the address of the user
+		*
+		* @return (String) Contains the user's address
+		*/
+		function getAddress()
+		{
+			return $this->address;
+		}
+		/**
+		* Get Postcode
+		* Returns the postcode of the user's address
+		*
+		* @return (integer) Contains the user's postcode
+		*/
+		function getPostcode()
+		{
+			return $this->postcode;
+		}
+		/**
+		* Get State
+		* Returns the state of the user's address
+		*
+		* @return (String) Contains the user's state
+		*/
+		function getState()
+		{
+			return $this->state;
+		}
+
+		// ==================== Database Functions ==================== //
+		/**
+		* Create Customer Account
+		*	Creates a new customer account
+		*
+		*/
+		function createCustomerAccount($password)
+		{
+			//Create new database connection
+			require_once 'database.php';
+			$db = new Database();
+
+			//Generate Salt
+			$this->salt = uniqid(mt_rand(), true);
+
+			//Set Customer Role
+			require_once 'php/roles.php';
+			$this->role = Roles::Customer;
+
+			//Set Users Query
+			$queryUsers = "INSERT INTO users (
+				email,
+				password,
+				salt,
+				firstName,
+				lastName,
+				phoneNumber,
+				address,
+				postcode,
+				state)
+
+				VALUES (
+					:email,
+					SHA2(CONCAT(:password, :salt), 0),
+					:salt,
+					:firstName,
+					:lastName,
+					:phoneNumber,
+					:address,
+					:postcode,
+					:state);";
 
 			//Bind query parameter with it's given variable
-			$stmt->bindParam(':email', $this->email);
-			$stmt->bindParam(':firstName', $this->firstName);
-			$stmt->bindParam(':lastName', $this->lastName);
-			$stmt->bindParam(':phoneNumber', $this->phone);
-			$stmt->bindParam(':address', $this->address);
-			$stmt->bindParam(':postcode', $this->postcode);
-			$stmt->bindParam(':state', $this->state);
-			$stmt->bindParam(':userID', $this->id);
+			$parametersUsers = array(
+				':email' => $this->email,
+				':password' => $password,
+				':salt' => $this->salt,
+				':firstName' => $this->firstName,
+				':lastName' => $this->lastName,
+				':phoneNumber' => $this->phone,
+				':address' => $this->address,
+				':postcode' => $this->postcode,
+				':state' => $this->state
+			);
 
-			//Run query
-			$stmt->execute();
+			//Run Update Statment
+			$db->update_statement($queryUsers, $parametersUsers);
 
-			//Close connection
-			$stmt = null;
+			//Set Roles Query
+			$queryRoles = "INSERT INTO roles (
+				userID,
+				role)
 
-			//Destroy PDO Object
-			$pdo = null;
+				SELECT userID, 0
+				FROM users
+				WHERE email = :email";
 
-		}catch(PDOException $e){
-			//Output Error
-			echo $e->getMessage();
-			echo '<p>'.$e.'</p>';
+			//Bind query parameter with it's given variable
+			$parametersRoles = array(
+				':email' => $this->email
+			);
+
+			//Run Update Statment
+			$db->update_statement($queryRoles, $parametersRoles);
+
+			//Destroy Database Connection
+			$db->destroy_pdo();
+			unset($db);
 		}
-	}
+		/**
+		* Create Staff Account
+		*	Creates a new staff account
+		*
+		*/
+		function createStaffAccount($password)
+		{
+			//Create new database connection
+			require_once 'database.php';
+			$db = new Database();
 
-	function updateAccount() {
-		updateUser($this);
-	}
-}
+			//Generate Salt
+			$this->salt = uniqid(mt_rand(), true);
 
+			//Set Users Query
+			$queryUsers = "INSERT INTO users (
+				email,
+				password,
+				salt,
+				firstName,
+				lastName,
+				phoneNumber,
+				address,
+				postcode,
+				state)
+
+				VALUES (
+					:email,
+					SHA2(CONCAT(:password, :salt), 0),
+					:salt,
+					:firstName,
+					:lastName,
+					:phoneNumber,
+					:address,
+					:postcode,
+					:state)";
+
+				//Populate Users Parameters List
+				$parametersUsers = array(
+					':email' => $this->email,
+					':password' => $password,
+					':salt' => $this->salt,
+					':firstName' => $this->firstName,
+					':lastName' => $this->lastName,
+					':phoneNumber' => $this->phone,
+					':address' => $this->address,
+					':postcode' => $this->postcode,
+					':state' => $this->state
+				);
+
+				//Run Update Statment for Users table
+				$db->update_statement($queryUsers, $parametersUsers);
+
+				//Set Roles Query
+				$queryRoles = "INSERT INTO roles (
+					userID,
+					role)
+
+					SELECT userID, :role
+					FROM users
+					WHERE email = :email";
+
+				//Populate Roles Parameters List
+				$parametersRoles = array(
+					':role' => $this->role,
+					':email' => $this->email
+				);
+
+				//Run Update Statment for Roles table
+				$db->update_statement($query, $parameters);
+
+				//Destroy Database Connection
+				$db->destroy_pdo();
+				unset($db);
+		}
+		/**
+		* Update User Account
+		*	Updates the Users table entry for the given userID
+		*
+		*/
+		function updateUser()
+		{
+			//Create new database connection
+			require_once 'database.php';
+			$db = new Database();
+
+			//Set Update Query
+			$query = "UPDATE users
+			SET email = :email,
+			firstName = :firstName,
+			lastName = :lastName,
+			phoneNumber = :phoneNumber,
+			address = :address,
+			postcode = :postcode,
+			state = :state
+			WHERE userID = :userID;";
+
+			//Populate Parameters List
+			$parameters = array(
+				':email' => $this->email,
+				':firstName' => $this->firstName,
+				':lastName' => $this->lastName,
+				':phoneNumber' => $this->phone,
+				':address' => $this->address,
+				':postcode' => $this->postcode,
+				':state' => $this->state,
+				':userID' => $this->userID
+			);
+
+			//Run Update Statment
+			$db->update_statement($query, $parameters);
+
+			//Destroy Database Connection
+			$db->destroy_pdo();
+			unset($db);
+		}
+		/**
+		* Get User from Database
+		* Assigns user object variables with values from the database
+		* according to the userID provided
+		*
+		* @param (integer) $userID User's ID number
+		*/
+		function getUser($userID)
+		{
+			//Create new database connection
+			require_once 'database.php';
+			$db = new Database();
+
+			//Set User Select Query
+			$queryUsers = "SELECT DISTINCT *
+			FROM users
+			WHERE userID = :userID";
+
+			//Set UserID parameter
+			$parametersUsers = array(
+				':userID' => $userID
+			);
+
+			//Get User from Database
+			$stmt = $db->select_statement($queryUsers, $parametersUsers);
+
+			$user = $stmt->fetch();
+
+			//Assign User Values according to results
+			$this->id = $userID;
+			$this->email = $user['email'];
+			$this->firstName = $user['firstName'];
+			$this->lastName = $user['lastName'];
+			$this->phone = $user['phoneNumber'];
+			$this->address = $user['address'];
+			$this->postcode = $user['postcode'];
+			$this->state = $user['state'];
+
+			//Set Role Select Query
+			$queryRoles = "SELECT DISTINCT role
+			FROM roles
+			WHERE userID = :userID";
+
+			//Set Role parameters
+			$parametersRoles = array(
+				':userID' => $userID
+			);
+
+			//Get Role from Database
+			$stmt = $db->select_statement($queryRoles, $parametersRoles);
+
+			$role = $stmt->fetch();
+
+			//Assign User role
+			$this->role = $role['role'];
+
+			//Destroy Database Connection
+			$db->destroy_pdo();
+			unset($db);
+		}
+		/**
+		* Get User from Database using Email
+		* Assigns user object variables with values from the database
+		* according to the user email provided
+		*
+		* @param (String) $email User's email
+		*/
+		function getUserByEmail($email)
+		{
+			//Create new database connection
+			require_once 'database.php';
+			$db = new Database();
+
+			//Set Select Query
+			$query = "SELECT DISTINCT *
+			FROM users
+			WHERE email = :email";
+
+			//Set UserID parameter
+			$parameters = array(
+				':email' => $email
+			);
+
+			//Get User from Database
+			$stmt = $db->select_statement($query, $parameters);
+
+			$user = $stmt->fetch();
+
+			//Assign User Values according to results
+			$this->id = $user['userID'];
+			$this->email = $email;
+			$this->firstName = $user['firstName'];
+			$this->lastName = $user['lastName'];
+			$this->phone = $user['phoneNumber'];
+			$this->address = $user['address'];
+			$this->postcode = $user['postcode'];
+			$this->state = $user['state'];
+
+			//Set Role Select Query
+			$queryRoles = "SELECT DISTINCT role
+			FROM roles
+			WHERE userID = :userID";
+
+			//Set Role parameters
+			$parametersRoles = array(
+				':userID' => $this->id
+			);
+
+			//Get Role from Database
+			$stmt = $db->select_statement($queryRoles, $parametersRoles);
+
+			$role = $stmt->fetch();
+
+			//Assign User role
+			$this->role = $role['role'];
+
+			//Destroy Database Connection
+			$db->destroy_pdo();
+			unset($db);
+		}
+
+	}
 ?>

@@ -14,26 +14,26 @@
 		if(empty($_POST['address']) && empty($_POST['postCode']) && empty($_POST['state']))
 		{
 		  $errors = array(
-			"email"=>checkEmail($_POST['email']),
-			"password"=>checkPassword($_POST['password']),
-			"confpassword"=>checkMatch($_POST['password'], $_POST['confpassword']),
-			"firstName"=>checkName($_POST['firstName']),
-			"lastName"=>checkName($_POST['lastName']),
-			"phone"=>checkPhone($_POST['phone'])
+				"email"=>checkEmail($_POST['email']),
+				"password"=>checkPassword($_POST['password']),
+				"confpassword"=>checkMatch($_POST['password'], $_POST['confpassword']),
+				"firstName"=>checkName($_POST['firstName']),
+				"lastName"=>checkName($_POST['lastName']),
+				"phone"=>checkPhone($_POST['phone'])
 		  );
 		  //Set state to empty string for user object
 		  $_POST['state'] = "";
 		} else {
 		  $errors = array(
-			"email"=>checkEmail($_POST['email']),
-			"password"=>true,//"password"=>checkPassword($_POST['password']),   Password checking is too strict I think.
-			"confpassword"=>checkMatch($_POST['password'], $_POST['confpassword']),
-			"firstName"=>checkName($_POST['firstName']),
-			"lastName"=>checkName($_POST['lastName']),
-			"phone"=>checkPhone($_POST['phone']),
-			"address"=>checkAddress($_POST['address']),
-			"postCode"=>checkPost($_POST['postCode']),
-			"state"=>checkState($_POST['state'])
+				"email"=>checkEmail($_POST['email']),
+				"password"=>checkPassword($_POST['password']),
+				"confpassword"=>checkMatch($_POST['password'], $_POST['confpassword']),
+				"firstName"=>checkName($_POST['firstName']),
+				"lastName"=>checkName($_POST['lastName']),
+				"phone"=>checkPhone($_POST['phone']),
+				"address"=>checkAddress($_POST['address']),
+				"postCode"=>checkPost($_POST['postCode']),
+				"state"=>checkState($_POST['state'])
 		  );
 		}
 
@@ -51,26 +51,25 @@
 		if($formValid)
 		{
 			require_once 'php/users.php';
-			//Set the customer role to 0, which is represents customer accounts.
-			$role = 0;
 			//Set the ID to null.
-			$ID = NULL;
-			$user = new User($ID, $_POST['email'], $_POST['firstName'], $_POST['lastName'], $_POST['phone'], $role, $_POST['address'], $_POST['postCode'], $_POST['state']);
+			$id = null;
+			$role = null;
+			$user = new User($id, $_POST['email'], $_POST['firstName'], $_POST['lastName'], $_POST['phone'], $role, $_POST['address'], $_POST['postCode'], $_POST['state']);
 
 			$user->createCustomerAccount($_POST['password']);
 
 			//Send user an email confirming their account creation.
 			require_once 'php/notifications.php';
 			sendConfirmAccount($_POST['email'], $_POST['firstName']);
-			
-			
+
+
 			//Login to account just created
 			require_once 'php/usersDB.php';
 			login($_POST['email']);
 
-			//Redirect Script	
-			header('Location: ../index.php');
-		} 
+			//Redirect Script
+			header('Location: index.php');
+		}
 	}
 ?>
 

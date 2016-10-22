@@ -27,26 +27,26 @@
 		if(empty($_POST['address']) && empty($_POST['postCode']) && empty($_POST['state']))
 		{
 		  $errors = array(
-			"email"=>checkEmail($_POST['email']),
-			"password"=>checkPassword($_POST['password']),
-			"confpassword"=>checkMatch($_POST['password'], $_POST['confpassword']),
-			"firstName"=>checkName($_POST['firstName']),
-			"lastName"=>checkName($_POST['lastName']),
-			"phone"=>checkPhone($_POST['phone'])
+				"email"=>checkEmail($_POST['email']),
+				"password"=>checkPassword($_POST['password']),
+				"confpassword"=>checkMatch($_POST['password'], $_POST['confpassword']),
+				"firstName"=>checkName($_POST['firstName']),
+				"lastName"=>checkName($_POST['lastName']),
+				"phone"=>checkPhone($_POST['phone'])
 		  );
 		  //Set state to empty string for user object
 		  $_POST['state'] = "";
 		} else {
 		  $errors = array(
-			"email"=>checkEmail($_POST['email']),
-			"password"=>true,//"password"=>checkPassword($_POST['password']),   Password checking is too strict I think.
-			"confpassword"=>checkMatch($_POST['password'], $_POST['confpassword']),
-			"firstName"=>checkName($_POST['firstName']),
-			"lastName"=>checkName($_POST['lastName']),
-			"phone"=>checkPhone($_POST['phone']),
-			"address"=>checkAddress($_POST['address']),
-			"postCode"=>checkPost($_POST['postCode']),
-			"state"=>checkState($_POST['state'])
+				"email"=>checkEmail($_POST['email']),
+				"password"=>checkPassword($_POST['password']),
+				"confpassword"=>checkMatch($_POST['password'], $_POST['confpassword']),
+				"firstName"=>checkName($_POST['firstName']),
+				"lastName"=>checkName($_POST['lastName']),
+				"phone"=>checkPhone($_POST['phone']),
+				"address"=>checkAddress($_POST['address']),
+				"postCode"=>checkPost($_POST['postCode']),
+				"state"=>checkState($_POST['state'])
 		  );
 		}
 
@@ -55,8 +55,8 @@
 		{
 		  if($valid === false)
 		  {
-			$formValid = false;
-			echo "Invalid " . $field . " detected<br />";
+				$formValid = false;
+				echo "Invalid " . $field . " detected<br />";
 		  }
 		}
 
@@ -65,8 +65,8 @@
 		{
 			require_once 'php/users.php';
 			//Set the ID to null. The database will give the new account a unique ID at a later time.
-			$$ID = NULL;
-			$user = new User($ID, $_POST['email'], $_POST['firstName'], $_POST['lastName'], $_POST['phone'], $_POST['role'], $_POST['address'], $_POST['postCode'], $_POST['state']);
+			$id = null;
+			$user = new User($id, $_POST['email'], $_POST['firstName'], $_POST['lastName'], $_POST['phone'], $_POST['role'], $_POST['address'], $_POST['postCode'], $_POST['state']);
 
 			$user->createStaffAccount($_POST['password']);
 
@@ -74,9 +74,9 @@
 			require_once 'php/notifications.php';
 			sendConfirmAccount($_POST['email'], $_POST['firstName']);
 
-			//Redirect Script	
-			header('Location: ../index.php');
-		} 
+			//Redirect Script
+			header('Location:index.php');
+		}
 	}
 ?>
 

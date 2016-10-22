@@ -24,7 +24,7 @@
 				$status = "NOT ".Status::Delivered;
 			}
 
-			displayOrders(searchOrder($user->email, "", "", $status, ""));
+			displayOrders(searchOrder($user->getEmail(), "", "", $status, ""));
 		?>
 	</div>
 </section>

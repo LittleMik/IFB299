@@ -53,7 +53,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 
 		$user = unserialize($_SESSION['user']);
 
-		$order = new Order(0, $user->id, Status::Ordered, $_POST['description'], $_POST['signature'],
+		$order = new Order(0, $user->getID(), Status::Ordered, $_POST['description'], $_POST['signature'],
 		$_POST['priority'], $_POST['pickupAddress'], $_POST['pickupPostCode'], $_POST['pickupState'], $_POST['pickupTime'],
 		$_POST['deliveryAddress'], $_POST['deliveryPostCode'], $_POST['deliveryState'], $_POST['deliveryTime'],
 		$_POST['recipientName'], $_POST['recipientPhone']);
@@ -70,18 +70,16 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 		while($i < sizeof($packageDescriptions)){
 			//Note that '0' is given as package id, only to indicate that it has not been set yet
 			$package = new Package(0, $orderID, $packageWeights[$i], $packageDescriptions[$i]);
-			$package->saveToDB();
+			$package->createPackage();
 			$i++;
 		}
 
 		//Send user an email confirming their order has been sent
 		require_once 'php/notifications.php';
-		sendConfirmOrder($user->email, $user->firstName, $_POST['description'], $_POST['pickupAddress'], $_POST['pickupState'],
-		$_POST['pickupPostCode'], $_POST['pickupTime'], $_POST['deliveryAddress'], $_POST['deliveryState'], $_POST['deliveryPostCode'],
-		$_POST['recipientName'], $_POST['recipientPhone'], $_POST['deliveryTime']);
+		sendConfirmOrder($user->email, $user->firstName, $_POST['description'], $orderID, $_POST['pickupAddress'], $_POST['pickupState'], $_POST['pickupPostCode'], $_POST['pickupTime'], $_POST['deliveryAddress'], $_POST['deliveryState'], $_POST['deliveryPostCode'],	$_POST['recipientName'], $_POST['recipientPhone'], $_POST['deliveryTime']);
 
 		//Redirect Script
-		header('Location:index.php');
+		header('Location:order-tracking.php');
 	}
 }
 ?>

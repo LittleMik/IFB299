@@ -8,27 +8,27 @@
     * Test User Constructor
     * @dataProvider providerConstructorUser
     */
-    public function testConstructorUser($email, $firstName, $lastName, $phone, $role, $address, $postCode, $state)
+    public function testConstructorUser($email, $firstName, $lastName, $phone, $role, $address, $postcode, $state)
     {
       $id = null;
 
-      $user = new User($id, $email, $firstName, $lastName, $phone, $role, $address, $postCode, $state);
+      $user = new User($id, $email, $firstName, $lastName, $phone, $role, $address, $postcode, $state);
 
-      var_dump($user->email);
-      var_dump($user->firstName);
-      var_dump($user->lastName);
-      var_dump($phone);
-      var_dump($address);
-      var_dump($postCode);
-      var_dump($state);
+      var_dump($user->getEmail());
+      var_dump($user->getFirstName());
+      var_dump($user->getLastName());
+      var_dump($user->getPhone());
+      var_dump($user->getAddress());
+      var_dump($user->getPostcode());
+      var_dump($user->getState());
 
-      $this->assertEquals($email, $user->email);
-      $this->assertEquals($firstName, $user->firstName);
-      $this->assertEquals($lastName, $user->lastName);
-      $this->assertEquals($phone, $user->phone);
-      $this->assertEquals($address, $user->address);
-      $this->assertEquals($postCode, $user->postCode);
-      $this->assertEquals($state, $user->state);
+      $this->assertEquals($email, $user->getEmail());
+      $this->assertEquals($firstName, $user->getFirstName());
+      $this->assertEquals($lastName, $user->getLastName());
+      $this->assertEquals($phone, $user->getPhone());
+      $this->assertEquals($address, $user->getAddress());
+      $this->assertEquals($postcode, $user->getPostcode());
+      $this->assertEquals($state, $user->getState());
     }
     /**
     * Test User Constructor DataProvider
