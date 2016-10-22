@@ -104,7 +104,7 @@
 					:description);";
 
 			//Set Parameters
-			$parameter = array(
+			$parameters = array(
 				':orderID' => $this->orderID,
 				':weight' => $this->weight,
 				':description' => $this->description
@@ -135,7 +135,7 @@
 				WHERE packageID = :packageID;";
 
 			//Set Parameters
-			$parameter = array(
+			$parameters = array(
 				':weight' => $this->weight,
 				':description' => $this->description,
 				':packageID' => $this->packageID
@@ -148,7 +148,7 @@
 			$db->destroy_pdo();
 			unset($db);
 		}
-		
+
 		// ==================== Display/Output Functions ==================== //
 		/**
 		* Display Package

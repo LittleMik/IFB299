@@ -79,7 +79,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 		sendConfirmOrder($user->email, $user->firstName, $_POST['description'], $orderID, $_POST['pickupAddress'], $_POST['pickupState'], $_POST['pickupPostCode'], $_POST['pickupTime'], $_POST['deliveryAddress'], $_POST['deliveryState'], $_POST['deliveryPostCode'],	$_POST['recipientName'], $_POST['recipientPhone'], $_POST['deliveryTime']);
 
 		//Redirect Script
-		//header('Location:index.php');
+		header('Location:order-tracking.php');
 	}
 }
 ?>

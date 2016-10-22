@@ -199,11 +199,11 @@
 			//Bind query parameter with it's given variable
 			$parametersUsers = array(
 				':email' => $this->email,
-				':password' => $this->password,
+				':password' => $password,
 				':salt' => $this->salt,
 				':firstName' => $this->firstName,
 				':lastName' => $this->lastName,
-				':phoneNumber' => $this->phoneNumber,
+				':phoneNumber' => $this->phone,
 				':address' => $this->address,
 				':postcode' => $this->postcode,
 				':state' => $this->state
@@ -273,7 +273,7 @@
 				//Populate Users Parameters List
 				$parametersUsers = array(
 					':email' => $this->email,
-					':password' => $this->password,
+					':password' => $password,
 					':salt' => $this->salt,
 					':firstName' => $this->firstName,
 					':lastName' => $this->lastName,
@@ -335,7 +335,7 @@
 				':email' => $this->email,
 				':firstName' => $this->firstName,
 				':lastName' => $this->lastName,
-				':phoneNumber' => $this->phoneNumber,
+				':phoneNumber' => $this->phone,
 				':address' => $this->address,
 				':postcode' => $this->postcode,
 				':state' => $this->state,
