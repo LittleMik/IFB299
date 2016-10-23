@@ -20,7 +20,8 @@
       'view-users.php' => Roles::Manager,
       'package-information.php' => Roles::Manager,
 			'payments-view' => Roles::Driver,
-			'payments-add' => Roles::Driver
+			'payments-add' => Roles::Driver,
+			'payments-edit' => Roles::Manager
     );
 
     if(array_key_exists($permission, $permissions))

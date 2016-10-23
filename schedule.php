@@ -10,7 +10,7 @@
 	{
 		if(checkPermission($_SESSION['role'], 'view-order.php') === false)
 		{
-		echo '<script> alert('.$_SERVER['PHP_SELF'].');</script>';
+			echo '<script> alert('.$_SERVER['PHP_SELF'].');</script>';
 			//Insufficient Role, Redirect User to Forbidden Error Page
 			header("Location:login.php");
 		}
@@ -160,7 +160,7 @@
 						if(checkIntID($_GET['orderID']))
 						{
 							//Retrieve Order
-							require_once 'php/ordersDB.php';
+							require_once 'php/orders.php';
 							$order = new Order();
 							$order->getOrder($_GET['orderID']);
 
@@ -183,33 +183,4 @@
 			 ?>
 		</div>
 	</section>
-	<!--Output Schedule
-	<div class="container">
-			<div class="row">
-			<div class="col-md-4">
-				<section>
-					<a href="#">
-						<img id="shortcut" src="images/philosophy.png" alt="Our Philosophy"/>
-					</a>
-				</section>
-			</div>
-			<div class="col-md-4">
-				<section>
-					<a href="#">
-						<img id="shortcut" src="images/services.png" alt="Our Services"/>
-					</a>
-				</section>
-			</div>
-
-			<div class="col-md-4">
-				<section>
-					<a href="#">
-						<img id="shortcut" src="images/testimonials.png" alt="Testimonials"/>
-					</a>
-				</section>
-			</div>
-		 </div>
-	</div>-->
-
-
 <?php require 'includes/footer.inc' ?>

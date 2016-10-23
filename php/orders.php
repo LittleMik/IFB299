@@ -324,6 +324,46 @@
 		}
 
 		/**
+		* Update the Order's Status
+		* Updates the order object's status to the database and
+		* sends a notification of the change to the order's creator
+		*
+		* @param (integer) $status New order Status
+		*/
+		function updateStatus($status)
+		{
+			//Create new database connection
+			require_once 'database.php';
+			$db = new Database();
+
+			//Set Update Query
+			$query = "UPDATE orders
+				SET orderStatus = :orderStatus
+				WHERE orderID = :orderID;";
+
+			$parameters = array(
+				':orderStatus' => $status,
+				':orderID' => $this->orderID
+			);
+
+			//Run Update Statment
+			$db->update_statement($query, $parameters);
+
+			//Destroy Database Connection
+			$db->destroy_pdo();
+			unset($db);
+
+			//Get User
+			require_once 'users.php';
+			$user = new User();
+			$user->getUser($this->userID);
+
+			//Send user an email of the status update
+			require_once 'notifications.php';
+			milestoneUpdate($user->getEmail(), $user->getFirstName(), $status, $this->getDescription(), $this->getID());
+		}
+
+		/**
 		* Get Order from Database
 		* Assigns order object variables with values from the database
 		* according to the orderID provided

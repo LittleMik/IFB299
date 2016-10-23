@@ -155,13 +155,16 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 			<input type="datetime-local" class="form-control" id="pickupTime" name="pickupTime"
 			<?php
 				date_default_timezone_set('Australia/Brisbane');
-				$dateMin = date('Y-m-d TH:i:s a');
-				echo "min='".$dateMin."'";
+				//Set Min Date
+				$dateMin = date('Y-m-d H:i:s');
+				$dateMinString = str_replace(' ', 'T', $dateMin);
+				echo "min='".$dateMinString."'";
 
-				$date = date_create($dateMin);
-				date_modify($date,"+1 year");
-				$dateMax = date_format($date, "Y-m-d TH:i:s a");
-				echo " max='".$dateMax."'";
+				//Set Max Date
+				$dateMax = date_create($dateMin);
+				date_modify($dateMax,"+3 months");
+				$dateMaxString = str_replace(' ', 'T', date_format($dateMax, "Y-m-d H:i:s"));
+				echo " max='".$dateMaxString."'";
 			?>>
 		</div>
 
@@ -226,17 +229,20 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 
 		<!--delivery Time-->
 		<div class="form-group">
-			<label for="pickupTime">Preferred Pickup Time:</label>
+			<label for="deliveryTime">Preferred Delivery Time:</label>
 			<input type="datetime-local" class="form-control" id="deliveryTime" name="deliveryTime"
 			<?php
 				date_default_timezone_set('Australia/Brisbane');
-				$dateMin = date('Y-m-d TH:i:s a');
-				echo "min='".$dateMin."'";
+				//Set Min Date
+				$dateMin = date('Y-m-d H:i:s');
+				$dateMinString = str_replace(' ', 'T', $dateMin);
+				echo "min='".$dateMinString."'";
 
-				$date = date_create($dateMin);
-				date_modify($date,"+1 year");
-				$dateMax = date_format($date, "Y-m-d TH:i:s a");
-				echo " max='".$dateMax."'";
+				//Set Max Date
+				$dateMax = date_create($dateMin);
+				date_modify($dateMax,"+4 months");
+				$dateMaxString = str_replace(' ', 'T', date_format($dateMax, "Y-m-d H:i:s"));
+				echo " max='".$dateMaxString."'";
 			?>>
 		</div>
 

@@ -83,7 +83,7 @@
 						Preferred Delivery Time: '.$recpTime.' (Note that this is not guaranteed) <br>
 					</p>
 					<p>
-						To view your order please click here (link to be added).
+						Please view your order via order tracking: https://ifb299-group52.herokuapp.com/order-tracking.php.
 					</p>
 					<p>
 						Regards, <br>
@@ -105,16 +105,16 @@
 
 		require_once 'php/status.php';
 						switch ($orderStatus){
-							case PickingUp:
+							case Status::PickingUp:
 								$orderStatusMessage = 'is being picked up';
 								break;
-							case PickedUp:
+							case Status::PickedUp:
 								$orderStatusMessage = 'has been picked up.';
 								break;
-							case Delivering:
+							case Status::Delivering:
 								$orderStatusMessage = 'is being delivered to your recipient.';
 								break;
-							case Delivered:
+							case Status::Delivered:
 								$orderStatusMessage = 'has been successfully delivered.';
 								break;
 							default:
@@ -130,9 +130,10 @@
 					</p>
 					<p>
 						Your order: '.$orderDescription.'<br>
-						With an order ID of '.$orderID.$orderDescription.'
+						With an order ID of '.$orderID.' '.$orderStatusMessage.'
+						
 					<p>
-						To view your order please click here (link to be added).
+						Please view your order via order tracking: https://ifb299-group52.herokuapp.com/order-tracking.php.
 					</p>
 					<p>
 						Regards, <br>
@@ -141,6 +142,6 @@
 				</body>
 			</html>';
 			//Send email
-			sendNotification($recipientEmail, 'An update on your order', $message);
+			sendNotification($recipientEmail, 'Order Tracking Update', $message);
 	}
 ?>

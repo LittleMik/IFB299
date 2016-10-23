@@ -69,17 +69,10 @@
 			require_once 'php/orders.php';
 			require_once 'php/ordersDB.php';
 			require_once 'php/packages.php';
-
 			require_once 'php/users.php';
 			require_once 'php/status.php';
 
-			//Update Status and Notify Customer
-			updateStatus($_GET["orderID"], $_POST["status"]);
-			//	Send user an email of the status update
-			require_once 'php/notifications.php';
-			milestoneUpdate($user->getEmail(), $user->getFirstName(), $_POST["status"], $_POST['description'], $_GET["orderID"]);
-
-			$order = new Order((htmlspecialchars($_GET["orderID"])), $user->getID(), Status::Ordered, $_POST['description'], $_POST['signature'],
+			$order = new Order((htmlspecialchars($_GET["orderID"])), $user->getID(), $_POST["status"], $_POST['description'], $_POST['signature'],
 			$_POST['priority'], $_POST['pickupAddress'], $_POST['pickupPostCode'], $_POST['pickupState'], $_POST['pickupTime'],
 			$_POST['deliveryAddress'], $_POST['deliveryPostCode'], $_POST['deliveryState'], $_POST['deliveryTime'],
 			$_POST['recipientName'], $_POST['recipientPhone']);
@@ -179,13 +172,16 @@
 			<input value="<?php echo str_replace(' ', 'T', $pickupDetails['time']);/*Format string replacing the space with T to fit it in*/ ?>" type="datetime-local" type="datetime-local" class="form-control" id="pickupTime" name="pickupTime"
 			<?php
 				date_default_timezone_set('Australia/Brisbane');
-				$dateMin = date('Y-m-d TH:i:s a');
-				echo "min='".$dateMin."'";
+				//Set Min Date
+				$dateMin = date('Y-m-d H:i:s');
+				$dateMinString = str_replace(' ', 'T', $dateMin);
+				echo "min='".$dateMinString."'";
 
-				$date = date_create($dateMin);
-				date_modify($date,"+1 year");
-				$dateMax = date_format($date, "Y-m-d TH:i:s a");
-				echo " max='".$dateMax."'";
+				//Set Max Date
+				$dateMax = date_create($dateMin);
+				date_modify($dateMax,"+3 months");
+				$dateMaxString = str_replace(' ', 'T', date_format($dateMax, "Y-m-d H:i:s"));
+				echo " max='".$dateMaxString."'";
 			?>>
 		</div>
 
@@ -247,17 +243,20 @@
 
 		<!--delivery Time-->
 		<div class="form-group">
-			<label for="pickupTime">Preferred Pickup Time:</label>
+			<label for="deliveryTime">Preferred Delivery Time:</label>
 			<input value="<?php echo str_replace(' ', 'T', $deliveryDetails['time']); ?>" type="datetime-local" class="form-control" id="deliveryTime" name="deliveryTime"
 			<?php
 				date_default_timezone_set('Australia/Brisbane');
-				$dateMin = date('Y-m-d TH:i:s a');
-				echo "min='".$dateMin."'";
+				//Set Min Date
+				$dateMin = date('Y-m-d H:i:s');
+				$dateMinString = str_replace(' ', 'T', $dateMin);
+				echo "min='".$dateMinString."'";
 
-				$date = date_create($dateMin);
-				date_modify($date,"+1 year");
-				$dateMax = date_format($date, "Y-m-d TH:i:s a");
-				echo " max='".$dateMax."'";
+				//Set Max Date
+				$dateMax = date_create($dateMin);
+				date_modify($dateMax,"+4 months year");
+				$dateMaxString = str_replace(' ', 'T', date_format($dateMax, "Y-m-d H:i:s"));
+				echo " max='".$dateMaxString."'";
 			?>>
 		</div>
 
