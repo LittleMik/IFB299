@@ -444,11 +444,6 @@
     background-color: #171F68; /* Still need to fix the brand logo's padding*/
   }
 
-  /*Navigation List */
-  .navbar li a{
-    color:#FFFFFF;
-  }
-
   /*Collapsed Navigation Icon */
   .icon-bar {
       background-color: white;
@@ -793,7 +788,6 @@
   /*Right Navigation */
   .navbar-right {
     background-color: #F2D5A0;
-    padding-right:50px;
   }
 
   .navbar-right > li {
@@ -813,11 +807,6 @@
 
   .navbar-brand img {
     width:100px;
-  }
-
-  /*Navigation List */
-  .navbar li a{
-    color:#FFFFFF;
   }
 
   /*Collapsed Navigation Icon */
@@ -1169,7 +1158,6 @@
   /*Right Navigation */
   .navbar-right {
     background-color: #F2D5A0;
-    padding-right:50px;
   }
 
   .navbar-right > li {
@@ -1191,11 +1179,6 @@
     width: 80px;
   }
 
-  /*Navigation List */
-  .navbar li a{
-    color:#FFFFFF;
-  }
-	
   /*Collapsed Navigation Icon */
   .icon-bar {
       background-color: white;
@@ -1508,7 +1491,7 @@
 }
 
 .navbar-header a:hover {
-  background-color:  #8C1B16;
+  background-color: #8C1B16;
 }
 
 .footer p {
