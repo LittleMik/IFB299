@@ -103,7 +103,7 @@
 	* Sends email to address indicated notifying them that an order milestone (a significant event) has been completed.
 	*/
 	function milestoneUpdate($recipientEmail, $firstName, $orderStatus, $orderDescription, $orderID) {
-		
+		//Change email message depending on the order status passed as argument.
 		require_once 'php/status.php';
 						switch ($orderStatus){
 							case PickingUp:

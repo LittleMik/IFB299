@@ -252,6 +252,7 @@
   */
   function displayUsers($stmt)
   {
+    require_once 'php/roles.php';
     //Output Orders Table
     echo '<table class="table table-striped table-condensed table-responsive">
 		<thead>
@@ -269,13 +270,14 @@
     //Output each result row as a single order
     foreach($stmt as $user)
     {
+      $roleTitle = getRoleName($user['role']);
       echo "
         <tr>
           <td>{$user['userID']}</td>
           <td>
             <p>{$user['firstName']} {$user['lastName']}</p>
           </td>
-          <td>{$user['role']}</td>
+          <td>{$roleTitle}</td>
           <td>
             <p>Phone: {$user['phoneNumber']}</p>
             <p>Email: {$user['email']}</p>

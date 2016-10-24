@@ -3,6 +3,7 @@
 <?php
   //Verify User Permission to View Page
   require_once 'php/permissions.php';
+  require_once 'php/roles.php';
 
   if(isset($_SESSION['role']))
   {
