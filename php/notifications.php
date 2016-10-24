@@ -4,10 +4,10 @@
 	/**
 	* Args: string recipientEmail (email address of intended recpient), string subject (the email subject) &
 	* & string message (the email content).
-	* 
+	*
 	* Sends email to address indicated with $recipientEmail argument, with a subject of $subject and a message of $message.
 	*/
-	function sendNotification($recipientEmail, $subject, $message) 
+	function sendNotification($recipientEmail, $subject, $message)
 	{
 		$from = new SendGrid\Email(null, "notifications@onthespot.com");
 		$to = new SendGrid\Email(null, $recipientEmail);
@@ -26,7 +26,7 @@
 
 	/**
 	* Args: string recipientEmail (email address of intended recpient), string firstName (the firstname of the recipient).
-	* 
+	*
 	* Sends email to address indicated notifying them there account has been created.
 	*/
 	function sendConfirmAccount($recipientEmail, $firstName) {
@@ -52,13 +52,12 @@
 	}
 
 	/**
-	* Args: string recipientEmail (email address of intended recpient), string firstName (the firstname of the recipient), other variables are for the self describing 
+	* Args: string recipientEmail (email address of intended recpient), string firstName (the firstname of the recipient), other variables are for the self describing
 	* order information.
-	* 
+	*
 	* Sends email to address indicated notifying them there account has been created.
 	*/
-	function sendConfirmOrder($recipientEmail, $firstName, $orderDescription, $orderID, $pickAddress, $pickState, $pickPost, 
-		$pickTime, $recpAddress, $recpState, $recpPost, $recpName, $recpPhone, $recpTime) {
+	function sendConfirmOrder($recipientEmail, $firstName, $orderDescription, $orderID, $pickAddress, $pickState, $pickPost, $pickTime, $recpAddress, $recpState, $recpPost, $recpName, $recpPhone, $recpTime) {
 		$message = '
 			<html>
 			<head></head>
@@ -84,7 +83,7 @@
 						Preferred Delivery Time: '.$recpTime.' (Note that this is not guaranteed) <br>
 					</p>
 					<p>
-						To view your order please click here (link to be added).
+						Please view your order via order tracking: https://ifb299-group52.herokuapp.com/order-tracking.php.
 					</p>
 					<p>
 						Regards, <br>
@@ -96,26 +95,26 @@
 			sendNotification($recipientEmail, 'Your order has been processed.', $message);
 	}
 	/**
-	* Args: string recipientEmail (email address of intended recpient), string firstName (the firstname of the recipient) and int orderstatus (a number indicating the current 
-	* state of the order. Other arguments are for the self describing 
+	* Args: string recipientEmail (email address of intended recpient), string firstName (the firstname of the recipient) and int orderstatus (a number indicating the current
+	* state of the order. Other arguments are for the self describing
 	* order information.
-	* 
+	*
 	* Sends email to address indicated notifying them that an order milestone (a significant event) has been completed.
 	*/
 	function milestoneUpdate($recipientEmail, $firstName, $orderStatus, $orderDescription, $orderID) {
 		//Change email message depending on the order status passed as argument.
 		require_once 'php/status.php';
 						switch ($orderStatus){
-							case PickingUp:
+							case Status::PickingUp:
 								$orderStatusMessage = 'is being picked up';
 								break;
-							case PickedUp:
+							case Status::PickedUp:
 								$orderStatusMessage = 'has been picked up.';
 								break;
-							case Delivering:
+							case Status::Delivering:
 								$orderStatusMessage = 'is being delivered to your recipient.';
 								break;
-							case Delivered:
+							case Status::Delivered:
 								$orderStatusMessage = 'has been successfully delivered.';
 								break;
 							default:
@@ -131,9 +130,10 @@
 					</p>
 					<p>
 						Your order: '.$orderDescription.'<br>
-						With an order ID of '.$orderID.$orderDescription.'
+						With an order ID of '.$orderID.' '.$orderStatusMessage.'
+						
 					<p>
-						To view your order please click here (link to be added).
+						Please view your order via order tracking: https://ifb299-group52.herokuapp.com/order-tracking.php.
 					</p>
 					<p>
 						Regards, <br>
@@ -142,7 +142,6 @@
 				</body>
 			</html>';
 			//Send email
-			sendNotification($recipientEmail, 'An update on your order', $message);
+			sendNotification($recipientEmail, 'Order Tracking Update', $message);
 	}
 ?>
-

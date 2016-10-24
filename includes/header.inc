@@ -1,4 +1,4 @@
-<header>	
+<header>
 	<div class = "container-fluid">
 		<nav class="navbar navbar-fixed-top" role="navigation">
 			<div class="navbar-header">
@@ -6,7 +6,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
-			  </button>    
+			  </button>
 			  <a class="navbar-brand" href="index.php"><img src=images/logo.png alt="logo">
 			  </a>
 			</div>
@@ -18,7 +18,7 @@
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Orders <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a href="order.php">Place Order</a></li>
-							<li><a href="#">Tracking</a></li>
+							<li><a href="order-tracking.php">Tracking</a></li>
 							<li><a href="#">History</a></li>
 						</ul>
 					</li>
@@ -48,8 +48,15 @@
 							echo '
 								<li><a href="view-order.php">View Order</a></li>
 							';
-							}
 						}
+						//Check Permission to View Users
+						if(checkPermission($_SESSION['role'], 'view-users.php') === true)
+						{
+							echo '
+								<li><a href="view-users.php">View Accounts</a></li>
+							';
+						}
+					}
 					?>
 			  </ul>
 			  <ul class="nav navbar-right">

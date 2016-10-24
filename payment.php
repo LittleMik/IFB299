@@ -50,15 +50,18 @@
 		//Payment Form Valid
 		if($formValid)
 		{
-			//Get UserID
-			require_once 'php/usersDB.php';
-			$userID = getID($_POST['email']);
-
-			require_once 'php/paymentsDB.php';
+			//Get Order
+			require_once 'php/orders.php';
+			$order = new Order();
+			$order->getOrder($_GET['orderID']);
 
 			//Add Payment to DB
-			if(addPayment($_GET['orderID'], $userID, $_POST['type'], $_POST['date'], $_POST['amount']))
+			require_once 'php/paymentsDB.php';
+			if(addPayment($_GET['orderID'], $order->getUserID(), $_POST['type'], $_POST['date'], $_POST['amount']))
 			{
+				require_once 'php/status.php';
+				$order->updateStatus(Status::PickedUp);
+
 				//Redirect Script
 				header("Location:view-order.php?orderID={$_GET['orderID']}");
 			}else{
@@ -85,7 +88,20 @@
 
 		<div class="form-group1">
 			<label for="email">Customer Email:</label>
-			<input type="email" class="form-control" id="email" placeholder="Enter Email Address" name="email" maxlength="255" required>
+			<?php
+				//Get UserID
+				require_once 'php/orders.php';
+				$order = new Order();
+				$order->getOrder($_GET['orderID']);
+				$userID = $order->getUserID();
+
+				//Output User's Email
+				require_once 'php/users.php';
+				$user = new User();
+				$user->getUser($userID);
+				$user->getEmail();
+			?>
+			<input type="email" class="form-control" id="email" value="<?php echo $user->getEmail(); ?>" name="email" maxlength="255" required readonly>
 		</div>
 
 		<div class= "texts">
@@ -102,23 +118,26 @@
 				<option>Bank Deposit</option>
 			</select>
 
-			<!--Payment Date-->
-			<label for="pickupTime">Date:</label>
-			<input type="datetime-local" class="form-control" id="paymentDate" name="date" required
 			<?php
 				date_default_timezone_set('Australia/Brisbane');
-				$date = date('Y-m-d TH:i:s a');
-				echo "placeholder='{$date}'";
-				$dateMin = date_create($date);
-				date_modify($dateMin,"-6 months");
-				$dateMinString = date_format($dateMin, "Y-m-d TH:i:s a");
-				echo "min='".$dateMinString."'";
 
-				$dateMax = date_create($date);
-				date_modify($dateMax,"+1 year");
-				$dateMaxString = date_format($dateMax, "Y-m-d TH:i:s a");
-				echo " max='".$dateMaxString."'";
-			?>>
+				//Set Min Datetime
+				$dateMin = date('Y-m-d H:i:s');
+				$dateString = str_replace(' ', 'T', $dateMin);
+
+				//Set Max DateTime
+				$dateMax = date_create($dateMin);
+				date_modify($dateMax,"+3 months");
+				$dateMaxString = str_replace(' ', 'T', date_format($dateMax, "Y-m-d H:i:s"));
+
+				//Hide Date Editing if permission not available
+				$type = (checkPermission($_SESSION['role'], 'payments-edit') === true ? "datetime-local" : "hidden");
+
+				echo "
+					<!--Payment Date-->
+					<label for='date'>Date:</label>
+					<input type='{$type}' class='form-control' id='paymentDate' name='date' value='{$dateString}' min='{$dateString}' max='{$dateMaxString}' required>";
+			?>
 
 			<!--Payment Amount-->
 			<label for="paymentAmount">Amount: ($AUD)</label>

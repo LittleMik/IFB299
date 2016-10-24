@@ -37,26 +37,30 @@
 					require_once 'php/formValidation.php';
 					if(checkIntID($_GET['orderID']))
 					{
-						//Run Query and Output Results
-						require_once 'php/ordersDB.php';
-						displayPackages(getOrder($_GET['orderID']), getPackages($_GET['orderID']));
+						//Retrieve Order
+						require_once 'php/orders.php';
+						$order = new Order();
+						$order->getOrder($_GET['orderID']);
 
-						if(checkPermission($_SESSION['role'], 'payments-view') === true)
-						{
-							require_once 'php/paymentsDB.php';
-							displayPayment(getPayment($_GET['orderID']));
-						}
-					}else{
+						//Retrieve Order's Packages
+						$packages = $order->getPackages();
 
+						//Retrieve Payment Information
+						require_once 'php/paymentsDB.php';
+						$payment = getPayment($_GET['orderID']);
+
+						//Output All Order Relevant Information
+						require_once 'php/output.php';
+						outputOrderAll($order, $packages, $payment);
+					}
+						else
+					{
 						//Output Error
 						echo "Invalid orderID detected<br />";
-
 					}
 				}
 				echo '</div>';
 			}
-
-
 		?>
 	</div>
 </section>

@@ -53,7 +53,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 
 		$user = unserialize($_SESSION['user']);
 
-		$order = new Order(0, $user->id, Status::Ordered, $_POST['description'], $_POST['signature'],
+		$order = new Order(0, $user->getID(), Status::Ordered, $_POST['description'], $_POST['signature'],
 		$_POST['priority'], $_POST['pickupAddress'], $_POST['pickupPostCode'], $_POST['pickupState'], $_POST['pickupTime'],
 		$_POST['deliveryAddress'], $_POST['deliveryPostCode'], $_POST['deliveryState'], $_POST['deliveryTime'],
 		$_POST['recipientName'], $_POST['recipientPhone']);
@@ -70,18 +70,16 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 		while($i < sizeof($packageDescriptions)){
 			//Note that '0' is given as package id, only to indicate that it has not been set yet
 			$package = new Package(0, $orderID, $packageWeights[$i], $packageDescriptions[$i]);
-			$package->saveToDB();
+			$package->createPackage();
 			$i++;
 		}
 
 		//Send user an email confirming their order has been sent
 		require_once 'php/notifications.php';
-		sendConfirmOrder($user->email, $user->firstName, $_POST['description'], $_POST['pickupAddress'], $_POST['pickupState'],
-		$_POST['pickupPostCode'], $_POST['pickupTime'], $_POST['deliveryAddress'], $_POST['deliveryState'], $_POST['deliveryPostCode'],
-		$_POST['recipientName'], $_POST['recipientPhone'], $_POST['deliveryTime']);
+		sendConfirmOrder($user->email, $user->firstName, $_POST['description'], $orderID, $_POST['pickupAddress'], $_POST['pickupState'], $_POST['pickupPostCode'], $_POST['pickupTime'], $_POST['deliveryAddress'], $_POST['deliveryState'], $_POST['deliveryPostCode'],	$_POST['recipientName'], $_POST['recipientPhone'], $_POST['deliveryTime']);
 
 		//Redirect Script
-		header('Location: ../index.php');
+		header('Location:order-tracking.php');
 	}
 }
 ?>
@@ -157,13 +155,16 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 			<input type="datetime-local" class="form-control" id="pickupTime" name="pickupTime"
 			<?php
 				date_default_timezone_set('Australia/Brisbane');
-				$dateMin = date('Y-m-d TH:i:s a');
-				echo "min='".$dateMin."'";
+				//Set Min Date
+				$dateMin = date('Y-m-d H:i:s');
+				$dateMinString = str_replace(' ', 'T', $dateMin);
+				echo "min='".$dateMinString."'";
 
-				$date = date_create($dateMin);
-				date_modify($date,"+1 year");
-				$dateMax = date_format($date, "Y-m-d TH:i:s a");
-				echo " max='".$dateMax."'";
+				//Set Max Date
+				$dateMax = date_create($dateMin);
+				date_modify($dateMax,"+3 months");
+				$dateMaxString = str_replace(' ', 'T', date_format($dateMax, "Y-m-d H:i:s"));
+				echo " max='".$dateMaxString."'";
 			?>>
 		</div>
 
@@ -228,17 +229,20 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 
 		<!--delivery Time-->
 		<div class="form-group">
-			<label for="pickupTime">Preferred Pickup Time:</label>
+			<label for="deliveryTime">Preferred Delivery Time:</label>
 			<input type="datetime-local" class="form-control" id="deliveryTime" name="deliveryTime"
 			<?php
 				date_default_timezone_set('Australia/Brisbane');
-				$dateMin = date('Y-m-d TH:i:s a');
-				echo "min='".$dateMin."'";
+				//Set Min Date
+				$dateMin = date('Y-m-d H:i:s');
+				$dateMinString = str_replace(' ', 'T', $dateMin);
+				echo "min='".$dateMinString."'";
 
-				$date = date_create($dateMin);
-				date_modify($date,"+1 year");
-				$dateMax = date_format($date, "Y-m-d TH:i:s a");
-				echo " max='".$dateMax."'";
+				//Set Max Date
+				$dateMax = date_create($dateMin);
+				date_modify($dateMax,"+4 months");
+				$dateMaxString = str_replace(' ', 'T', date_format($dateMax, "Y-m-d H:i:s"));
+				echo " max='".$dateMaxString."'";
 			?>>
 		</div>
 

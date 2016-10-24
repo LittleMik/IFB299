@@ -10,7 +10,7 @@
 	{
 		if(checkPermission($_SESSION['role'], 'view-order.php') === false)
 		{
-		echo '<script> alert('.$_SERVER['PHP_SELF'].');</script>';
+			echo '<script> alert('.$_SERVER['PHP_SELF'].');</script>';
 			//Insufficient Role, Redirect User to Forbidden Error Page
 			header("Location:login.php");
 		}
@@ -26,7 +26,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-9">
-				<form method="POST" class="form-order-lookup form-horizontal">
+				<form method="POST" class="form-order-schedule form-horizontal">
 					<div class="form-group">
 						<h2 class="form-order-lookup">Delivery Schedule</h2>
 						<div id="error"></div>
@@ -159,48 +159,28 @@
 						require_once 'php/formValidation.php';
 						if(checkIntID($_GET['orderID']))
 						{
-							//Run Query and Output Results
-							require_once 'php/ordersDB.php';
-							displayPackages(getOrder($_GET['orderID']), getPackages($_GET['orderID']));
+							//Retrieve Order
+							require_once 'php/orders.php';
+							$order = new Order();
+							$order->getOrder($_GET['orderID']);
 
-						}else{
+							//Retrieve Order's Packages
+							$packages = $order->getPackages();
 
+							//Output All Order Relevant Information
+							require_once 'php/output.php';
+							outputOrder($order);
+							outputPackages($packages);
+
+						}
+							else
+						{
 							//Output Error
 							echo "Invalid orderID detected<br />";
-
 						}
 					}
 				}
 			 ?>
 		</div>
 	</section>
-	<!--Output Schedule
-	<div class="container">
-			<div class="row">
-			<div class="col-md-4">
-				<section>
-					<a href="#">
-						<img id="shortcut" src="images/philosophy.png" alt="Our Philosophy"/>
-					</a>
-				</section>
-			</div>
-			<div class="col-md-4">
-				<section>
-					<a href="#">
-						<img id="shortcut" src="images/services.png" alt="Our Services"/>
-					</a>
-				</section>
-			</div>
-
-			<div class="col-md-4">
-				<section>
-					<a href="#">
-						<img id="shortcut" src="images/testimonials.png" alt="Testimonials"/>
-					</a>
-				</section>
-			</div>
-		 </div>
-	</div>-->
-
-
 <?php require 'includes/footer.inc' ?>
