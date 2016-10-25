@@ -194,7 +194,7 @@
 			$db = new Database();
 
 			//Set Insert Query
-			$query = "INSERT INTO orders (
+			$queryOrders = "INSERT INTO orders (
 			userID,
 			orderStatus,
 			description,
@@ -229,7 +229,7 @@
 				:recipientPhone);";
 
 			//Populate Parameters List
-			$parameters = array(
+			$parametersOrders = array(
 				':userID' => $this->userID,
 				':orderStatus' => $this->status,
 				':description' => $this->description,
@@ -247,11 +247,35 @@
 				':recipientPhone' => $this->recipientPhone
 			);
 
-			//Run Update Statment
-			$db->update_statement($query, $parameters);
+			//Run Insert Statment for Orders
+			$db->update_statement($queryOrders, $parametersOrders);
 
 			//Get ID of new row
 			$lastID = $db->__get('lastID');
+
+			//Get time
+			date_default_timezone_set('Australia/Brisbane');
+
+			$time = date('Y-m-d H:i:s');
+			$timestamp = str_replace(' ', 'T', $time);
+
+			//Add new entry to milestones database
+			$queryMilestones = "INSERT into milestones (
+					orderID,
+					orderTime
+				)
+				VALUES (
+					:orderID,
+					:orderTime
+				);";
+
+			$parametersMilestones = array(
+				':orderID' => $lastID,
+				':orderTime' => $timestamp,
+			);
+
+			//Run Insert Statment for Milestones
+			$db->update_statement($queryMilestones, $parametersMilestones);
 
 			//Destroy Database Connection
 			$db->destroy_pdo();
@@ -348,6 +372,69 @@
 
 			//Run Update Statment
 			$db->update_statement($query, $parameters);
+
+			//Get time
+			date_default_timezone_set('Australia/Brisbane');
+
+			$time = date('Y-m-d H:i:s');
+			$timestamp = str_replace(' ', 'T', $time);
+
+			//Add new entry to milestones database
+
+			//Set Query and Parameters
+			$queryMilestones = "";
+			$parametersMilestones = array(
+				':orderID' => $this->orderID
+			);
+
+			//Adjust the query and parameters according to status
+			require_once 'status.php';
+			switch ($status)
+			{
+				case Status::Ordered:
+					//Set Query
+					$queryMilestones = "UPDATE milestones SET orderTime = :orderTime WHERE orderID = :orderID";
+					//Add Parameters to list
+					array_push($parametersMilestones, ':orderTime', $timestamp);
+					break;
+				case Status::PickingUp:
+					//Set Query
+					$queryMilestones = "UPDATE milestones SET pickingupTime = :pickingupTime WHERE orderID = :orderID";
+					//Add Parameters to list
+					array_push($parametersMilestones, ':pickingupTime', $timestamp);
+					break;
+				case Status::PickedUp:
+					//Set Query
+					$queryMilestones = "UPDATE milestones SET pickedupTime = :pickedupTime WHERE orderID = :orderID";
+					//Add Parameters to list
+					array_push($parametersMilestones, ':pickedupTime', $timestamp);
+					break;
+				case Status::Storing:
+					//Set Query
+					$queryMilestones = "UPDATE milestones SET storingTime = :storingTime WHERE orderID = :orderID";
+					//Add Parameters to list
+					array_push($parametersMilestones, ':storingTime', $timestamp);
+					break;
+				case Status::Delivering:
+					//Set Query
+					$queryMilestones = "UPDATE milestones SET deliveringTime = :deliveringTime WHERE orderID = :orderID";
+					//Add Parameters to list
+					array_push($parametersMilestones, ':deliveringTime', $timestamp);
+					break;
+				case Status::Delivered:
+					//Set Query
+					$queryMilestones = "UPDATE milestones SET deliveredTime = :deliveredTime WHERE orderID = :orderID";
+					//Add Parameters to list
+					array_push($parametersMilestones, ':deliveredTime', $timestamp);
+					break;
+				default:
+					$queryMilestones = "UPDATE milestones SET orderTime = :orderTime WHERE orderID = :orderID";
+					//Add Parameters to list
+					array_push($parametersMilestones, ':orderTime', $timestamp);
+			}
+
+			//Run Update Statment for Milestones
+			$db->update_statement($queryMilestones, $parametersMilestones);
 
 			//Destroy Database Connection
 			$db->destroy_pdo();
