@@ -22,10 +22,33 @@
 <div class="pusher"></div>
 
 <?php
+    require_once 'php/status.php';
     if($_SERVER["REQUEST_METHOD"] === "GET"){
-
-        echo '
-        <div class="container">';
+        $status = $_GET['orderStatus'];
+        $driverHeading = "Unknown";
+        switch ($status) {
+			case Status::Ordered:
+					$driverHeading = "Not Assigned";
+					break;
+			case Status::PickingUp:
+					$driverHeading = "Picking Up";
+					break;
+			case Status::PickedUp:
+					$driverHeading = "Taking to Warehouse";
+					break;
+			case Status::Storing:
+					$driverHeading = "Picking up from Warehouse";
+					break;
+			case Status::Delivering:
+					$driverHeading = "Taking to Recipient";
+					break;
+			case Status::Delivered:
+					$driverHeading = "Order Completed";
+					break;
+        }
+        echo "
+        <div class='container'>
+        <h1>Driver Interface: {$driverHeading}";
 
         //Check Order ID is present and valid
         if(isset($_GET['orderID']) && !empty($_GET['orderID']))
@@ -56,9 +79,26 @@
         }
           
         echo '</div>';
+    } else {
+        echo 'URL does not contain the right information.';
     }
 
 
-require 'includes/milestoneOnePayment.inc';?>
+    switch ($status) {
+			case Status::PickingUp:
+                    require 'includes/milestoneOnePayment.inc';
+					break;
+			case Status::PickedUp:
+					require 'includes/milestoneTwoDropWarehouse.inc';
+					break;
+			case Status::Storing:
+					require 'includes/milestoneThreePickWarehouse.inc';
+					break;
+			case Status::Delivering:
+					require 'includes/milestoneFourDeliver.inc';
+					break;
+            }
+?>
+    
 
 <?php require 'includes/footer.inc' ?>

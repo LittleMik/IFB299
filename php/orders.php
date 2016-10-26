@@ -26,6 +26,8 @@
 		private $recipientName;
 		private $recipientPhone;
 
+		private $driverID;
+
 		// ==================== Constructor ==================== //
 		/**
 		 * Constructor
@@ -179,6 +181,16 @@
 		function getRecipientPhone()
 		{
 			return $this->recipientPhone;
+		}
+		/**
+		* Get driverID
+		* Returns integer driver's ID
+		*
+		* @return (integer) Contains the order's ID
+		*/
+		function getDriverID()
+		{
+			return $this->driverID;
 		}
 
 		// ==================== Database Functions ==================== //
@@ -372,6 +384,9 @@
 
 			//Run Update Statment
 			$db->update_statement($query, $parameters);
+
+			//Set current object to new session_status
+			$this->status = $status;
 
 			//Get time
 			date_default_timezone_set('Australia/Brisbane');
@@ -616,6 +631,28 @@
 
 			//Close Row Tag
 			echo "</tr>";
+		}
+
+		function updateDriver($driverID){
+			//Create new database connection
+			require_once 'database.php';
+			$db = new Database();
+
+			//Set Update Query
+			$query = "UPDATE orders
+				SET driverID = :driverID
+				WHERE orderID = :orderID;";
+
+			$parameters = array(
+				':driverID' => $driverID,
+				':orderID' => $this->orderID
+			);
+
+			//Run Update Statment
+			$db->update_statement($query, $parameters);
+
+			$db->destroy_pdo();
+			unset($db);
 		}
 	}
 ?>

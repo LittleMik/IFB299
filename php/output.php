@@ -128,7 +128,7 @@
 				<table class="table table-striped table-condensed table-responsive">
 					<thead>
 						<tr>
-							<th>Payment ID</th>
+							<th>Order ID</th>
 							<th>Customer</th>
 							<th>Type</th>
 							<th>Date</th>
@@ -140,7 +140,7 @@
 			echo "
 				<tbody>
 					<tr>
-						<td>{$payment['paymentID']}</td>
+						<td>{$payment['orderID']}</td>
 						<td>
 							<p>{$payment['firstName']} {$payment['lastName']}</p>
 						</td>

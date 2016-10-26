@@ -38,12 +38,15 @@
 			//Add Payment to DB
 			require_once 'php/paymentsDB.php';
 			if(addPayment($_GET['orderID'], $order->getUserID(), $_POST['type'], $_POST['date'], $_POST['amount']))
-			{
-				require_once 'php/status.php';
-				$order->updateStatus(Status::PickedUp);
+			{   
+                //If the status has not already progressed beyond being picked up (i.e. this is a new payment and not a modified one);
+                if($order->getStatus() < Status::PickedUP){
+                    require_once 'php/status.php';
+                    $order->updateStatus(Status::PickedUp);
+                }
 
 				//Redirect Script
-				header("Location:view-order.php?orderID={$_GET['orderID']}");
+				//header("Location:view-order.php?orderID={$_GET['orderID']}");
 			}else{
 				echo "<script>alert('Sorry...it seems something went wrong with the database.) [Error:Rejected Entry]');</script>";
 			}
@@ -122,7 +125,7 @@
 
 		</div>
 
-		<button type="submit" class="btn1btn-default">Submit</button>
+		<button type="submit" class="btn1btn-default">Order Picked Up</button>
 
 	</form>
 </div>

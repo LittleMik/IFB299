@@ -46,7 +46,8 @@
 			// Prepare Query
 			$stmt = $pdo->prepare(
 			"INSERT INTO payments (orderID, userID, paymentType, paymentDate, paymentAmount)
-			VALUES (:orderID, :userID, :paymentType, :paymentDate, :paymentAmount)");
+			VALUES (:orderID, :userID, :paymentType, :paymentDate, :paymentAmount)
+			ON DUPLICATE KEY UPDATE userID = :userID, paymentType = :paymentType, paymentDate = :paymentDate, paymentAmount = :paymentAmount;");
 
 			//Bind query parameter with it's given variable
 			$stmt->bindParam(':orderID', $orderID);

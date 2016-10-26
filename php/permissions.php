@@ -22,7 +22,8 @@
 			'payments-view' => Roles::Driver,
 			'payments-add' => Roles::Driver,
 			'payments-edit' => Roles::Manager,
-      'driver-ui' => Roles::Driver
+      'driver-ui' => Roles::Driver,
+      'assign-driver' => Roles::Coordinator
     );
 
     if(array_key_exists($permission, $permissions))

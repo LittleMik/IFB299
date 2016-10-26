@@ -100,6 +100,11 @@
 		{
 			require_once 'php/status.php';
 			$orderStatus = Status::getStatusName($order['orderStatus']);
+			$assignedDriver = "Not Yet Assigned.";
+			if (isset($order['driverID'])){
+				$assignedDriver = $order['driverID'];
+			}
+			
 			echo "
 				<tr>
 					<td>{$order['orderID']}</td>
@@ -110,6 +115,7 @@
 					<td>
 						<p>Desc: {$order['description']}</p>
 						<p>Type: {$order['deliveryPriority']}</p>
+						<p>Assigned Driver: {$assignedDriver}</p>
 					</td>
 					<td>
 						<p>Preferred Time: {$order['pickupTime']}</p>
@@ -136,18 +142,19 @@
 				if(checkPermission($_SESSION['role'], 'edit-order.php') === true)
 				{
 					echo "<td>
-							<p><a href='edit-order.php?orderID={$order['orderID']}'>Edit</a></p>
-							<p><a href='driver.php?orderID={$order['orderID']}&orderStatus={$order['orderStatus']}'>Add Milestone</a></p>
-							<p><a href='view-order.php?orderID={$order['orderID']}'>View</a></p>;
+							<p><a class='btn btn-info' href='edit-order.php?orderID={$order['orderID']}'>Edit</a></p>
+							<p><a class='btn btn-info' href='driver.php?orderID={$order['orderID']}&orderStatus={$order['orderStatus']}'>Add Milestone</a></p>
+							<p><a class='btn btn-info' href='view-order.php?orderID={$order['orderID']}'>View</a></p>
+							<p><a class='btn btn-info' href='assign-driver.php?orderID={$order['orderID']}'>Assign Driver</a></p>
 						</td>";
 				} else if(checkPermission($_SESSION['role'], 'driver-ui') === true) {
 					echo "<td>
-							<p><a href='driver.php?orderID={$order['orderID']}&orderStatus={$order['orderStatus']}'>Add Milestone</a></p>
-							<p><a href='view-order.php?orderID={$order['orderID']}'>View</a></p>;
+							<p><a class='btn btn-info' href='driver.php?orderID={$order['orderID']}&orderStatus={$order['orderStatus']}'>Update Status</a></p>
+							<p><a class='btn btn-info' href='view-order.php?orderID={$order['orderID']}'>View</a></p>
 						</td>";
 				} else {
 					echo "<td>
-							<p><a href='view-order.php?orderID={$order['orderID']}'>View</a></p>;
+							<p><a class='btn btn-info' href='view-order.php?orderID={$order['orderID']}'>View</a></p>
 						</td>";
 				}
 			}
