@@ -175,11 +175,25 @@
 	* Returns true if status is valid,
 	* false if invalid
 	*/
-	function checkStatus($status)
+	/*function checkStatus($status)
 	{
 		if(isset($status))
 		{
 			if(preg_match('/^Ordered|Picking Up|Picked Up|Storing|Delivering|Delivered$/', $status))
+			{
+				return true;
+			}else{
+				return false;
+			}
+		}else{
+			return true;
+		}
+	}*/
+	function checkStatus($status)
+	{
+		if(isset($status))
+		{
+			if(preg_match('/[0-5]/', $status))
 			{
 				return true;
 			}else{

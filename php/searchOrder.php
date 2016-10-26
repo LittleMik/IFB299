@@ -38,12 +38,12 @@
 					<div class="col-sm-10">
 						<select class="form-control" id="inputStatus" name="status">
 							<option value="" selected="">- Select Status -</option>
-							<option>Ordered</option>
-							<option>Picking Up</option>
-							<option>Picked Up</option>
-							<option>Storing</option>
-							<option>Delivering</option>
-							<option>Delivered</option>
+							<option value=0>Ordered</option>
+							<option value=1>Picking Up</option>
+							<option value=2>Picked Up</option>
+							<option value=3>Storing</option>
+							<option value=4>Delivering</option>
+							<option value=5>Delivered</option>
 						</select>
 					</div>
 				</div>
@@ -116,7 +116,7 @@
 					require_once 'php/search.php';
 
 					//Run Search Query and Output Results
-					outputResultOrders(searchOrder($_POST['email'], $_POST['customerName'], $_POST['priority'], $_POST['status'], $_POST['pickupTime']), "");
+					outputResultOrders(searchOrder($_POST['email'], $_POST['customerName'], $_POST['priority'], $_POST['status'], $_POST['pickupTime'], ""));
 				}
 
 			}

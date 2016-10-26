@@ -30,9 +30,9 @@
 		//Identify and Set Search Filters
 		require_once 'status.php';
 		$removeDelivered = " NOT orders.orderStatus = ".Status::Delivered;
-		if(!empty($status))
+		if(!empty($status) || (int)$status === 0)
 		{
-			if($status === Status::Delivered)
+			if((int)$status === Status::Delivered)
 			{
 				$whereConditions[] = " orders.orderStatus = ".Status::Delivered;
 			}
