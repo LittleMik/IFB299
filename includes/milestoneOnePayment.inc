@@ -1,22 +1,4 @@
-<?php require 'includes/head.inc' ?>
-
-<?php
-	//Verify User Permission to View Page
-	require_once 'php/permissions.php';
-	if(isset($_SESSION['role']))
-	{
-		if(checkPermission($_SESSION['role'], 'payments-add') === false)
-		{
-			echo '<script> alert('.$_SERVER['PHP_SELF'].');</script>';
-			//Insufficient Role, Redirect User to Forbidden Error Page
-			header("Location:login.php");
-		}
-	}else{
-		//Error: User not logged in
-		header("Location:login.php");
-	}
-?>
-
+<!--Process Payment-->
 <?php
 	if($_SERVER["REQUEST_METHOD"] === "POST")
 	{
@@ -69,12 +51,8 @@
 	}
 ?>
 
-<!--Header-->
-<?php require 'includes/header.inc' ?>
-
-<img id="im" src="images/background1.png" alt="Banner"> </img>
 <!--Payment Form-->
-<div class="container2">
+<div class="container containerDriver">
 	<div class= "texts2">
 	<h2>Payment</h2>
 	</div>
@@ -148,6 +126,3 @@
 
 	</form>
 </div>
-
-<!--Footer-->
-<?php require 'includes/footer.inc' ?>

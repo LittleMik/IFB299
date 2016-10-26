@@ -90,16 +90,8 @@
 						<th>Pickup</th>
 						<th>Delivery</th>
 						<th>Status</th>
-						<th>More Details...</th>';
-			if(isset($_SESSION['role']))
-			{
-				if(checkPermission($_SESSION['role'], 'edit-order.php') === true)
-				{
-					echo "<th>Edit Order</th>";
-				}
-			}
-
-		echo	'</tr>
+						<th>Options...</th>
+					</tr>
 				</thead>
 			<tbody>';
 
@@ -133,8 +125,8 @@
 						<p>Postcode: {$order['deliveryPostcode']}</p>
 						<p>State: {$order['deliveryState']}</p>
 					</td>
-					<td>{$orderStatus}</td>
-					<td><a href='view-order.php?orderID={$order['orderID']}'>View</a>";
+					<td>{$orderStatus}</td>";
+					
 
 			//Verify User Permission to Edit Orders
 			require_once 'php/permissions.php';
@@ -143,12 +135,25 @@
 			{
 				if(checkPermission($_SESSION['role'], 'edit-order.php') === true)
 				{
-					echo "<td><a href='edit-order.php?orderID={$order['orderID']}'>Edit</a></td>";
+					echo "<td>
+							<p><a href='edit-order.php?orderID={$order['orderID']}'>Edit</a></p>
+							<p><a href='driver.php?orderID={$order['orderID']}&orderStatus={$order['orderStatus']}'>Add Milestone</a></p>
+							<p><a href='view-order.php?orderID={$order['orderID']}'>View</a></p>;
+						</td>";
+				} else if(checkPermission($_SESSION['role'], 'driver-ui') === true) {
+					echo "<td>
+							<p><a href='driver.php?orderID={$order['orderID']}&orderStatus={$order['orderStatus']}'>Add Milestone</a></p>
+							<p><a href='view-order.php?orderID={$order['orderID']}'>View</a></p>;
+						</td>";
+				} else {
+					echo "<td>
+							<p><a href='view-order.php?orderID={$order['orderID']}'>View</a></p>;
+						</td>";
 				}
 			}
 
 			echo "
-					</td>
+
 				</tr>
 			";
 		}

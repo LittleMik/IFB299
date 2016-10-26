@@ -25,7 +25,6 @@
 					<?php
 					//Verify User Permission to View Special Navigation Items
 					require_once 'php/permissions.php';
-
 					if(isset($_SESSION['role']))
 					{
 						//Check Permission to Create Staff Account

@@ -302,7 +302,7 @@
 				);
 
 				//Run Update Statment for Roles table
-				$db->update_statement($query, $parameters);
+				$db->update_statement($queryRoles, $parametersRoles);
 
 				//Destroy Database Connection
 				$db->destroy_pdo();

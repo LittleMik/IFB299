@@ -21,7 +21,8 @@
       'package-information.php' => Roles::Manager,
 			'payments-view' => Roles::Driver,
 			'payments-add' => Roles::Driver,
-			'payments-edit' => Roles::Manager
+			'payments-edit' => Roles::Manager,
+      'driver-ui' => Roles::Driver
     );
 
     if(array_key_exists($permission, $permissions))

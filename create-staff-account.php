@@ -89,7 +89,7 @@
 	<h2>Create an Account</h2>
 	</div>
 
-	<form method="post" autocomplete="on" onsubmit="return validate(this)" action="<?php echo "https://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];?>">
+	<form method="post" autocomplete="on" onsubmit="return validate(this)">
 		<div class="form-group1">
 			<label for="email">Email Address:</label>
 			<input type="email" class="form-control" id="email" placeholder="Enter Email Address" name="email" maxlength="255" required>
