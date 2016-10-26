@@ -154,7 +154,7 @@
 				{
 					echo "<td>
 							<p><a class='btn btn-info' href='edit-order.php?orderID={$order['orderID']}'>Edit</a></p>
-							<p><a class='btn btn-info' href='driver.php?orderID={$order['orderID']}&orderStatus={$order['orderStatus']}'>Update Order Status</a></p>
+							<p><a class='btn btn-info' href='driver.php?orderID={$order['orderID']}&orderStatus={$order['orderStatus']}'>Update Status</a></p>
 							<p><a class='btn btn-info' href='view-order.php?orderID={$order['orderID']}'>View</a></p>
 							<p><a class='btn btn-info' href='assign-driver.php?orderID={$order['orderID']}'>Assign Driver</a></p>
 						</td>";

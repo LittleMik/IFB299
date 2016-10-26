@@ -650,11 +650,12 @@
 
 			//Run Update Statment
 			$db->update_statement($query, $parameters);
-
+			require_once 'php/status.php';
+			require_once 'php/ordersDB.php';
 			$db->destroy_pdo();
 			unset($db);
 			if($this->getStatus() < Status::PickingUp){
-				updateStatus($status);
+				updateStatus($this->getID(),Status::PickingUp);
 			}
 		}
 	}
