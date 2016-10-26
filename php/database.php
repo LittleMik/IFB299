@@ -6,7 +6,7 @@
 	*	Contains a PDO object for the execution of SQL queries and
 	* a value to save the lastID when executing update or insert queries
 	*
-	*	@author Michael Smallcombe & Greg Mills
+	*	@author Michael Smallcombe
 	*/
 	// ============================================================================================= //
 	class Database

@@ -8,7 +8,8 @@
     const Admin = 4;
   }
 
-  function getRoleName($role){
+  function getRoleName($role)
+	{
     switch ($role){
 			case Roles::Customer:
 				return "Customer";
@@ -28,5 +29,5 @@
 			default:
 				return "Unknown Role";
 		}
-  }
- ?>
+ 	}
+?>

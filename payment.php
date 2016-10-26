@@ -3,7 +3,7 @@
 <?php
 	//Verify User Permission to View Page
 	require_once 'php/permissions.php';
-
+	echo "<script>alert('payment session. [Error:Rejected Entry]');</script>";
 	if(isset($_SESSION['role']))
 	{
 		if(checkPermission($_SESSION['role'], 'payments-add') === false)
@@ -46,7 +46,7 @@
 				echo "<script>alert('Sorry...it seems something went wrong with your entry. [Error:Invalid {$field}]');</script>";
 			}
 		}
-
+		echo "<script>alert('Adding payment before. [Error:Rejected Entry]');</script>";
 		//Payment Form Valid
 		if($formValid)
 		{
@@ -56,6 +56,7 @@
 			$order->getOrder($_GET['orderID']);
 
 			//Add Payment to DB
+			echo "<script>alert('Adding payment. [Error:Rejected Entry]');</script>";
 			require_once 'php/paymentsDB.php';
 			if(addPayment($_GET['orderID'], $order->getUserID(), $_POST['type'], $_POST['date'], $_POST['amount']))
 			{
@@ -63,7 +64,7 @@
 				$order->updateStatus(Status::PickedUp);
 
 				//Redirect Script
-				header("Location:view-order.php?orderID={$_GET['orderID']}");
+				//header("Location:view-order.php?orderID={$_GET['orderID']}");
 			}else{
 				echo "<script>alert('Sorry...it seems something went wrong with the database. [Error:Rejected Entry]');</script>";
 			}

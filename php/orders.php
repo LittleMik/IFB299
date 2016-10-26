@@ -383,11 +383,10 @@
 
 			//Set Query and Parameters
 			$queryMilestones = "";
-			$parametersMilestones = array(
-				':orderID' => $this->orderID
-			);
+			$parametersMilestones[':orderID'] = $this->orderID;
 
 			//Adjust the query and parameters according to status
+			echo "<script>alert('inside updatestatus. [Error:Rejected Entry]');</script>";
 			require_once 'status.php';
 			switch ($status)
 			{
@@ -395,42 +394,40 @@
 					//Set Query
 					$queryMilestones = "UPDATE milestones SET orderTime = :orderTime WHERE orderID = :orderID";
 					//Add Parameters to list
-					array_push($parametersMilestones, ':orderTime', $timestamp);
+					$parametersMilestones[':orderTime'] = $timestamp;
 					break;
 				case Status::PickingUp:
 					//Set Query
 					$queryMilestones = "UPDATE milestones SET pickingupTime = :pickingupTime WHERE orderID = :orderID";
 					//Add Parameters to list
-					array_push($parametersMilestones, ':pickingupTime', $timestamp);
+					$parametersMilestones[':pickingupTime'] = $timestamp;
 					break;
 				case Status::PickedUp:
 					//Set Query
 					$queryMilestones = "UPDATE milestones SET pickedupTime = :pickedupTime WHERE orderID = :orderID";
 					//Add Parameters to list
-					array_push($parametersMilestones, ':pickedupTime', $timestamp);
+					$parametersMilestones[':pickedupTime'] = $timestamp;
 					break;
 				case Status::Storing:
 					//Set Query
 					$queryMilestones = "UPDATE milestones SET storingTime = :storingTime WHERE orderID = :orderID";
 					//Add Parameters to list
-					array_push($parametersMilestones, ':storingTime', $timestamp);
+					$parametersMilestones[':storingTime'] = $timestamp;
 					break;
 				case Status::Delivering:
 					//Set Query
 					$queryMilestones = "UPDATE milestones SET deliveringTime = :deliveringTime WHERE orderID = :orderID";
 					//Add Parameters to list
-					array_push($parametersMilestones, ':deliveringTime', $timestamp);
+					$parametersMilestones[':deliveringTime'] = $timestamp;
 					break;
 				case Status::Delivered:
 					//Set Query
 					$queryMilestones = "UPDATE milestones SET deliveredTime = :deliveredTime WHERE orderID = :orderID";
 					//Add Parameters to list
-					array_push($parametersMilestones, ':deliveredTime', $timestamp);
+					$parametersMilestones[':deliveredTime'] = $timestamp;
 					break;
 				default:
-					$queryMilestones = "UPDATE milestones SET orderTime = :orderTime WHERE orderID = :orderID";
-					//Add Parameters to list
-					array_push($parametersMilestones, ':orderTime', $timestamp);
+					echo "<script>('Invalid order status');</script>";
 			}
 
 			//Run Update Statment for Milestones
