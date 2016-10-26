@@ -21,7 +21,7 @@
 					return "Picked Up";
 					break;
 			case Status::Storing:
-					return "Storing";
+					return "Stored in Warehouse";
 					break;
 			case Status::Delivering:
 					return "Delivering";
