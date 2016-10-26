@@ -193,6 +193,19 @@
 			return $this->driverID;
 		}
 
+		/**
+		* Get user email
+		* Returns user's email
+		*
+		* @return (string) Contains the order's user's email'
+		*/
+		function getUserEmail($userID)
+		{
+			$user = new User();
+			getUser($userID);
+			return $user->getEmail();
+		}
+
 		// ==================== Database Functions ==================== //
 		/**
 		* Create Order
@@ -399,9 +412,15 @@
 			//Set Query and Parameters
 			$queryMilestones = "";
 			$parametersMilestones[':orderID'] = $this->orderID;
+			
+			//Get a user object for information to send in notifcations
+			require_once 'users.php';
+			$user = new User();
+			$user->getUser($this->getUserID());
 
 			//Adjust the query and parameters according to status
 			require_once 'status.php';
+			require_once 'php/notifications.php';
 			switch ($status)
 			{
 				case Status::Ordered:
@@ -415,12 +434,14 @@
 					$queryMilestones = "UPDATE milestones SET pickingupTime = :pickingupTime WHERE orderID = :orderID";
 					//Add Parameters to list
 					$parametersMilestones[':pickingupTime'] = $timestamp;
+					milestoneUpdate($user->getEmail(), $user->getFirstName(), $status, $this->getDescription(), $this->getID());
 					break;
 				case Status::PickedUp:
 					//Set Query
 					$queryMilestones = "UPDATE milestones SET pickedupTime = :pickedupTime WHERE orderID = :orderID";
 					//Add Parameters to list
 					$parametersMilestones[':pickedupTime'] = $timestamp;
+					milestoneUpdate($user->getEmail(), $user->getFirstName(), $status, $this->getDescription(), $this->getID());
 					break;
 				case Status::Storing:
 					//Set Query
@@ -433,12 +454,14 @@
 					$queryMilestones = "UPDATE milestones SET deliveryTime = :deliveringTime WHERE orderID = :orderID";
 					//Add Parameters to list
 					$parametersMilestones[':deliveringTime'] = $timestamp;
+					milestoneUpdate($user->getEmail(), $user->getFirstName(), $status, $this->getDescription(), $this->getID());
 					break;
 				case Status::Delivered:
 					//Set Query
 					$queryMilestones = "UPDATE milestones SET deliveredTime = :deliveredTime WHERE orderID = :orderID";
 					//Add Parameters to list
 					$parametersMilestones[':deliveredTime'] = $timestamp;
+					milestoneUpdate($user->getEmail(), $user->getFirstName(), $status, $this->getDescription(), $this->getID());
 					break;
 				default:
 					echo "<script>('Invalid order status');</script>";
@@ -453,15 +476,6 @@
 			//Destroy Database Connection
 			$db->destroy_pdo();
 			unset($db);
-
-			//Get User
-			require_once 'users.php';
-			$user = new User();
-			$user->getUser($this->userID);
-
-			//Send user an email of the status update
-			require_once 'notifications.php';
-			milestoneUpdate($user->getEmail(), $user->getFirstName(), $status, $this->getDescription(), $this->getID());
 		}
 
 		/**
@@ -617,7 +631,7 @@
 			//Get Order's User details
 			require_once 'users.php';
 			$user = new User();
-			$user->getUser($this->userID);
+			$user->getUser($this->getUserID());
 
 			//Output Order as Table Row
 			echo "

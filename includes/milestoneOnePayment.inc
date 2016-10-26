@@ -40,7 +40,7 @@
 			if(addPayment($_GET['orderID'], $order->getUserID(), $_POST['type'], $_POST['date'], $_POST['amount']))
 			{   
                 //If the status has not already progressed beyond being picked up (i.e. this is a new payment and not a modified one);
-                if($order->getStatus() < Status::PickedUP){
+                if($order->getStatus() < Status::PickedUp){
                     require_once 'php/status.php';
                     $order->updateStatus(Status::PickedUp);
                 }
