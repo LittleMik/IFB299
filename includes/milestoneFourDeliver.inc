@@ -8,6 +8,7 @@
         $ID = $order->getID();
         $status = (Status::Delivered);
         header("Location: driver.php?orderID={$ID}&orderStatus={$status}");
+        exit();
 	}
 ?>
 
