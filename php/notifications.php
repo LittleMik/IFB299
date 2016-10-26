@@ -18,12 +18,13 @@
 		$apiKey = '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';
 		$sg = new \SendGrid($apiKey);
 
-		//Commented out because of interference with redirect scripts elsewhere
+		//Uncomment to debug notifactions
 		/*
 		$response = $sg->client->mail()->send()->post($mail);
 		echo $response->statusCode();
 		echo $response->headers();
-		echo $response->body();*/
+		echo $response->body();
+		*/
 	}	
 
 	/**
