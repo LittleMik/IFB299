@@ -60,6 +60,42 @@
 	}
 
 	/**
+	* Output Orders
+	* Outputs information from an Array of Order Objects into a table
+	*
+	* @param (Array) $orders Array of Order objects
+	*/
+	function outputOrders($orders)
+	{
+		//Orders Table
+		echo '
+			<h3>Order</h3>
+			<table class="table table-striped table-condensed table-responsive">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Customer</th>
+					<th>Description</th>
+					<th>Pickup</th>
+					<th>Delivery</th>
+					<th>Recipient</th>
+					<th>Status</th>
+					<th> </th>
+				</tr>
+			</thead>
+			<tbody>';
+
+			foreach($orders as $order)
+			{
+				//Output Order Row
+				$order->displayOrder();
+			}
+
+			//Close Order Table Tags
+			echo "</tbody></table>";
+	}
+
+	/**
 	* Output Packages
 	* Outputs individual package details from
 	* an array of packages to a table
