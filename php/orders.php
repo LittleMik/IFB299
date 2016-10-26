@@ -430,7 +430,7 @@
 					break;
 				case Status::Delivering:
 					//Set Query
-					$queryMilestones = "UPDATE milestones SET deliveringTime = :deliveringTime WHERE orderID = :orderID";
+					$queryMilestones = "UPDATE milestones SET deliveryTime = :deliveringTime WHERE orderID = :orderID";
 					//Add Parameters to list
 					$parametersMilestones[':deliveringTime'] = $timestamp;
 					break;
