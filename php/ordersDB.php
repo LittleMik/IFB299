@@ -102,7 +102,12 @@
 			$orderStatus = Status::getStatusName($order['orderStatus']);
 			$assignedDriver = "Not Yet Assigned.";
 			if (isset($order['driverID'])){
-				$assignedDriver = $order['driverID'];
+				require_once 'php/users.php';
+				$user = new User();
+				$user->getUser($order['driverID']);
+				$firstName = $user->getFirstName();
+				$lastName = $user->getLastName();
+				$assignedDriver = "{$firstName} {$lastName}";
 			}
 			
 			echo "

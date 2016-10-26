@@ -88,6 +88,7 @@
     }
   }
 
+
   /**
   * Output Results of Users Search
   * Args: PDO Statment ResultSet $stmt
@@ -195,4 +196,6 @@
 
 		}
   }
+
+
 ?>
