@@ -28,7 +28,7 @@
     <?php
         require_once 'php/output.php';
 				require_once 'php/search.php';
-        outputResultOrders(searchAssignedOrder("", "", "", "", "", $_SESSION['ID']));
+        outputResultOrders(searchOrder("", "", "", "", "", $_SESSION['ID']));
     ?>
 </div>
 <?php require 'includes/footer.inc' ?>
