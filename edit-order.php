@@ -21,7 +21,6 @@
 
 <?php
 	require_once 'php/orders.php';
-	require_once 'php/ordersDB.php';
 	require_once 'php/usersDB.php';
 
 	//Get Order
@@ -67,7 +66,6 @@
 		if($formValid)
 		{
 			require_once 'php/orders.php';
-			require_once 'php/ordersDB.php';
 			require_once 'php/packages.php';
 			require_once 'php/users.php';
 			require_once 'php/status.php';
@@ -150,7 +148,8 @@
 		</div>
 
 		<?php
-			displayPackageInputs($order->getPackages());
+			require_once 'php/output.php';
+			outputPackageInputs($order->getPackages());
 		?>
 
 		<div class="row">
@@ -254,7 +253,7 @@
 
 				//Set Max Date
 				$dateMax = date_create($dateMin);
-				date_modify($dateMax,"+4 months year");
+				date_modify($dateMax,"+4 months");
 				$dateMaxString = str_replace(' ', 'T', date_format($dateMax, "Y-m-d H:i:s"));
 				echo " max='".$dateMaxString."'";
 			?>>

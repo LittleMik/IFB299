@@ -462,6 +462,42 @@
 		}
 
 		/**
+		* Update Order's Assigned Driver
+		* Updates the order object's assigned driver and checks the order's status
+		* for updating
+		*
+		* @param (integer) $driverID userID of the assigned driver
+		*/
+		function updateDriver($driverID){
+			//Create new database connection
+			require_once 'database.php';
+			$db = new Database();
+
+			//Set Update Query
+			$query = "UPDATE orders
+				SET driverID = :driverID
+				WHERE orderID = :orderID;";
+
+			$parameters = array(
+				':driverID' => $driverID,
+				':orderID' => $this->orderID
+			);
+
+			//Run Update Statment
+			$db->update_statement($query, $parameters);
+
+			//Close Connection
+			$db->destroy_pdo();
+			unset($db);
+
+			//Check Status
+			require_once 'php/status.php';
+			if($this->getStatus() < Status::PickingUp){
+				$this->updateStatus(Status::PickingUp);
+			}
+		}
+
+		/**
 		* Get Order from Database
 		* Assigns order object variables with values from the database
 		* according to the orderID provided
@@ -631,32 +667,6 @@
 
 			//Close Row Tag
 			echo "</tr>";
-		}
-
-		function updateDriver($driverID){
-			//Create new database connection
-			require_once 'database.php';
-			$db = new Database();
-
-			//Set Update Query
-			$query = "UPDATE orders
-				SET driverID = :driverID
-				WHERE orderID = :orderID;";
-
-			$parameters = array(
-				':driverID' => $driverID,
-				':orderID' => $this->orderID
-			);
-
-			//Run Update Statment
-			$db->update_statement($query, $parameters);
-			require_once 'php/status.php';
-			require_once 'php/ordersDB.php';
-			$db->destroy_pdo();
-			unset($db);
-			if($this->getStatus() < Status::PickingUp){
-				updateStatus($this->getID(),Status::PickingUp);
-			}
 		}
 	}
 ?>

@@ -71,14 +71,7 @@
 					</div>
 
 					<div class="form-group">
-						<label class="col-sm-2 control-label" for="pickupTime">Scheduled Time</label>
-						<div class="col-sm-10">
-							<input type="datetime-local" class="form-control" id="scheduledTime" name="scheduledTime">
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label class="col-sm-2 control-label" for="pickupTime">Scheduled Time</label>
+						<label class="col-sm-2 control-label" for="scheduledTime">Scheduled Time</label>
 						<div class="col-sm-10">
 							<input type="datetime-local" class="form-control" id="scheduledTime" name="scheduledTime">
 						</div>
@@ -123,9 +116,9 @@
 					{
 						$errors["priority"] = checkPriority($_POST['priority']);
 					}
-					if(isset($_POST['pickupTime']) && !empty($_POST['pickupTime']))
+					if(isset($_POST['scheduledTime']) && !empty($_POST['scheduledTime']))
 					{
-						$errors["pickupTime"] = checkTime($_POST['pickupTime']);
+						$errors["scheduledTime"] = checkTime($_POST['scheduledTime']);
 					}
 
 					//Check for presence of errors and output
@@ -141,10 +134,10 @@
 					//Check Form is Valid
 					if($formValid)
 					{
-						require_once 'php/ordersDB.php';
-
+						require_once 'php/output.php';
+						require_once 'php/search.php';
 						//Run Search Query and Output Results
-						displayOrders(searchOrder($_POST['email'], $_POST['customerName'], $_POST['priority'], $_POST['status'], $_POST['pickupTime']));
+						outputResultOrders(searchOrder($_POST['email'], $_POST['customerName'], $_POST['priority'], $_POST['status'], $_POST['pickupTime']));
 					}
 
 				}else if($_SERVER["REQUEST_METHOD"] === "GET"){

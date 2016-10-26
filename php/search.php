@@ -1,9 +1,13 @@
 <?php
 	/**
 	* Search Order
-	* Args: $email, $customerName, $priority, $status,
-	* $pickupTime
-	* Returns PDO Statement
+	* Searches the orders table according to the set parameters
+	*
+	* @param (String) $email order Customer's email
+	* @param (String) $customerName Fullname of the order's customer
+	* @param (String) $priority Standard or Express type
+	* @param (integer) $status Order's status
+	* @param (timestamp) $pickupTime PickupTime of the Order
 	*/
 	function searchOrder($email, $customerName, $priority, $status, $pickupTime)
 	{
@@ -61,20 +65,27 @@
 	}
 
 	/**
-	* Search Assigned Order
-	* Args: $email, $customerName, $priority, $status,
-	* $pickupTime
-	* Returns PDO Statement
+	* Search Order
+	* Searches the orders table according to the set parameters
+	*
+	* @param (integer) $driverID assigned driver ID for the order
+	* @param (String) $email order Customer's email
+	* @param (String) $customerName Fullname of the order's customer
+	* @param (String) $priority Standard or Express type
+	* @param (integer) $status Order's status
+	* @param (timestamp) $pickupTime PickupTime of the Order
 	*/
-	function searchAssignedOrder($driverID, $email, $customerName, $priority, $status, $pickupTime)
+	function searchAssignedOrder($email, $customerName, $priority, $status, $pickupTime, $driverID)
 	{
 		//Create new database connection
 		require_once 'database.php';
 		$db = new Database();
 
 		//Identify Search Filters
-		$whereConditions = array();
-		$parameters = array();
+
+		//Set Default Where Condition and Bind Parameters
+		$whereConditions[] = " orders.driverID = :driverID";
+		$parameters[':driverID'] = $driverID;
 
 		//Check which filters are set
 		if(!empty($email))
@@ -97,9 +108,6 @@
 		if(!empty($whereConditions))
 		{
 			$where = implode(' AND ', $whereConditions);
-		}else{
-			//Set Empty Where Statement (Accepts all values)
-			$where = " users.email LIKE '%'";
 		}
 
 		//Set Query

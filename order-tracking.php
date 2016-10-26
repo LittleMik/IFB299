@@ -13,7 +13,8 @@
 <section id="filter-order">
 	<div class="container">
 		<?php
-			require_once 'php/ordersDB.php';
+			require_once 'php/output.php';
+			require_once 'php/search.php';
 			require_once 'php/users.php';
 			require_once 'php/status.php';
 
@@ -24,7 +25,7 @@
 				$status = "NOT ".Status::Delivered;
 			}
 
-			displayOrders(searchOrder($user->getEmail(), "", "", $status, ""));
+			outputResultOrders(searchOrder($user->getEmail(), "", "", $status, ""));
 		?>
 	</div>
 </section>

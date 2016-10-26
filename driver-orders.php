@@ -26,8 +26,9 @@
 <!-- Display orders assigned to driver-->
 <div class="container">
     <?php
-        require_once 'php/ordersDB.php';
-        displayOrders(searchOrder("", "", "", "", "", $_SESSION['ID']));
+        require_once 'php/output.php';
+				require_once 'php/search.php';
+        outputResultOrders(searchAssignedOrder("", "", "", "", "", $_SESSION['ID']));
     ?>
 </div>
 <?php require 'includes/footer.inc' ?>
