@@ -386,7 +386,6 @@
 			$parametersMilestones[':orderID'] = $this->orderID;
 
 			//Adjust the query and parameters according to status
-			echo "<script>alert('inside updatestatus. [Error:Rejected Entry]');</script>";
 			require_once 'status.php';
 			switch ($status)
 			{
