@@ -45,8 +45,11 @@
                     $order->updateStatus(Status::PickedUp);
                 }
 
+				//Get updated (if they were updated) values and redirect to next step of driver UI
+				$newStatus = $order->getStatus();
+				$orderID = $order->getID();
 				//Redirect Script
-				//header("Location:view-order.php?orderID={$_GET['orderID']}");
+				echo "<script>window.location = 'driver.php?orderID={$orderID}&orderStatus={$newStatus}';</script>";
 			}else{
 				echo "<script>alert('Sorry...it seems something went wrong with the database.) [Error:Rejected Entry]');</script>";
 			}

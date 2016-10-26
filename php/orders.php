@@ -447,6 +447,9 @@
 			//Run Update Statment for Milestones
 			$db->update_statement($queryMilestones, $parametersMilestones);
 
+			//Set current updateStatus
+			$this->status=$status;
+
 			//Destroy Database Connection
 			$db->destroy_pdo();
 			unset($db);

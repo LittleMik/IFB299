@@ -7,7 +7,12 @@
         $order->updateStatus(Status::Storing);
         $ID = $order->getID();
         $status = (Status::Storing);
-        header("Location: driver.php?orderID={$ID}&orderStatus={$status}");
+
+        //Get updated (if they were updated) values and redirect to next step of driver UI
+        $newStatus = $order->getStatus();
+        $orderID = $order->getID();
+        //Redirect Script
+        echo "<script>window.location = 'driver.php?orderID={$orderID}&orderStatus={$newStatus}';</script>";
 	}
 ?>
 
