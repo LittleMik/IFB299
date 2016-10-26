@@ -112,10 +112,11 @@
 				//Check Form is Valid
 				if($formValid)
 				{
-					require_once 'php/ordersDB.php';
+					require_once 'php/output.php';
+					require_once 'php/search.php';
 
 					//Run Search Query and Output Results
-					displayOrders(searchOrder($_POST['email'], $_POST['customerName'], $_POST['priority'], $_POST['status'], $_POST['pickupTime']), "");
+					outputResultOrders(searchOrder($_POST['email'], $_POST['customerName'], $_POST['priority'], $_POST['status'], $_POST['pickupTime']), "");
 				}
 
 			}
