@@ -21,6 +21,7 @@
 			$user = unserialize($_SESSION['user']);
 
 			outputResultOrders(searchOrder($user->getEmail(), "", "", "", "", ""));
+			
 		?>
 	</div>
 </section>
