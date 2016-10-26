@@ -30,7 +30,7 @@
 		//Identify and Set Search Filters
 		require_once 'status.php';
 		$removeDelivered = " NOT orders.orderStatus = ".Status::Delivered;
-		if(!empty($status) || (int)$status === 0)
+		if(!empty($status))
 		{
 			if((int)$status === Status::Delivered)
 			{
