@@ -451,7 +451,7 @@
 					break;
 				case Status::Delivering:
 					//Set Query
-					$queryMilestones = "UPDATE milestones SET deliveryTime = :deliveringTime WHERE orderID = :orderID";
+					$queryMilestones = "UPDATE milestones SET deliveryTime = :deliveringTime WHERE orderID = <:orderI></:orderI>D";
 					//Add Parameters to list
 					$parametersMilestones[':deliveringTime'] = $timestamp;
 					milestoneUpdate($user->getEmail(), $user->getFirstName(), $status, $this->getDescription(), $this->getID());
