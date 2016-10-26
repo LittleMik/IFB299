@@ -32,7 +32,8 @@
 
 <!--Header-->
 <?php require 'includes/header.inc' ?>
-<!--Payment Form-->
+
+<!--Assign Driver Form-->
 <div class="container containerDriver">
 	<div class= "texts2">
 	<h2>Payment</h2>
@@ -50,10 +51,10 @@
 
 		<div class="form-group1">
 			<!--Driver-->
-            
 			<select class="form-control" id="driverChoice" name="driverChoice" required>
 				<option value="" disabled selected>- NONE -</option>
                 <?php
+                    //Get all users with driver roles, and display them as options
                     require_once 'php/usersDB.php';
                     require_once 'php/roles.php';
                     $stmt = searchUsers("", "", Roles::Driver);

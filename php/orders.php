@@ -653,6 +653,9 @@
 
 			$db->destroy_pdo();
 			unset($db);
+			if($this->getStatus() < Status::PickingUp){
+				updateStatus($status);
+			}
 		}
 	}
 ?>

@@ -38,4 +38,28 @@
       return false;
     }
   }
+
+ /**
+  * Check Role requirement of the specific permission, only returns true
+  * if exactly the role, not if role is greater than required.
+  * return boolean - true if is role
+  *                - false if not role
+  */
+function checkRole($role, $permission){
+  $permissions = array(
+      'driver-ui' => Roles::Driver
+  );
+  
+  if(array_key_exists($permission, $permissions))
+    {
+      if($role == $permissions[$permission])
+      {
+        return true;
+      }else{
+        return false;
+      }
+    }else{
+      return false;
+    }
+}
 ?>

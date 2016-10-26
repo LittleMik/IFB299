@@ -12,6 +12,7 @@
 		$_SESSION['firstname'] = $user->firstName;
 		$_SESSION['user'] = serialize($user);
 		$_SESSION['role'] = $user->role;
+    $_SESSION['ID'] = $user->getID();
 	}
 
 	function loginWithID($userID)

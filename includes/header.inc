@@ -55,6 +55,13 @@
 								<li><a href="view-users.php">View Accounts</a></li>
 							';
 						}
+						//Check Permission to View Users
+						if(checkRole($_SESSION['role'], 'driver-ui') === true)
+						{
+							echo '
+								<li><a href="driver-orders.php">Assigned Orders</a></li>
+							';
+						}
 					}
 					?>
 			  </ul>

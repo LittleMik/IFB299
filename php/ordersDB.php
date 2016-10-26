@@ -9,7 +9,7 @@
 	* $pickupTime
 	* Returns PDO Statement
 	*/
-	function searchOrder($email, $customerName, $priority, $status, $pickupTime)
+	function searchOrder($email, $customerName, $priority, $status, $pickupTime, $driverID)
 	{
 		//Get PDO
 		require 'pdo.inc';
@@ -34,6 +34,12 @@
 		{
 			$whereConditions[] = " orders.deliveryPriority LIKE :priority";
 			$filters["priority"] = $priority;
+		}
+
+		if(!empty($driverID))
+		{
+			$whereConditions[] = " orders.driverID LIKE :driverID";
+			$filters["driverID"] = $driverID;
 		}
 
 		//Set SQL Where Statement According to Filters
@@ -148,7 +154,7 @@
 				{
 					echo "<td>
 							<p><a class='btn btn-info' href='edit-order.php?orderID={$order['orderID']}'>Edit</a></p>
-							<p><a class='btn btn-info' href='driver.php?orderID={$order['orderID']}&orderStatus={$order['orderStatus']}'>Add Milestone</a></p>
+							<p><a class='btn btn-info' href='driver.php?orderID={$order['orderID']}&orderStatus={$order['orderStatus']}'>Update Order Status</a></p>
 							<p><a class='btn btn-info' href='view-order.php?orderID={$order['orderID']}'>View</a></p>
 							<p><a class='btn btn-info' href='assign-driver.php?orderID={$order['orderID']}'>Assign Driver</a></p>
 						</td>";

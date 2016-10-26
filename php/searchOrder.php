@@ -115,7 +115,7 @@
 					require_once 'php/ordersDB.php';
 
 					//Run Search Query and Output Results
-					displayOrders(searchOrder($_POST['email'], $_POST['customerName'], $_POST['priority'], $_POST['status'], $_POST['pickupTime']));
+					displayOrders(searchOrder($_POST['email'], $_POST['customerName'], $_POST['priority'], $_POST['status'], $_POST['pickupTime']), "");
 				}
 
 			}
