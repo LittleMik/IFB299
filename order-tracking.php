@@ -19,13 +19,8 @@
 			require_once 'php/status.php';
 
 			$user = unserialize($_SESSION['user']);
-			//Check Status is set
-			if(!isset($_POST['status']))
-			{
-				$status = "NOT ".Status::Delivered;
-			}
 
-			outputResultOrders(searchOrder($user->getEmail(), "", "", $status, ""));
+			outputResultOrders(searchOrder($user->getEmail(), "", "", "", "", ""));
 		?>
 	</div>
 </section>

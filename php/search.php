@@ -20,13 +20,33 @@
 		$parameters = array();
 
 		//Set Default Where Condition if driver ID is present
-		if(!empty($driverID)){
+		if(!empty($driverID))
+		{
 			//Set Default Where Condition and Bind Parameters
 			$whereConditions[] = " orders.driverID = :driverID";
 			$parameters[':driverID'] = $driverID;
 		}
 
 		//Identify and Set Search Filters
+		require_once 'status.php';
+		$removeDelivered = " NOT orders.orderStatus = ".Status::Delivered;
+		if(!empty($status))
+		{
+			if($status === Status::Delivered)
+			{
+				$whereConditions[] = " orders.orderStatus = ".Status::Delivered;
+			}
+				else
+			{
+				$whereConditions[] = " orders.orderStatus = :orderStatus AND {$removeDelivered}";
+				$parameters[':orderStatus'] = $status;
+			}
+		}
+			else
+		{
+			$whereConditions[] = $removeDelivered;
+		}
+
 		if(!empty($email))
 		{
 			$whereConditions[] = " LOWER(users.email) LIKE CONCAT(LOWER(:email),'%')";
