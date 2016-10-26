@@ -270,6 +270,7 @@
 							<p><a class='btn btn-info' href='driver.php?orderID={$order['orderID']}&orderStatus={$order['orderStatus']}'>Update Status</a></p>
 							<p><a class='btn btn-info' href='view-order.php?orderID={$order['orderID']}'>View</a></p>
 							<p><a class='btn btn-info' href='assign-driver.php?orderID={$order['orderID']}'>Assign Driver</a></p>
+							<p><a class='btn btn-info' href='delete-order.php?orderID={$order['orderID']}'>Delete Order</a></p>
 						</td>";
 				} else if(checkPermission($_SESSION['role'], 'driver-ui') === true) {
 					echo "<td>
