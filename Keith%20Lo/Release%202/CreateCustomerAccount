@@ -1,0 +1,92 @@
+package com.example.tests;
+
+import java.util.regex.Pattern;
+import java.util.concurrent.TimeUnit;
+import org.testng.annotations.*;
+import static org.testng.Assert.*;
+import org.openqa.selenium.*;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class Signup {
+  private WebDriver driver;
+  private String baseUrl;
+  private boolean acceptNextAlert = true;
+  private StringBuffer verificationErrors = new StringBuffer();
+
+  @BeforeClass(alwaysRun = true)
+  public void setUp() throws Exception {
+    driver = new FirefoxDriver();
+    baseUrl = "https://ifb299-group52.herokuapp.com/";
+    driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+  }
+
+  @Test
+  public void testSignup() throws Exception {
+    driver.get(baseUrl + "/index.php");
+    driver.findElement(By.linkText("Sign Up")).click();
+    driver.findElement(By.id("email")).clear();
+    driver.findElement(By.id("email")).sendKeys("test@email.com");
+    driver.findElement(By.id("password")).clear();
+    driver.findElement(By.id("password")).sendKeys("test1234");
+    driver.findElement(By.id("confirmPassword")).clear();
+    driver.findElement(By.id("confirmPassword")).sendKeys("test1234");
+    driver.findElement(By.id("firstName")).clear();
+    driver.findElement(By.id("firstName")).sendKeys("Test");
+    driver.findElement(By.id("lastName")).clear();
+    driver.findElement(By.id("lastName")).sendKeys("Test");
+    driver.findElement(By.id("phone")).clear();
+    driver.findElement(By.id("phone")).sendKeys("0411111111");
+    driver.findElement(By.id("address")).clear();
+    driver.findElement(By.id("address")).sendKeys("8 Something Lane, Somewhere");
+    driver.findElement(By.id("postCode")).clear();
+    driver.findElement(By.id("postCode")).sendKeys("4001");
+    new Select(driver.findElement(By.id("state"))).selectByVisibleText("QLD");
+    driver.findElement(By.cssSelector("button.btn1btn-default")).click();
+    driver.findElement(By.linkText("Hello Test!")).click();
+    driver.findElement(By.cssSelector("button.btn1btn-default")).click();
+    driver.findElement(By.linkText("Logout")).click();
+  }
+
+  @AfterClass(alwaysRun = true)
+  public void tearDown() throws Exception {
+    driver.quit();
+    String verificationErrorString = verificationErrors.toString();
+    if (!"".equals(verificationErrorString)) {
+      fail(verificationErrorString);
+    }
+  }
+
+  private boolean isElementPresent(By by) {
+    try {
+      driver.findElement(by);
+      return true;
+    } catch (NoSuchElementException e) {
+      return false;
+    }
+  }
+
+  private boolean isAlertPresent() {
+    try {
+      driver.switchTo().alert();
+      return true;
+    } catch (NoAlertPresentException e) {
+      return false;
+    }
+  }
+
+  private String closeAlertAndGetItsText() {
+    try {
+      Alert alert = driver.switchTo().alert();
+      String alertText = alert.getText();
+      if (acceptNextAlert) {
+        alert.accept();
+      } else {
+        alert.dismiss();
+      }
+      return alertText;
+    } finally {
+      acceptNextAlert = true;
+    }
+  }
+}
