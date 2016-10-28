@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="https://ifb299-group52.herokuapp.com/" />
+<title>View Customer Payment</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">View Customer Payment</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/index.php</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Login</td>
+	<td>Login</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Login</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=inputEmail</td>
+	<td>bill@email.com</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=inputPassword</td>
+	<td>password1</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Hello Bill!</td>
+	<td>Hello Bill!</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=View Order</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=inputEmail</td>
+	<td>grg8spam@gmail.com</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=button.btn.btn-default</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//section[@id='filter-order']/div/div/table/tbody/tr/td[2]/p[2]</td>
+	<td>grg8spam@gmail.com</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//section[@id='filter-order']/div/div/table/tbody/tr/td[3]/p</td>
+	<td>exact:Desc: Selenium Testing</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//section[@id='filter-order']/div/div/table/tbody/tr/td[6]</td>
+	<td>Stored in Warehouse</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=View</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//section[@id='filter-order']/div[2]/table[3]/tbody/tr/td[2]/p</td>
+	<td>Greg Mills</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//section[@id='filter-order']/div[2]/table[3]/tbody/tr/td[3]</td>
+	<td>Cash</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//section[@id='filter-order']/div[2]/table[3]/tbody/tr/td[5]</td>
+	<td>15</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Logout</td>
+	<td>Logout</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Logout</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Login</td>
+	<td>Login</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

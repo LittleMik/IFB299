@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="https://ifb299-group52.herokuapp.com/" />
+<title>Login And Make Order</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Login And Make Order</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/index.php</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Login</td>
+	<td>Login</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Login</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=inputEmail</td>
+	<td>grg8spam@gmail.com</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=inputPassword</td>
+	<td>password1</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Hello Greg!</td>
+	<td>Hello Greg!</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=My Orders</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Place Order</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=comment</td>
+	<td>Selenium Testing</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=package-description</td>
+	<td>Test Sel Package1</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=package-weight</td>
+	<td>12</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=signature</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=pickupTime</td>
+	<td>2016-12-12T08:30:00</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=pickupAddress</td>
+	<td>110 Test ROAD, Suburb</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=email</td>
+	<td>4000</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=state</td>
+	<td>label=QLD</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=recipientName</td>
+	<td>John Doe</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=recipientPhone</td>
+	<td>0411111111</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=deliveryTime</td>
+	<td>2016-12-20T09:30:00</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=deliveryAddress</td>
+	<td>123 Test STREET, Suburb</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=deliveryPostCode</td>
+	<td>4000</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=deliveryState</td>
+	<td>label=QLD</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=button.btnbtn-default</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//section[@id='filter-order']/div/table/tbody/tr/td[2]/p[2]</td>
+	<td>grg8spam@gmail.com</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//section[@id='filter-order']/div/table/tbody/tr/td[3]/p</td>
+	<td>exact:Desc: Selenium Testing</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//section[@id='filter-order']/div/table/tbody/tr/td[6]</td>
+	<td>Ordered</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Logout</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
