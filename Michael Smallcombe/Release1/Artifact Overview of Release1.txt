@@ -1,21 +1,21 @@
 NOTE:
-- During Release 1 the whole team contributed in maintaining the release and sprint plan documentation during team meetings
+- During Release 1 the entire team contributed to the maintenance of the release and sprint plan documentation during team meetings.
 
-- My blog entries detail further information regarding certain artifacts development if required
+- My blog entries detail further information regarding certain artifacts development if required.
 
-- Most of the artifacts on the repository were edited for bug fixes at points in time by other people, all of which can be seen in the git commit logs
+- Most of the artifacts on the repository were edited for bug fixes at points in time by other people, all of which can be seen in the git commit logs.
 
 1. Form Processing (Validation of Inputs)
-After initial HTML forms for account registration and ordering was provided, I constructed a series of methods which would return a boolean value according to whether the inputs were valid or not. This used a series of regex queries using PHP's preg_match functionality. An errors away would be populated whenever a false (or failed) value was returned, notifying us of an invalid input. I also added some regex statements to the HTML5 input elements for some client-side validation.
+After initial HTML forms for account registration and ordering was provided, I constructed a series of methods which would return a boolean value according to whether the inputs were valid or not. This used a series of regex queries using PHP's preg_match functionality. An errors array would be populated whenever a false (or failed) value was returned, notifying us of an invalid input. I also added some regex statements to the HTML5 input elements for some client-side validation.
 
 2. Orders and Users classes (orders.php, ordersDB.php, users.php, usersDB.php)
-I constructed the orders and users classes to send and receive information from the database and use it in code throughout the website. Originally the order would be constructed according to the number of arguments provided to the constructor. This is due to the fact new orders would lack an ID which was assigned by the database while past orders would contain an ID as they were retrieved from the database. This idea was later abandoned as the project progressed as we prioritised other components for the release. I conducted major improvements to these classes during the second release in terms of commenting and functionality, reducing the reliance upon the extra functionality files ordersDB and usersDB
+I constructed the orders and users classes to send and receive information from the database and use it in code throughout the website. Originally the order would be constructed according to the number of arguments provided to the constructor. This is due to the fact new orders would lack an ID which was assigned by the database while past orders would contain an ID as they were retrieved from the database. This idea was later abandoned as the project progressed, as we prioritised other components for the release. I conducted major improvements to these classes during the second release in terms of commenting and functionality, reducing the reliance upon the extra functionality files ordersDB and usersDB.
 
 3. View Order and View User (view-order.php, view-users.php, ordersDB.php, usersDB.php)
-I constructed the search query and the output functionality for both the users and orders executed by the search form of the view-order.php and view-users.php pages
+I constructed the search query and the output functionality for both the users and orders executed by the search form of the view-order.php and view-users.php pages.
 
 4.  Permissions Checking (permissions.php, roles.php)
 I initially created the roles file to remove magic numbers from the code and replace them with constants, a PHP enumerated value of sorts. (I also used this process to deal with Status numbers) I then moved a reoccurring permissions checking method which was used on multiple pages into a single file and modified it. This method would return a true or false according to a string permission and role provided. If the role was less than the minimum required for that particular string permission, it would return false, otherwise it would return true.
 
 5. PHPUnit Testing (tests and testLogs directories)
-Form Validation, Permissions, the Order class, and the User class were all tested using PHPUnit automated testing. I constructed a series of values to automatically run through using an expected result against an input. I ran the tests on my local xampp web server using phpUnit and composer. The test logs were uploaded to the testLogs directory during the first release. The vendor files are located on the main branch if required
+Form Validation, Permissions, the Order class, and the User class were all tested using PHPUnit automated testing. I constructed a series of values to automatically run through using an expected result against an input. I ran the tests on my local xampp web server using phpUnit and composer. The test logs were uploaded to the testLogs directory during the first release. The vendor files are located on the main branch if required.
